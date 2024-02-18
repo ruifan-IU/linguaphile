@@ -8,7 +8,25 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  theme: {},
+
   plugins: [require('daisyui')],
+  daisyui: {
+    themes: [
+      'light',
+      'dark',
+      'coffee',
+      'aqua',
+      'forest',
+      'halloween',
+      'lofi',
+      'synthwave',
+      'black',
+      'cyberpunk',
+      'retro',
+      'valentine',
+      'wireframe',
+      'dracula',
+    ],
+  },
 };
 export default config;
