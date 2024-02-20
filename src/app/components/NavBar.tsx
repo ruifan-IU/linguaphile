@@ -1,6 +1,8 @@
+import Link from 'next/link';
+
 export default function NavBar() {
   return (
-    <div className='navbar bg-base-100'>
+    <div className='navbar bg-base-100 md:px-10'>
       <div className='navbar-start'>
         <div className='dropdown'>
           <div tabIndex={0} role='button' className='btn btn-ghost lg:hidden'>
@@ -24,10 +26,10 @@ export default function NavBar() {
             className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
           >
             <li>
-              <a>Item 1</a>
+              <a>Lessons</a>
             </li>
             <li>
-              <a>Parent</a>
+              <a>Dictionary</a>
               <ul className='p-2'>
                 <li>
                   <a>Submenu 1</a>
@@ -38,20 +40,22 @@ export default function NavBar() {
               </ul>
             </li>
             <li>
-              <a>Item 3</a>
+              <a>Generate</a>
             </li>
           </ul>
         </div>
-        <a className='btn btn-primary text-xl'>daisyUI</a>
+        <h2 className='text-2xl text-center lg:text-left'>
+        Linguaphile
+        </h2>
       </div>
       <div className='navbar-center hidden lg:flex'>
-        <ul className='menu menu-horizontal px-1'>
+        <ul className='menu menu-horizontal px-10 space-x-4 text-lg'>
           <li>
-            <a>Item 1</a>
+            <a>Lessons</a>
           </li>
           <li>
             <details>
-              <summary>Parent</summary>
+              <summary>Dictionary</summary>
               <ul className='p-2'>
                 <li>
                   <a>Submenu 1</a>
@@ -63,12 +67,14 @@ export default function NavBar() {
             </details>
           </li>
           <li>
-            <a>Item 3</a>
+            <a>Generate</a>
           </li>
         </ul>
       </div>
       <div className='navbar-end'>
-        <a className='btn'>Button</a>
+        <Link href='/login' className='btn btn-secondary text-xl'>
+          Login
+        </Link>
       </div>
     </div>
   );
