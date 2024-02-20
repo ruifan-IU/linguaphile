@@ -20,7 +20,7 @@ const themes = [
 ];
 
 const ThemeSelector = () => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('');
 
   useEffect(() => {
     document.body.setAttribute('data-theme', theme);
