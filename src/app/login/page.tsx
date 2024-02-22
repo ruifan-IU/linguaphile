@@ -1,8 +1,6 @@
-// build login page using daisyUI
-
 export default function Login() {
   return (
-    <div className='flex h-screen bg-base-200'>
+    <div className='flex h-[calc(100vh-76px)] bg-base-200'>
       <div className='w-full max-w-xs m-auto bg-base-100 rounded-box p-10'>
         <h1 className='text-2xl font-bold mb-10 text-center'>Login</h1>
         <div className='form-control'>
