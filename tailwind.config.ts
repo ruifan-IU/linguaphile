@@ -9,24 +9,9 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
 
-  plugins: [require('daisyui')],
+  plugins: [require('daisyui'), require('@tailwindcss/line-clamp')],
   daisyui: {
-    themes: [
-      'light',
-      'dark',
-      'coffee',
-      'aqua',
-      'forest',
-      'halloween',
-      'lofi',
-      'synthwave',
-      'black',
-      'cyberpunk',
-      'retro',
-      'valentine',
-      'wireframe',
-      'dracula',
-    ],
+    themes: ['retro'],
   },
 };
 export default config;

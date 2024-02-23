@@ -17,6 +17,8 @@ const themes = [
   'valentine',
   'wireframe',
   'dracula',
+  'pastel',
+  'nord',
 ];
 
 const ThemeSelector = () => {

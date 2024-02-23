@@ -7,7 +7,7 @@ export default async function NavBar() {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className='navbar bg-base-100 md:px-10'>
+    <div className='navbar bg-base-100 px-3'>
       <div className='navbar-start'>
         <div className='dropdown'>
           <div tabIndex={0} role='button' className='btn btn-ghost lg:hidden'>
@@ -33,51 +33,57 @@ export default async function NavBar() {
             <li>
               <a>Lessons</a>
             </li>
-            <li>
-              <a>Dictionary</a>
-              <ul className='p-2'>
+            {session && (
+              <>
                 <li>
-                  <a>Submenu 1</a>
+                  <a>Dictionary</a>
+                  <ul className='p-2'>
+                    <li>
+                      <a>Submenu 1</a>
+                    </li>
+                    <li>
+                      <a>Submenu 2</a>
+                    </li>
+                  </ul>
                 </li>
                 <li>
-                  <a>Submenu 2</a>
+                  <a>Generate</a>
                 </li>
-              </ul>
-            </li>
-            <li>
-              <a>Generate</a>
-            </li>
+              </>
+            )}
           </ul>
         </div>
-        <h2 className='text-2xl text-center lg:text-left'>
-        Linguaphile
-        </h2>
+        <h2 className='text-2xl text-center lg:text-left'>Linguaphile</h2>
       </div>
       <div className='navbar-center hidden lg:flex'>
         <ul className='menu menu-horizontal px-10 space-x-4 text-lg'>
           <li>
             <a>Lessons</a>
           </li>
-          <li>
-            <details>
-              <summary>Dictionary</summary>
-              <ul className='p-2'>
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Generate</a>
-          </li>
+          {session && (
+            <>
+              <li>
+                <details>
+                  <summary>Dictionary</summary>
+                  <ul className='p-2'>
+                    <li>
+                      <a>Submenu 1</a>
+                    </li>
+                    <li>
+                      <a>Submenu 2</a>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <a>Generate</a>
+              </li>
+            </>
+          )}
         </ul>
       </div>
       <div className='navbar-end'>
-        { session ? (
+        {session ? (
           <LogOutButton />
         ) : (
           <Link href='/login' className='btn btn-secondary text-xl'>
