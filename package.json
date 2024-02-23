@@ -9,12 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^5.9.1",
+    "@auth/prisma-adapter": "^1.4.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-regular-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@prisma/client": "^5.10.2",
     "mongodb": "^6.3.0",
     "next": "14.1.0",
     "next-auth": "^4.24.6",
+    "nodemailer": "^6.9.9",
     "react": "^18",
     "react-dom": "^18",
+    "react-toastify": "^10.0.4",
     "theme-change": "^2.5.0"
   },
   "devDependencies": {
@@ -26,7 +34,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",
-    "prisma": "^5.9.1",
+    "prisma": "^5.10.2",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }

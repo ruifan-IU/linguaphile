@@ -1,6 +1,11 @@
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../utils/auth';
+import LogOutButton from './LogOutButton';
 
-export default function NavBar() {
+export default async function NavBar() {
+  const session = await getServerSession(authOptions);
+
   return (
     <div className='navbar bg-base-100 md:px-10'>
       <div className='navbar-start'>
@@ -72,9 +77,13 @@ export default function NavBar() {
         </ul>
       </div>
       <div className='navbar-end'>
-        <Link href='/login' className='btn btn-secondary text-xl'>
-          Login
-        </Link>
+        { session ? (
+          <LogOutButton />
+        ) : (
+          <Link href='/login' className='btn btn-secondary text-xl'>
+            Login
+          </Link>
+        )}
       </div>
     </div>
   );
