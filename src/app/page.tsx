@@ -17,8 +17,8 @@ export default async function Home() {
             className="p-6 bg-base-200 rounded-box shadow-lg max-w-xs max-h-40"
             href={`/lesson/${lesson.id}`}
           >
-            <h2 className="text-2xl font-bold mb-4">Lesson {index + 1}</h2>
-            <p className="line-clamp-3">{lesson.text}</p>
+            <h2 className='mb-4 text-2xl font-bold'>Lesson {index + 1}</h2>
+            <p className='line-clamp-3'>{lesson.text}</p>
           </Link>
         ))}
       </div>
