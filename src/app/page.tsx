@@ -8,13 +8,13 @@ export default async function Home() {
 
   return (
     <main className='flex min-h-screen flex-col items-center justify-between p-10'>
-      <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+      <div className='grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         {lessons.map((lesson: { text: string; id: string }, index: number) => (
           <div
             key={lesson.id}
-            className='p-6 bg-base-200 rounded-box shadow-lg max-w-xs max-h-40'
+            className='max-h-40 max-w-xs rounded-box bg-base-200 p-6 shadow-lg'
           >
-            <h2 className='text-2xl font-bold mb-4'>Lesson {index + 1}</h2>
+            <h2 className='mb-4 text-2xl font-bold'>Lesson {index + 1}</h2>
             <p className='line-clamp-3'>{lesson.text}</p>
           </div>
         ))}
