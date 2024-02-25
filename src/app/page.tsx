@@ -2,9 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 
 export default async function Home() {
-  console.log("here");
   const lessons = await db.lesson.findMany();
-  console.log(lessons);
 
   return (
     <main
