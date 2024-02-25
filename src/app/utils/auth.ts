@@ -1,10 +1,10 @@
-import { NextAuthOptions } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
-import EmailProvider from "next-auth/providers/email";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from "./db";
+import { NextAuthOptions } from 'next-auth';
+import GithubProvider from 'next-auth/providers/github';
+import EmailProvider from 'next-auth/providers/email';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import prisma from './db';
 
-import type { Adapter } from "next-auth/adapters";
+import type { Adapter } from 'next-auth/adapters';
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
@@ -25,4 +25,10 @@ export const authOptions = {
       from: process.env.EMAIL_FROM,
     }),
   ],
+  callbacks: {
+    session({ session, user }) {
+      session.user.id = user.id;
+      return session;
+    },
+  },
 } satisfies NextAuthOptions;
