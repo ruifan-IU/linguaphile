@@ -283,7 +283,7 @@ export const LessonDisplay = ({
   };
 
   return (
-    <div className='flex h-[calc(100vh-64px)] w-full items-stretch px-4 pb-3 pt-12 lg:h-[calc(100vh-76px)]'>
+    <div className='flex h-full w-full items-stretch px-4 pb-3 pt-12'>
       <canvas ref={canvasRef} className='hidden' />
       <Transition.Root show={modalOpen} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={onHideHandler}>

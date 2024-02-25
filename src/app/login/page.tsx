@@ -12,8 +12,8 @@ export default async function Login() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-64px)] lg:h-[calc(100vh-76px)] bg-base-200">
-      <div className="w-full max-w-xs m-auto bg-base-100 rounded-box p-10">
+    <div className="flex h-full">
+      <div className="w-full max-w-xs m-auto bg-base-100 rounded-box p-10 bg-base-200 shadow-lg">
         <h1 className="text-2xl font-bold mb-10 text-center">Please sign in</h1>
         <SignInForm />
         <SignInWithGithub />

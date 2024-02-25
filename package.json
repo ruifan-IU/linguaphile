@@ -4,7 +4,6 @@
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
-  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -23,13 +23,10 @@ export default function SignInForm() {
 
   return (
     <form className="form-control" action={SignInWithEmail}>
-      <label className="label">
-        <span className="label-text">Email</span>
-      </label>
       <input
         name="email"
         type="email"
-        placeholder="email@example.com"
+        placeholder="Enter your email"
         className="input input-bordered"
         onChange={(e) => setEmail(e.target.value)}
       />
