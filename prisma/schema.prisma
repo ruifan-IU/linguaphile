@@ -7,20 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Account {
-  id                 String  @id @map("_id") @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.String
-  access_token       String?  @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.String
-  session_state      String?
+  id                String  @id @default(cuid()) @map("_id")
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -28,7 +27,7 @@ model Account {
 }
 
 model Session {
-  id           String   @id @map("_id") @default(cuid())
+  id           String   @id @default(cuid()) @map("_id")
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -36,7 +35,7 @@ model Session {
 }
 
 model User {
-  id            String    @id @map("_id") @default(cuid())
+  id            String    @id @default(cuid()) @map("_id")
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -44,19 +43,20 @@ model User {
   accounts      Account[]
   sessions      Session[]
   lessons       Lesson[]
+  words         Word[]
 }
 
 model Lesson {
-  id      String @id @map("_id") @default(cuid())
-  title   String @unique
-  text    String
-  level   Int
-  auth    User?   @relation(fields: [userId], references: [id])
-  userId  String?
+  id     String  @id @default(cuid()) @map("_id")
+  title  String  @unique
+  text   String
+  level  Int
+  auth   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }
 
 model VerificationToken {
-  id         String   @id @map("_id") @default(cuid())
+  id         String   @id @default(cuid()) @map("_id")
   identifier String
   token      String   @unique
   expires    DateTime
@@ -64,15 +64,20 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model texts {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  audioUrl    String?
-  content     String
-  dynasty     String
-  remark      String?
-  shangxi     String?
-  title       String
-  translation String?
-  type        String[]
-  writer      String
+model Language {
+  id    String @id @default(cuid()) @map("_id")
+  name  String @unique
+  code  String @unique
+  words Word[]
+}
+
+model Word {
+  id         String   @id @default(cuid()) @map("_id")
+  phrase       String
+  translation  String
+  languageId String
+  userId     String
+  language   Language @relation(fields: [languageId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+  @@unique([phrase, languageId, userId])
 }
