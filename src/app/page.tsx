@@ -6,7 +6,7 @@ export default async function Home() {
 
   return (
     <main
-      className="h-[calc(100vh-64px)] lg:h-[calc(100vh-76px)] flex flex-col items-center justify-between p-10"
+      className="flex flex-col items-center justify-between p-10"
     >
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {lessons.map((lesson: { text: string; id: string }, index: number) => (
