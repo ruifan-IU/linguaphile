@@ -23,11 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body
+        className={`${inter.className} grid h-screen grid-rows-[auto_1fr_auto]`}
+      >
         <header>
           <NavBar />
         </header>
-        {children}
+        <main className='overflow-scroll'>{children}</main>
         <ToastContainer position='bottom-right' theme='dark' />
       </body>
     </html>
