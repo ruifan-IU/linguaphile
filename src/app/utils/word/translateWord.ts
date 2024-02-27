@@ -1,3 +1,5 @@
+"use server";
+
 import { TranslationServiceClient } from '@google-cloud/translate';
 
 interface TranslationObject {
@@ -7,16 +9,12 @@ interface TranslationObject {
   detectedLanguageCode: string;
 }
 
-export async function GET(
-  request: Request,
-  { params }: { params: { word: string } },
-) {
+export async function translateWord(word: string) {
   // Instantiates a client
   const translationClient = new TranslationServiceClient();
 
   const projectId = 'polyglot-ai';
   const location = 'global';
-  const word = params.word;
 
   const req = {
     parent: `projects/${projectId}/locations/${location}`,
@@ -32,8 +30,8 @@ export async function GET(
   }>;
 
   if (response && response.translations[0]) {
-    return Response.json(response.translations[0]);
+    return response.translations[0].translatedText;
   } else {
-    return Response.json({ error: 'No translation found' });
+    return "";
   }
 }

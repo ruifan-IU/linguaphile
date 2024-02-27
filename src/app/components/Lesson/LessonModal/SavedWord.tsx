@@ -2,17 +2,19 @@ import { Dialog } from '@headlessui/react';
 import { Word } from '@prisma/client';
 import { forwardRef, useState } from 'react';
 import FamiliarityBar from './FamiliarityBar';
+import { removeWord } from '@/utils/word/removeWord';
+import { toast } from 'react-toastify';
 
 interface SavedWordProps {
   word: Word;
   onHideHandler: () => void;
   words: Map<string, Word>;
-  setWords: (words: Map<string, Word>) => void;
+  setWords: React.Dispatch<React.SetStateAction<Map<string, Word>>>;
   selectedWordRef: React.MutableRefObject<HTMLCanvasElement>;
 }
 
 export default forwardRef(function SavedWordComponent(
-  { word, onHideHandler, words, setWords, selectedWordRef }: SavedWordProps,
+  { word, onHideHandler, setWords, selectedWordRef }: SavedWordProps,
   forwardedRef: React.ForwardedRef<HTMLDivElement>,
 ) {
   const [removingWord, setRemovingWord] = useState(false);
@@ -20,26 +22,19 @@ export default forwardRef(function SavedWordComponent(
   const removeWordHandler = async (word: Word) => {
     setRemovingWord(true);
     try {
-      const res = await fetch('/api/remove-word', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ phrase: word.phrase, userId: word.userId }),
-      });
-      if (!res.ok) {
-        throw new Error('Failed to remove word');
-      }
+      await removeWord(word.phrase, word.languageId, word.userId);
       selectedWordRef.current.style.fill = 'black';
       setWords((prevWords) => {
         const newWords: Map<string, Word> = new Map(prevWords);
         newWords.delete(word.phrase);
         return newWords;
       });
-      onHideHandler();
+      toast.success('Word successfully removed');
     } catch (err) {
       console.error(err);
+      toast.error('Failed to remove word');
     }
+    onHideHandler();
     setRemovingWord(false);
   };
 
@@ -56,7 +51,8 @@ export default forwardRef(function SavedWordComponent(
                 <div>Phrase: {word.phrase}</div>
                 <div>Definition: {word.translation}</div>
                 <div>
-                  Familiarity: <FamiliarityBar familiarity={word.familiarity} />
+                  Familiarity:{' '}
+                  <FamiliarityBar familiarity={word.familiarity} word={word} setWords={setWords} />
                 </div>
               </div>
             </div>

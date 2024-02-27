@@ -1,3 +1,4 @@
+import FamiliarityBar from '@/components/Lesson/LessonModal/FamiliarityBar';
 import { db } from '@/lib/db';
 
 export default async function Dictionary() {
@@ -11,6 +12,7 @@ export default async function Dictionary() {
           <thead>
             <tr>
               <th>Word</th>
+              <th>Familiarity</th>
               <th>Translation</th>
             </tr>
           </thead>
@@ -18,6 +20,7 @@ export default async function Dictionary() {
             {words.map((word) => (
               <tr key={word.id}>
                 <td>{word.phrase}</td>
+                <td><FamiliarityBar familiarity={word.familiarity} word={word} /></td>
                 <td>{word.translation}</td>
               </tr>
             ))}
