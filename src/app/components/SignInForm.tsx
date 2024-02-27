@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function SignInForm() {
   const [email, setEmail] = useState<string>('');
@@ -22,15 +22,15 @@ export default function SignInForm() {
   }
 
   return (
-    <form className="form-control" action={SignInWithEmail}>
+    <form className='form-control' action={SignInWithEmail}>
       <input
-        name="email"
-        type="email"
-        placeholder="Enter your email"
-        className="input input-bordered"
+        name='email'
+        type='email'
+        placeholder='Enter your email'
+        className='input input-bordered'
         onChange={(e) => setEmail(e.target.value)}
       />
-      <button type="submit" className="btn btn-primary text-lg w-full mt-5">
+      <button type='submit' className='btn btn-primary mt-5 w-full text-lg'>
         Login with email
       </button>
     </form>

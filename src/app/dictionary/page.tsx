@@ -6,7 +6,7 @@ export default async function Dictionary() {
   return (
     <div className='flex flex-col items-center p-10 lg:h-[calc(100vh-76px)]'>
       <h1 className='text-4xl font-bold'>Your Words</h1>
-      <div className='rounded-box border border-base-300 p-5 sm:w-11/12 md:w-9/12 lg:w-6/12 mt-10'>
+      <div className='mt-10 rounded-box border border-base-300 p-5 sm:w-11/12 md:w-9/12 lg:w-6/12'>
         <table className='table table-zebra w-full'>
           <thead>
             <tr>

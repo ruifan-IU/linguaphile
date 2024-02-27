@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState, useCallback, Fragment } from 'react';
+import { useRef, useEffect, useState, useCallback, Fragment, use } from 'react';
 import type { MutableRefObject } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
 
@@ -10,8 +10,10 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { Dialog, Transition } from '@headlessui/react';
-import Definition from './Definition';
+import LessonModal from './LessonModal/LessonModal';
 import { Session } from 'next-auth';
+import { Word } from '@prisma/client';
+import { on } from 'events';
 
 const maxWordsPerPage = 800;
 const lineHeight = 50;
@@ -19,7 +21,7 @@ const lineHeight = 50;
 interface LessonDisplayInterface {
   text: string;
   session: Session | null;
-  savedWords?: Set<string>;
+  savedWords: Map<string, Word>;
 }
 
 export const LessonDisplay = ({
@@ -31,39 +33,41 @@ export const LessonDisplay = ({
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [bottomClick, setBottomClick] = useState(false);
-  const [translation, setTranslation] = useState({
-    phrase: '',
-    translation: '',
-  });
-  const [defIsLoading, setDefIsLoading] = useState(false);
-
+  const [selectedWord, setSelectedWord] = useState('');
+  const [translation, setTranslation] = useState('');
+  const [words, setWords] = useState<Map<string, Word>>(savedWords);
+  const selectedWordRef = useRef() as MutableRefObject<HTMLCanvasElement>;
   const canvasRef = useRef() as MutableRefObject<HTMLCanvasElement>;
 
   const wordHandler = useCallback(
-    (event: React.MouseEvent<SVGTSpanElement, MouseEvent>) => {
+    (
+      event: React.MouseEvent<SVGTSpanElement, MouseEvent>,
+      isSaved: Boolean,
+    ) => {
       setModalOpen(true);
       if (event.clientY > (window.innerHeight - 30) / 2) {
         setBottomClick(true);
       } else {
         setBottomClick(false);
       }
-      setDefIsLoading(true);
       if (!event.target) return;
-      const eventTarget = event.target as HTMLElement;
+      const eventTarget = event.target as HTMLCanvasElement;
+      eventTarget.style.fill = 'teal';
       const textContent = eventTarget.textContent;
-      const phrase = textContent?.trim().replace(/[,./?;':~&%$#@*^|]/g, '');
+      const word = textContent?.trim().replace(/[,./?;':~&%$#@*^|]/g, '');
+      if (word) {
+        setSelectedWord(word);
+        selectedWordRef.current = eventTarget;
+      }
+      if (isSaved) return; // Don't fetch translation if word is already saved
       void (async function () {
-        if (phrase) {
+        if (word) {
           try {
-            const response = await fetch(`/api/translate/${phrase}`);
+            const response = await fetch(`/api/translate/${word}`);
             const translation = (await response.json()) as {
               translatedText: string;
             };
-            setTranslation({
-              phrase: phrase,
-              translation: translation.translatedText,
-            });
-            setDefIsLoading(false);
+            setTranslation(translation.translatedText);
           } catch (e) {}
         }
       })();
@@ -97,13 +101,12 @@ export const LessonDisplay = ({
         let maxWidth = (width > 300 ? width : 300) - width / 13.25;
         let columnHeight = height - height / 50;
 
-        const pagePaddingLeft = width / 13.75;
+        const pagePaddingLeft = width / 13.1;
         if (width - pagePaddingLeft > 300) {
           maxWidth = width - pagePaddingLeft;
         }
 
         const maxLinesPerPage = Math.round(columnHeight / lineHeight) - 2;
-        const x = pagePaddingLeft;
 
         // # words that have been displayed
         //(used when ordering a new page of words)
@@ -190,13 +193,13 @@ export const LessonDisplay = ({
             line.text.split(' ').forEach((linkedWord, wordIndex) => {
               if (!linkedWord) return;
               let isSaved = false;
-              if (savedWords && savedWords.has(linkedWord)) {
+              if (words.has(linkedWord)) {
                 isSaved = true;
               }
               linkedLine.push(
                 <tspan
                   className={`cursor-pointer transition-all duration-200 ease-in-out hover:fill-teal-600 ${isSaved ? 'fill-info' : ''}`}
-                  onClick={(e) => wordHandler(e)}
+                  onClick={(e) => wordHandler(e, isSaved)}
                   key={`${i}${lineIndex}${wordIndex}${linkedWord}`}
                 >{`${linkedWord} `}</tspan>,
               );
@@ -209,13 +212,17 @@ export const LessonDisplay = ({
 
         const drawSvg = (
           linesOfLinks: JSX.Element[][],
-          x: number,
+          pagePaddingLeft: number,
           i: number,
         ) => {
           const tspans: Array<JSX.Element> = [];
           linesOfLinks.forEach((line, index) => {
             const tspan = (
-              <tspan key={`page${index}-line${x}`} x={x} dy={`${lineHeight}px`}>
+              <tspan
+                key={`page${index}-line${i}`}
+                x={pagePaddingLeft}
+                dy={`${lineHeight}px`}
+              >
                 {line.map((linkedWord) => linkedWord)}
               </tspan>
             );
@@ -229,7 +236,10 @@ export const LessonDisplay = ({
           );
 
           return (
-            <div style={{ height: height, width: width }} key={`page${i}`}>
+            <div
+              style={{ height: height, width: width, zIndex: 1 }}
+              key={`page${i}`}
+            >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 height={columnHeight}
@@ -248,7 +258,7 @@ export const LessonDisplay = ({
             maxLinesPerPage,
           );
           const linesOfLinks = linesToLinks(lines, i);
-          pages.push(drawSvg(linesOfLinks, x, i));
+          pages.push(drawSvg(linesOfLinks, pagePaddingLeft, i));
         }
 
         let prevPageNum;
@@ -263,54 +273,76 @@ export const LessonDisplay = ({
           if (newPageNumber > 0) setCurrentPage(newPageNumber);
         }
       }
+      console.log('worried', words);
     },
-    [currentPage, text, lessonPages, wordHandler, savedWords],
+    [currentPage, text, lessonPages, wordHandler, words],
   );
 
-  const { ref } = useResizeDetector({ onResize });
+  const { ref, height, width } = useResizeDetector({ onResize });
 
   const pageBackHandler = () => {
     if (currentPage > 0) setCurrentPage(currentPage - 1);
+    onResize(width, height);
   };
 
   const pageForwardHandler = () => {
     if (currentPage < lessonPages.length - 1) setCurrentPage(currentPage + 1);
+    onResize(width, height);
   };
 
-  const onHideHandler = () => {
-    setTranslation({ phrase: '', translation: '' });
+  const onHideHandler = (changeColor?: Boolean) => {
+    setTranslation('');
+    setSelectedWord('');
     setModalOpen(false);
+    if (changeColor) {
+      selectedWordRef.current.style.fill = 'black';
+    }
   };
 
   return (
-    <div className='flex h-full w-full items-stretch px-4 pb-3 pt-12'>
+    <div className='flex h-full w-full items-stretch px-4 py-6'>
       <canvas ref={canvasRef} className='hidden' />
       <Transition.Root show={modalOpen} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={onHideHandler}>
-          <Definition
+          <LessonModal
             bottomClick={bottomClick}
-            phrase={translation.phrase}
-            translation={translation.translation}
+            selectedWord={selectedWord}
+            translation={translation}
             onHideHandler={onHideHandler}
             modalOpen={modalOpen}
             session={session}
+            words={words}
+            setWords={setWords}
+            selectedWordRef={selectedWordRef}
           />
         </Dialog>
       </Transition.Root>
       <button
         onClick={() => pageBackHandler()}
-        className='btn btn-ghost h-full w-3 p-0 sm:min-w-12 md:min-w-16 lg:min-w-20 flex-shrink-0 lg:block'
+        className='btn btn-ghost h-full w-3 flex-shrink-0 p-0 sm:min-w-12 md:min-w-16 lg:block lg:min-w-20'
       >
-        <FontAwesomeIcon icon={faChevronLeft} className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+        <FontAwesomeIcon
+          icon={faChevronLeft}
+          className='text-xl sm:text-2xl md:text-3xl lg:text-4xl'
+        />
       </button>
-      <div ref={ref} className='flex-auto overflow-hidden'>
-        {!lessonPages !== null && lessonPages[currentPage]}
+      <div ref={ref} className='relative flex-auto overflow-hidden'>
+        <div
+          className='absolute left-0 right-0 h-full w-full'
+          style={{ zIndex: -1 }}
+        >
+          <div className='m-auto h-full w-11/12 rounded-box bg-slate-50 p-4 shadow-lg' />
+        </div>
+        {lessonPages && lessonPages[currentPage]}
       </div>
       <button
         onClick={() => pageForwardHandler()}
-        className='btn btn-ghost h-full w-3 p-0 sm:min-w-12 md:min-w-16 lg:min-w-20 flex-shrink-0 lg:block'
+        className='btn btn-ghost h-full w-3 flex-shrink-0 p-0 sm:min-w-12 md:min-w-16 lg:block lg:min-w-20'
       >
-        <FontAwesomeIcon icon={faChevronRight} className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+        <FontAwesomeIcon
+          icon={faChevronRight}
+          className='text-xl sm:text-2xl md:text-3xl lg:text-4xl'
+        />
       </button>
     </div>
   );

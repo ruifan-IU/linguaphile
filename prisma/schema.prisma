@@ -72,12 +72,14 @@ model Language {
 }
 
 model Word {
-  id         String   @id @default(cuid()) @map("_id")
-  phrase       String
-  translation  String
-  languageId String
-  userId     String
-  language   Language @relation(fields: [languageId], references: [id])
-  user       User     @relation(fields: [userId], references: [id])
+  id          String   @id @default(cuid()) @map("_id")
+  phrase      String
+  translation String
+  familiarity Int
+  languageId  String
+  userId      String
+  language    Language @relation(fields: [languageId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+
   @@unique([phrase, languageId, userId])
 }
