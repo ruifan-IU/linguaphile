@@ -13,19 +13,19 @@ export async function POST(request: Request) {
     },
   });
 
-  if (wordExists) {
-    return Response.json({ error: 'Word already exists' });
+  if (!wordExists) {
+    return Response.json({ error: 'Word does not exist' });
   }
 
-  const newWord = await db.word.create({
-    data: {
-      phrase: data.phrase,
-      translation: data.translation,
-      languageId: 'en',
-      userId: data.userId,
-      familiarity: 0,
+  const deletedWord = await db.word.delete({
+    where: {
+      phrase_languageId_userId: {
+        phrase: data.phrase,
+        languageId: 'en',
+        userId: data.userId,
+      },
     },
   });
 
-  return Response.json(newWord);
+  return Response.json(deletedWord);
 }

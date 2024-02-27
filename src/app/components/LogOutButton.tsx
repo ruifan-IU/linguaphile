@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { signOut } from "next-auth/react";
+import { signOut } from 'next-auth/react';
 
 export default function LogOutButton() {
   return (
@@ -8,7 +8,7 @@ export default function LogOutButton() {
       onClick={() =>
         signOut({ callbackUrl: `${window.location.origin}/login` })
       }
-      className="btn btn-primary text-lg"
+      className='btn btn-primary text-lg'
     >
       Log out
     </button>

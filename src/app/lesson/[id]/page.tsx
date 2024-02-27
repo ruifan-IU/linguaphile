@@ -1,7 +1,8 @@
 import { db } from '@/lib/db';
-import { LessonDisplay } from '../../components/LessonDisplay';
+import { LessonDisplay } from '../../components/Lesson/LessonDisplay';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../utils/auth';
+import { Word } from '@prisma/client';
 
 export default async function Lesson({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
@@ -12,7 +13,7 @@ export default async function Lesson({ params }: { params: { id: string } }) {
   });
   // find words in dictionary that are in the lesson
   const lessonWords = lesson && lesson.text.split(' ');
-  const savedWords = new Set<string>();
+  const savedWords = new Map<string, Word>();
   if (lessonWords?.length) {
     const words = await db.word.findMany({
       where: {
@@ -20,13 +21,10 @@ export default async function Lesson({ params }: { params: { id: string } }) {
         languageId: 'en',
         userId: session?.user.id,
       },
-      select: {
-        phrase: true,
-      },
     });
 
     for (const word of words) {
-      savedWords.add(word.phrase);
+      savedWords.set(word.phrase, word);
     }
   }
 
