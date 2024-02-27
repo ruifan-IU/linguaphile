@@ -1,15 +1,16 @@
 import { Dialog } from '@headlessui/react';
-import { forwardRef, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Word } from '@prisma/client';
+import { addWord } from '@/utils/word/addWord';
+import { SetStateAction } from 'react';
 
 interface NewWordProps {
   session: import('next-auth').Session | null;
   phrase: string;
   translation: string;
-  words: Map<string, Word>;
-  setWords: (words: Map<string, Word>) => void;
-  onHideHandler: (arg0?: boolean) => void;
+  setWords: React.Dispatch<SetStateAction<Map<string, Word>>>;
+  onHideHandler: () => void;
   selectedWordRef: React.MutableRefObject<HTMLCanvasElement>;
 }
 
@@ -18,7 +19,6 @@ export default forwardRef(function NewWord(
     session,
     phrase,
     translation,
-    words,
     setWords,
     onHideHandler,
     selectedWordRef,
@@ -30,21 +30,10 @@ export default forwardRef(function NewWord(
   const addWordHandler = async () => {
     setAddingWord(true);
     try {
-      const res = await fetch('/api/add-word', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ phrase, translation, userId: session?.user.id }),
-      });
-      if (!res.ok) {
-        toast.error('Failed to add word. Please try again.');
-        onHideHandler();
-        throw new Error('Failed to add word');
-      }
+      await addWord(phrase, translation, 'en', session?.user.id);
       selectedWordRef.current.classList.add('fill-info');
       setWords((prevWords) => {
-        const newWords: Map<string, Word> = new Map(prevWords);
+        const newWords = new Map(prevWords);
         newWords.set(phrase, {
           phrase,
           translation,
@@ -56,10 +45,11 @@ export default forwardRef(function NewWord(
         return newWords;
       });
       toast.success('Word successfully added!');
-      onHideHandler(false);
     } catch (err) {
       console.error(err);
+      toast.error('Failed to add word');
     }
+    onHideHandler();
     setAddingWord(false);
   };
 

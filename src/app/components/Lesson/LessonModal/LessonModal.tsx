@@ -7,13 +7,13 @@ import { Word } from '@prisma/client';
 
 interface LessonModalProps {
   modalOpen: boolean;
-  onHideHandler: (arg0?: boolean) => void;
+  onHideHandler: () => void;
   bottomClick: boolean;
   selectedWord: string;
   translation: string;
   session: Session | null;
   words: Map<string, Word>;
-  setWords: (words: Map<string, Word>) => void;
+  setWords: React.Dispatch<React.SetStateAction<Map<string, Word>>>;
   selectedWordRef: React.MutableRefObject<HTMLCanvasElement>;
 }
 
@@ -70,7 +70,6 @@ export default function LessonModal({
                 phrase={selectedWord}
                 translation={translation}
                 onHideHandler={onHideHandler}
-                words={words}
                 setWords={setWords}
                 selectedWordRef={selectedWordRef}
               />

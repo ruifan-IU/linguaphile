@@ -13,7 +13,9 @@ import { Dialog, Transition } from '@headlessui/react';
 import LessonModal from './LessonModal/LessonModal';
 import { Session } from 'next-auth';
 import { Word } from '@prisma/client';
+import { translateWord } from '@/utils/word/translateWord';
 import { on } from 'events';
+import { toast } from 'react-toastify';
 
 const maxWordsPerPage = 800;
 const lineHeight = 50;
@@ -63,12 +65,18 @@ export const LessonDisplay = ({
       void (async function () {
         if (word) {
           try {
-            const response = await fetch(`/api/translate/${word}`);
-            const translation = (await response.json()) as {
-              translatedText: string;
-            };
-            setTranslation(translation.translatedText);
-          } catch (e) {}
+            const translation = await translateWord(word);
+            if (translation) {
+              setTranslation(translation);
+            } else {
+              onHideHandler();
+              toast.error('Failed to translate word');
+            }
+          } catch (e) {
+            console.error(e);
+            onHideHandler();
+            toast.error('Failed to translate word');
+          }
         }
       })();
     },
@@ -273,7 +281,6 @@ export const LessonDisplay = ({
           if (newPageNumber > 0) setCurrentPage(newPageNumber);
         }
       }
-      console.log('worried', words);
     },
     [currentPage, text, lessonPages, wordHandler, words],
   );
@@ -290,13 +297,10 @@ export const LessonDisplay = ({
     onResize(width, height);
   };
 
-  const onHideHandler = (changeColor?: Boolean) => {
+  const onHideHandler = () => {
     setTranslation('');
     setSelectedWord('');
     setModalOpen(false);
-    if (changeColor) {
-      selectedWordRef.current.style.fill = 'black';
-    }
   };
 
   return (

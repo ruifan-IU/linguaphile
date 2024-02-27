@@ -1,14 +1,18 @@
+'use server';
+
 import { db } from '@/lib/db';
 
-export async function POST(request: Request) {
-  const data = await request.json();
-
+export async function removeWord(
+  phrase: string,
+  languageId: string,
+  userId: string,
+) {
   const wordExists = await db.word.findUnique({
     where: {
       phrase_languageId_userId: {
-        phrase: data.phrase,
-        languageId: 'en',
-        userId: data.userId,
+        phrase,
+        languageId,
+        userId,
       },
     },
   });
@@ -20,12 +24,10 @@ export async function POST(request: Request) {
   const deletedWord = await db.word.delete({
     where: {
       phrase_languageId_userId: {
-        phrase: data.phrase,
-        languageId: 'en',
-        userId: data.userId,
+        phrase,
+        languageId,
+        userId,
       },
     },
   });
-
-  return Response.json(deletedWord);
 }
