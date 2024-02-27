@@ -2,8 +2,9 @@
 
 import OpenAI from 'openai';
 import { saveLesson } from './lessons';
+import context from './context';
 
-export default async function sendPrompt(formData: FormData) {
+export default async function generateRewrite(formData: FormData) {
   const prompt = {
     title: formData.get('title') as string,
     language: formData.get('language') as string,
@@ -11,7 +12,8 @@ export default async function sendPrompt(formData: FormData) {
     text: formData.get('text') as string,
   };
 
-  const promptString = `Here is a reading lesson: ${prompt.text} Please rewrite the lesson to the level of difficulty suited for ${prompt.language} language learners at the ${prompt.level} level.`;
+  const userPrompt = `Here is a reading lesson: ${prompt.text} Please rewrite the lesson to the level of difficulty suited for ${prompt.language} language learners at ${prompt.level} level. Please include only the rewritten text in your response.`;
+
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
@@ -19,11 +21,14 @@ export default async function sendPrompt(formData: FormData) {
   const response = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [
-      { role: 'system', content: 'You are a helpful language expert.' },
-      { role: 'user', content: promptString },
+      { role: 'system', content: context },
+      { role: 'user', content: userPrompt },
     ],
   });
-  console.log(response.choices[0].message.content);
+
+  const newText = response.choices[0].message.content;
+  console.log(newText);
+  if (newText) prompt.text = newText;
 
   saveLesson(prompt);
 

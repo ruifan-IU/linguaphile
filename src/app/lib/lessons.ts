@@ -13,30 +13,53 @@ export async function saveLesson(lesson: {
   let levelInt = 0;
 
   switch (lesson.level) {
-    case 'beginner':
+    case 'A1':
       levelInt = 1;
       break;
-    case 'elementary':
+    case 'A2':
       levelInt = 2;
       break;
-    case 'intermediate':
+    case 'B1':
       levelInt = 3;
       break;
-    case 'advanced':
+    case 'B2':
       levelInt = 4;
       break;
-    case 'mastery':
+    case 'C1':
       levelInt = 5;
+    case 'C2':
+      levelInt = 6;
       break;
   }
   console.log('level', levelInt);
 
-  await db.lesson.create({
-    data: {
+  const lessonData = await db.lesson.findFirst({
+    where: {
       title: lesson.title,
-      level: levelInt,
-      text: lesson.text,
-      userId: session?.user.id,
     },
   });
+
+  if (lessonData) {
+    await db.lesson.update({
+      where: {
+        id: lessonData.id,
+      },
+      data: {
+        title: lesson.title,
+        level: levelInt,
+        text: lesson.text,
+        userId: session?.user.id,
+      },
+    });
+  } else {
+    await db.lesson.create({
+      data: {
+        title: lesson.title,
+        level: levelInt,
+        text: lesson.text,
+        userId: session?.user.id,
+      },
+    });
+  }
+  return true;
 }
