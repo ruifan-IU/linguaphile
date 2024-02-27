@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from 'react';
 import changeFamiliarity from '../../../utils/word/changeFamiliarity';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
@@ -9,7 +11,7 @@ import { toast } from 'react-toastify';
 interface FamiliarityBarProps {
   familiarity: number;
   word: Word;
-  setWords: React.Dispatch<React.SetStateAction<Map<string, Word>>>;
+  setWords?: React.Dispatch<React.SetStateAction<Map<string, Word>>>;
 }
 
 export default function FamiliarityBar({
@@ -27,7 +29,7 @@ export default function FamiliarityBar({
         word.languageId,
         word.userId,
       );
-      setWords((prevWords) => {
+      setWords && setWords((prevWords) => {
         const newWords: Map<string, Word> = new Map(prevWords);
         newWords.set(word.phrase, { ...word, familiarity });
         return newWords;
@@ -51,9 +53,9 @@ export default function FamiliarityBar({
             onClick={() => onStarClick(i + 1)}
           >
             {i < (hoveredStar || familiarity) ? (
-              <FontAwesomeIcon icon={solidStar} className='text-info' />
+              <FontAwesomeIcon icon={solidStar} className='text-secondary' />
             ) : (
-              <FontAwesomeIcon icon={regularStar} className='text-info' />
+              <FontAwesomeIcon icon={regularStar} className='text-secondary' />
             )}
           </button>
         ))}
