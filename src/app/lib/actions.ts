@@ -3,6 +3,8 @@
 import OpenAI from 'openai';
 import { saveLesson } from './lessons';
 import context from './context';
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 export default async function generateRewrite(formData: FormData) {
   const prompt = {
@@ -30,7 +32,8 @@ export default async function generateRewrite(formData: FormData) {
   console.log(newText);
   if (newText) prompt.text = newText;
 
-  saveLesson(prompt);
-
+  await saveLesson(prompt);
+  revalidatePath('/');
+  redirect('/');
   return true;
 }

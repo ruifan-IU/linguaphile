@@ -2,6 +2,11 @@ import { db } from './db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../utils/auth';
 
+export async function getLessons() {
+  const lessons = await db.lesson.findMany();
+  return lessons;
+}
+
 export async function saveLesson(lesson: {
   title: string;
   level: string;
@@ -27,6 +32,7 @@ export async function saveLesson(lesson: {
       break;
     case 'C1':
       levelInt = 5;
+      break;
     case 'C2':
       levelInt = 6;
       break;

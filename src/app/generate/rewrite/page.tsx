@@ -1,4 +1,4 @@
-import sendPrompt from '@/lib/actions';
+import generateRewrite from '@/lib/actions';
 
 export default function ReWrite() {
   return (
@@ -10,7 +10,7 @@ export default function ReWrite() {
       <main className='h-full w-9/12'>
         <form
           className='flex h-full w-full flex-col items-center space-y-4'
-          action={sendPrompt}
+          action={generateRewrite}
         >
           <div className='flex w-full flex-col items-center space-y-4 md:flex-row md:space-x-4 md:space-y-0'>
             <input
@@ -41,11 +41,12 @@ export default function ReWrite() {
                 <option disabled value='DEFAULT'>
                   Level
                 </option>
-                <option value='beginner'>Beginner</option>
-                <option value='elementray'>Elementary</option>
-                <option value='intermediate'>Intermediate</option>
-                <option value='advanced'>Advanced</option>
-                <option value='mastery'>Mastery</option>
+                <option value='A1'>Beginner</option>
+                <option value='A2'>Elementary</option>
+                <option value='B1'>Lower Intermediate</option>
+                <option value='B2'>Upper Intermediate</option>
+                <option value='C1'>Advanced</option>
+                <option value='C2'>Proficency</option>
               </select>
             </div>
           </div>
