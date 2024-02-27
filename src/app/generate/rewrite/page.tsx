@@ -1,32 +1,6 @@
-import OpenAI from 'openai';
+import sendPrompt from '@/lib/actions';
 
 export default function ReWrite() {
-  async function sendPrompt(formData: FormData) {
-    'use server';
-
-    const prompt = {
-      title: formData.get('title'),
-      language: formData.get('language'),
-      level: formData.get('level'),
-      text: formData.get('text'),
-    };
-
-    const promptString = `Here is a reading lesson titled "${prompt.title}": ${prompt.text} Please rewrite the lesson to the level of difficulty suited for ${prompt.language} language learners at the ${prompt.level} level.`;
-    const openai = new OpenAI({
-      apiKey: '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',
-    });
-
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content: promptString },
-      ],
-    });
-    console.log(response.choices[0].message.content);
-    return true;
-  }
-
   return (
     <div className='flex h-full w-screen flex-col items-center pt-4'>
       <header className='mx-auto my-4 space-x-4 text-base font-bold uppercase md:text-xl lg:text-2xl'>
@@ -68,8 +42,10 @@ export default function ReWrite() {
                   Level
                 </option>
                 <option value='beginner'>Beginner</option>
+                <option value='elementray'>Elementary</option>
                 <option value='intermediate'>Intermediate</option>
                 <option value='advanced'>Advanced</option>
+                <option value='mastery'>Mastery</option>
               </select>
             </div>
           </div>
