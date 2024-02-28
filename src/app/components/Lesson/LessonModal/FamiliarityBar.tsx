@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useState } from 'react';
 import changeFamiliarity from '../../../utils/word/changeFamiliarity';
@@ -29,11 +29,12 @@ export default function FamiliarityBar({
         word.languageId,
         word.userId,
       );
-      setWords && setWords((prevWords) => {
-        const newWords: Map<string, Word> = new Map(prevWords);
-        newWords.set(word.phrase, { ...word, familiarity });
-        return newWords;
-      });
+      setWords &&
+        setWords((prevWords) => {
+          const newWords: Map<string, Word> = new Map(prevWords);
+          newWords.set(word.phrase, { ...word, familiarity });
+          return newWords;
+        });
     } catch (error) {
       toast.error('Failed to change familiarity. Please try again.');
       console.error(error);

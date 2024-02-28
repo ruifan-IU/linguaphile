@@ -52,7 +52,11 @@ export default forwardRef(function SavedWordComponent(
                 <div>Definition: {word.translation}</div>
                 <div>
                   Familiarity:{' '}
-                  <FamiliarityBar familiarity={word.familiarity} word={word} setWords={setWords} />
+                  <FamiliarityBar
+                    familiarity={word.familiarity}
+                    word={word}
+                    setWords={setWords}
+                  />
                 </div>
               </div>
             </div>

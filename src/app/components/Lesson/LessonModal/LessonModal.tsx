@@ -26,7 +26,7 @@ export default function LessonModal({
   session,
   words,
   setWords,
-  selectedWordRef
+  selectedWordRef,
 }: LessonModalProps) {
   if (!modalOpen) return null;
 

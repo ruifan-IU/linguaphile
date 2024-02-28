@@ -20,7 +20,9 @@ export default async function Dictionary() {
             {words.map((word) => (
               <tr key={word.id}>
                 <td>{word.phrase}</td>
-                <td><FamiliarityBar familiarity={word.familiarity} word={word} /></td>
+                <td>
+                  <FamiliarityBar familiarity={word.familiarity} word={word} />
+                </td>
                 <td>{word.translation}</td>
               </tr>
             ))}
