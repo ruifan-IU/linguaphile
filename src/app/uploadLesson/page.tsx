@@ -1,6 +1,6 @@
-import { generateRewrite } from '@/lib/actions';
+import { uploadLesson } from '@/lib/actions';
 
-export default function ReWrite() {
+export default function UploadLesson() {
   return (
     <div className='flex h-full w-screen flex-col items-center pt-4'>
       <header className='mx-auto my-4 space-x-4 text-base font-bold uppercase md:text-xl lg:text-2xl'>
@@ -10,7 +10,7 @@ export default function ReWrite() {
       <main className='h-full w-9/12'>
         <form
           className='flex h-full w-full flex-col items-center space-y-4'
-          action={generateRewrite}
+          action={uploadLesson}
         >
           <div className='flex w-full flex-col items-center space-y-4 md:flex-row md:space-x-4 md:space-y-0'>
             <input
@@ -57,7 +57,7 @@ export default function ReWrite() {
             className='scrollbar-hide textarea textarea-bordered h-4/6 w-full overflow-scroll'
           />
           <button type='submit' className='btn btn-primary uppercase'>
-            Generate Lesson
+            Upload Lesson
           </button>
         </form>
       </main>

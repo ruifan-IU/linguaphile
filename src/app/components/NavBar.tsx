@@ -57,8 +57,24 @@ export default async function NavBar() {
               <li>
                 <Link href='/dictionary'>Dictionary</Link>
               </li>
+              <li
+                className='tooltip tooltip-bottom'
+                data-tip='upload own lesson'
+              >
+                <Link href='/uploadLesson'>Upload</Link>
+              </li>
               <li>
-                <Link href='/generate'>Generate</Link>
+                <details>
+                  <summary>Create</summary>
+                  <ul className='menu dropdown-content'>
+                    <li>
+                      <a>Item 1</a>
+                    </li>
+                    <li>
+                      <a>Item 2</a>
+                    </li>
+                  </ul>
+                </details>
               </li>
             </>
           )}

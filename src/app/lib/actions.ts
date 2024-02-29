@@ -6,7 +6,21 @@ import context from './context';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 
-export default async function generateRewrite(formData: FormData) {
+export async function uploadLesson(formData: FormData) {
+  const prompt = {
+    title: formData.get('title') as string,
+    language: formData.get('language') as string,
+    level: formData.get('level') as string,
+    text: formData.get('text') as string,
+  };
+
+  await saveLesson(prompt);
+  revalidatePath('/');
+  redirect('/');
+  return true;
+}
+
+export async function generateRewrite(formData: FormData) {
   const prompt = {
     title: formData.get('title') as string,
     language: formData.get('language') as string,
