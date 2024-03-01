@@ -6,6 +6,10 @@ import NavBar from './components/NavBar';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { ToastContainer } from 'react-toastify';
+import StoreProvider from './StoreProvider';
+import { enableMapSet } from 'immer';
+
+enableMapSet();
 
 config.autoAddCss = false;
 
@@ -24,13 +28,15 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${inter.className}`}>
-        <header className='sticky top-0 z-50 bg-base-200 shadow-md'>
-          <NavBar />
-        </header>
-        <main className='h-[calc(100vh-64px)] lg:h-[calc(100vh-76px)]'>
-          {children}
-        </main>
-        <ToastContainer position='bottom-right' theme='dark' />
+        <StoreProvider>
+          <header className='sticky top-0 z-50 bg-base-200 shadow-md'>
+            <NavBar />
+          </header>
+          <main className='h-[calc(100vh-64px)] lg:h-[calc(100vh-76px)]'>
+            {children}
+          </main>
+          <ToastContainer position='bottom-right' theme='dark' />
+        </StoreProvider>
       </body>
     </html>
   );

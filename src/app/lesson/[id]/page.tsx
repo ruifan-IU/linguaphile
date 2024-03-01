@@ -13,7 +13,7 @@ export default async function Lesson({ params }: { params: { id: string } }) {
   });
   // find words in dictionary that are in the lesson
   const lessonWords = lesson && lesson.text.split(' ');
-  const savedWords = new Map<string, Word>();
+  const savedWords: { [key: string]: Word } = {};
   if (lessonWords?.length) {
     const words = await db.word.findMany({
       where: {
@@ -24,7 +24,7 @@ export default async function Lesson({ params }: { params: { id: string } }) {
     });
 
     for (const word of words) {
-      savedWords.set(word.phrase, word);
+      savedWords[word.phrase] = word;
     }
   }
 
