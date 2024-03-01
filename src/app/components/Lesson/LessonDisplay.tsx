@@ -41,6 +41,11 @@ export const LessonDisplay = ({
   const canvasRef = useRef() as MutableRefObject<HTMLCanvasElement>;
   const dispatch = useAppDispatch();
   const words = useAppSelector((state) => state.lesson.words);
+  const wordsRef = useRef(words);
+
+  useEffect(() => {
+    wordsRef.current = words;
+  }, [words]);
 
   useEffect(() => {
     if (savedWords) {
@@ -48,70 +53,34 @@ export const LessonDisplay = ({
     }
   }, [savedWords, dispatch]);
 
-  const onHideHandler = useCallback(
-    (isNew: boolean = false) => {
-      if (selectedWord in words) {
-        selectedWordRef.current.classList.add('fill-info');
-      } else {
-        selectedWordRef.current.classList.remove('fill-info');
-      }
-      selectedWordRef.current.classList.remove('fill-teal-600');
-      setTranslation('');
-      setSelectedWord('');
-      if (isNew) {
-        setNewWordModalOpen(false);
-      } else {
-        setSavedWordModalOpen(false);
-      }
-    },
-    [selectedWord, words],
-  );
+  const onHideHandler = (isNew: boolean = false) => {
+    if (!selectedWord) return;
+    if (selectedWord in words) {
+      selectedWordRef.current.classList.add('fill-info');
+    } else {
+      selectedWordRef.current.classList.remove('fill-info');
+    }
+    selectedWordRef.current.classList.remove('fill-teal-600');
+    setTranslation('');
+    setSelectedWord('');
+    if (isNew) {
+      setNewWordModalOpen(false);
+    } else {
+      setSavedWordModalOpen(false);
+    }
+  };
 
-  const wordHandler = useCallback(
-    (
-      event: React.MouseEvent<SVGTSpanElement, MouseEvent>,
-      isSaved: Boolean,
-    ) => {
-      if (event.clientY > (window.innerHeight - 30) / 2) {
-        setBottomClick(true);
-      } else {
-        setBottomClick(false);
-      }
-      if (!event.target) return;
-      const eventTarget = event.target as HTMLCanvasElement;
-      eventTarget.classList.add('fill-teal-600');
-      const textContent = eventTarget.textContent;
-      const word = textContent?.trim().replace(/[,./?;':~&%$#@*^|]/g, '');
-      if (word) {
-        setSelectedWord(word);
-        selectedWordRef.current = eventTarget;
-      }
-      if (word && word in words) {
-        setSavedWordModalOpen(true);
-      } else {
-        setNewWordModalOpen(true);
-      }
-      if (isSaved) return;
-      void (async function () {
-        if (word) {
-          try {
-            const translation = await translateWord(word);
-            if (translation) {
-              setTranslation(translation);
-            } else {
-              onHideHandler(true);
-              toast.error('Failed to translate word');
-            }
-          } catch (e) {
-            console.error(e);
-            onHideHandler(true);
-            toast.error('Failed to translate word');
-          }
-        }
-      })();
-    },
-    [onHideHandler, words],
-  );
+  useEffect(() => {
+    const handleResize = () => {
+      setLessonPages([]);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (!lessonPages) return;
@@ -133,21 +102,60 @@ export const LessonDisplay = ({
 
   const onResize = useCallback(
     (width?: number, height?: number) => {
-      if (width && height && text) {
-        drawPages(
-          width,
-          height,
-          text,
-          words,
-          canvasRef,
-          currentPage,
-          setCurrentPage,
-          setLessonPages,
-          wordHandler,
-        );
-      }
+      const wordHandler = async (
+        event: React.MouseEvent<SVGTSpanElement, MouseEvent>,
+        isSaved: Boolean,
+      ) => {
+        if (event.clientY > (window.innerHeight - 30) / 2) {
+          setBottomClick(true);
+        } else {
+          setBottomClick(false);
+        }
+        if (!event.target) return;
+        const eventTarget = event.target as HTMLCanvasElement;
+        eventTarget.classList.add('fill-teal-600');
+        const textContent = eventTarget.textContent;
+        const word = textContent?.trim().replace(/[,./?;':~&%$#@*^|]/g, '');
+        if (word) {
+          setSelectedWord(word);
+          selectedWordRef.current = eventTarget;
+        }
+        if (word && word in wordsRef.current) {
+          setSavedWordModalOpen(true);
+        } else {
+          setNewWordModalOpen(true);
+        }
+        if (isSaved) return;
+        if (word) {
+          try {
+            const translation = await translateWord(word);
+            if (translation) {
+              setTranslation(translation);
+            } else {
+              toast.error('Failed to translate word');
+            }
+          } catch (e) {
+            console.error(e);
+            toast.error('Failed to translate word');
+          }
+        }
+      };
+
+      if (!width || !height || !text) return;
+      setLessonPages([]);
+      drawPages(
+        width,
+        height,
+        text,
+        wordsRef.current,
+        canvasRef,
+        currentPage,
+        setCurrentPage,
+        setLessonPages,
+        wordHandler,
+      );
     },
-    [currentPage, text, wordHandler, words],
+    [currentPage, text, onHideHandler],
   );
 
   const { ref, height, width } = useResizeDetector({ onResize });
@@ -205,7 +213,7 @@ export const LessonDisplay = ({
         >
           <div className='m-auto h-full w-11/12 rounded-box bg-slate-50 p-4 shadow-lg' />
         </div>
-        {lessonPages && lessonPages[currentPage]}
+        {lessonPages.length > 0 && lessonPages[currentPage]}
       </div>
       <div
         onClick={() => pageForwardHandler()}
