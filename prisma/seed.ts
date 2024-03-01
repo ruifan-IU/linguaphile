@@ -241,7 +241,6 @@ These people wanted to remain loyal to the King of England. During the 19th cent
         },
       ],
     });
-    console.log('Added lesson data');
   } catch (e) {
     console.error(e);
     process.exit(1);

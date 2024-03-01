@@ -30,7 +30,6 @@ export async function translateWord(word: string) {
   }>;
 
   if (response && response.translations[0]) {
-    console.log(response.translations[0].translatedText)
     return response.translations[0].translatedText;
   } else {
     return "";
