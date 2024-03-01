@@ -18,15 +18,9 @@ export const lessonSlice = createSlice({
       state,
       action: PayloadAction<{ [key: string]: Word }>,
     ) => {
-      console.log('initializing words');
       state.words = action.payload;
     },
     saveWord: (state, action: PayloadAction<Word>) => {
-      console.log(
-        'saving word',
-        action.payload.phrase,
-        action.payload.translation,
-      );
       state.words[action.payload.phrase] = action.payload;
     },
     deleteWord: (state, action: PayloadAction<Word>) => {

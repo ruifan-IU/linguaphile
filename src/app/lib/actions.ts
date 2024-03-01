@@ -29,7 +29,7 @@ export default async function generateRewrite(formData: FormData) {
   });
 
   const newText = response.choices[0].message.content;
-  console.log(newText);
+
   if (newText) prompt.text = newText;
 
   await saveLesson(prompt);

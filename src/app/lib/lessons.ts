@@ -13,7 +13,6 @@ export async function saveLesson(lesson: {
   text: string;
 }) {
   const session = await getServerSession(authOptions);
-  console.log('user_id', session?.user.id);
 
   let levelInt = 0;
 
@@ -37,7 +36,6 @@ export async function saveLesson(lesson: {
       levelInt = 6;
       break;
   }
-  console.log('level', levelInt);
 
   const lessonData = await db.lesson.findFirst({
     where: {
