@@ -8,6 +8,7 @@ export async function addWord(
   languageId: string,
   userId: string,
 ) {
+  console.log('Adding word');
   const wordExists = await db.word.findUnique({
     where: {
       phrase_languageId_userId: { phrase, languageId, userId },
@@ -28,5 +29,7 @@ export async function addWord(
     },
   });
 
-  return Response.json(newWord);
+  console.log('Word added');
+
+  return newWord;
 }
