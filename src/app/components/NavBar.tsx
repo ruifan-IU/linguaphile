@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../utils/auth';
 import LogOutButton from './LogOutButton';
+import Dropdown from './Dropdown';
 
 export default async function NavBar() {
   const session = await getServerSession(authOptions);
@@ -38,14 +39,19 @@ export default async function NavBar() {
                 <li>
                   <Link href='/dictionary'>Dictionary</Link>
                 </li>
-                <li>
-                  <Link href='/generate'>Generate</Link>
+                <li
+                  className='tooltip tooltip-bottom'
+                  data-tip='upload own lesson'
+                >
+                  <Link href='/uploadLesson'>Upload</Link>
                 </li>
               </>
             )}
           </ul>
         </div>
-        <h2 className='text-center text-2xl lg:text-left'>Linguaphile</h2>
+        <h2 className='text-md text-center md:text-2xl lg:text-left'>
+          Polyglot-AI
+        </h2>
       </div>
       <div className='navbar-center hidden lg:flex'>
         <ul className='menu menu-horizontal space-x-4 px-10 text-lg'>
@@ -57,24 +63,11 @@ export default async function NavBar() {
               <li>
                 <Link href='/dictionary'>Dictionary</Link>
               </li>
-              <li
-                className='tooltip tooltip-bottom'
-                data-tip='upload own lesson'
-              >
+              <li>
                 <Link href='/uploadLesson'>Upload</Link>
               </li>
               <li>
-                <details>
-                  <summary>Create</summary>
-                  <ul className='menu dropdown-content'>
-                    <li>
-                      <a>Item 1</a>
-                    </li>
-                    <li>
-                      <a>Item 2</a>
-                    </li>
-                  </ul>
-                </details>
+                <Dropdown />
               </li>
             </>
           )}

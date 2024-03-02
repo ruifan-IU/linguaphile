@@ -1,8 +1,16 @@
 import FamiliarityBar from '@/components/Lesson/LessonModal/FamiliarityBar';
 import { db } from '@/lib/db';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../utils/auth';
 
 export default async function Dictionary() {
-  const words = await db.word.findMany();
+  const session = await getServerSession(authOptions);
+
+  const words = await db.word.findMany({
+    where: {
+      userId: session?.user.id,
+    },
+  });
 
   return (
     <div className='flex flex-col items-center p-10 lg:h-[calc(100vh-76px)]'>
