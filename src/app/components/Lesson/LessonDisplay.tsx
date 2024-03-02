@@ -1,14 +1,13 @@
 'use client';
 
-import { useRef, useEffect, useState, useCallback, Fragment, use } from 'react';
+import { useRef, useEffect, useState, useCallback, Fragment } from 'react';
 import type { MutableRefObject } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faChevronLeft,
-  faChevronRight,
-  faGear,
-} from '@fortawesome/free-solid-svg-icons';
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  Cog6ToothIcon,
+} from '@heroicons/react/24/outline';
 import { Dialog, Transition } from '@headlessui/react';
 import NewWordModal from './LessonModal/NewWordModal';
 import SavedWordModal from './LessonModal/SavedWordModal';
@@ -41,6 +40,7 @@ export const LessonDisplay = ({
   const [translation, setTranslation] = useState('');
   const [activeNavbar, setActiveNavbar] = useState(false);
   const [fontSize, setFontSize] = useState(20);
+  const [lineHeight, setLineHeight] = useState(50);
   const selectedWordRef = useRef() as MutableRefObject<HTMLCanvasElement>;
   const canvasRef = useRef() as MutableRefObject<HTMLCanvasElement>;
   const dispatch = useAppDispatch();
@@ -150,7 +150,7 @@ export const LessonDisplay = ({
       drawPages(
         width,
         height,
-        50,
+        lineHeight,
         fontSize,
         text,
         wordsRef.current,
@@ -161,7 +161,7 @@ export const LessonDisplay = ({
         wordHandler,
       );
     },
-    [currentPage, text, fontSize],
+    [currentPage, text, fontSize, lineHeight],
   );
 
   const { ref, height, width } = useResizeDetector({ onResize });
@@ -203,22 +203,18 @@ export const LessonDisplay = ({
       </Transition.Root>
       <div
         onClick={() => pageBackHandler()}
-        className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
+        className='relative flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
-        {currentPage > 0 && (
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            className='text-xl sm:text-2xl md:text-3xl lg:text-4xl'
-          />
-        )}
+        {currentPage > 0 && <ArrowLeftIcon className='absolute right-1 sm:right-3 w-5 sm:w-10' />}
       </div>
       <div ref={ref} className='relative h-full flex-auto overflow-hidden'>
         <button
           className={`btn btn-ghost absolute right-3 top-3 z-10 ${activeNavbar ? 'border-slate-200 bg-slate-100' : ''}`}
-          onClick={() => setActiveNavbar(prev => !prev)}
+          onClick={() => setActiveNavbar((prev) => !prev)}
         >
-          {/* rotate when clicked */}
-          <FontAwesomeIcon icon={faGear} size='lg' className={`transform transition-transform duration-500 ease-in-out ${activeNavbar ? 'rotate-180' : ''}`} />
+          <Cog6ToothIcon
+            className={`w-5 transform transition-transform duration-500 ease-in-out ${activeNavbar ? 'rotate-180' : ''}`}
+          />
         </button>
         <div
           className='absolute left-0 right-0 m-auto h-full rounded-box bg-slate-50 p-4 shadow-lg'
@@ -230,19 +226,18 @@ export const LessonDisplay = ({
       </div>
       <div
         onClick={() => pageForwardHandler()}
-        className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
+        className='relative flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
         {currentPage < lessonPages.length - 1 && (
-          <FontAwesomeIcon
-            icon={faChevronRight}
-            className='text-xl sm:text-2xl md:text-3xl lg:text-4xl'
-          />
+          <ArrowRightIcon className='absolute left-1 sm:left-3 w-5 sm:w-10' />
         )}
       </div>
       <SlidePanel
         activeNavbar={activeNavbar}
         fontSize={fontSize}
         setFontSize={setFontSize}
+        lineHeight={lineHeight}
+        setLineHeight={setLineHeight}
         onResize={onResize}
         width={width}
         height={height}
