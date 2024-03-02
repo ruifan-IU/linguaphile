@@ -4,10 +4,10 @@ import { useRef, useEffect, useState, useCallback, Fragment } from 'react';
 import type { MutableRefObject } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  Cog6ToothIcon,
-} from '@heroicons/react/24/outline';
+  faChevronLeft,
+  faChevronRight,
+  faGear,
+} from '@fortawesome/free-solid-svg-icons';
 import { Dialog, Transition } from '@headlessui/react';
 import NewWordModal from './LessonModal/NewWordModal';
 import SavedWordModal from './LessonModal/SavedWordModal';
@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { initializeWords } from '@/slices/lessonSlice';
 import drawPages from '@/utils/word/drawPages';
 import SlidePanel from './LessonModal/SlidePanel/SlidePanel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface LessonDisplayInterface {
   text: string;
@@ -203,18 +204,19 @@ export const LessonDisplay = ({
       </Transition.Root>
       <div
         onClick={() => pageBackHandler()}
-        className='relative flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
+        className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
-        {currentPage > 0 && <ArrowLeftIcon className='absolute right-1 sm:right-3 w-5 sm:w-10' />}
+        {currentPage > 0 && (
+          <FontAwesomeIcon  icon={faChevronLeft} className='mr-2 w-5 sm:w-10 sm:text-2xl' />
+        )}
       </div>
       <div ref={ref} className='relative h-full flex-auto overflow-hidden'>
         <button
           className={`btn btn-ghost absolute right-3 top-3 z-10 ${activeNavbar ? 'border-slate-200 bg-slate-100' : ''}`}
           onClick={() => setActiveNavbar((prev) => !prev)}
         >
-          <Cog6ToothIcon
-            className={`w-5 transform transition-transform duration-500 ease-in-out ${activeNavbar ? 'rotate-180' : ''}`}
-          />
+          {/* spin 180 degrees when activeNavbar is true */}
+          <FontAwesomeIcon icon={faGear} className={`w-5 sm:w-10 sm:text-2xl ${activeNavbar ? 'transform rotate-180' : ''} transition-transform duration-500 ease-in-out`} />
         </button>
         <div
           className='absolute left-0 right-0 m-auto h-full rounded-box bg-slate-50 p-4 shadow-lg'
@@ -226,10 +228,10 @@ export const LessonDisplay = ({
       </div>
       <div
         onClick={() => pageForwardHandler()}
-        className='relative flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
+        className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
         {currentPage < lessonPages.length - 1 && (
-          <ArrowRightIcon className='absolute left-1 sm:left-3 w-5 sm:w-10' />
+          <FontAwesomeIcon icon={faChevronRight} className='ml-2 w-5 sm:w-10 sm:text-2xl' />
         )}
       </div>
       <SlidePanel

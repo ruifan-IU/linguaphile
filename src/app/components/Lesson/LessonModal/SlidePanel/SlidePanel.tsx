@@ -1,4 +1,5 @@
-import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 interface SlidePanelProps {
   activeNavbar: boolean;
   fontSize: number;
@@ -38,14 +39,14 @@ export default function SlidePanel({
 
   return (
     <div
-      className={`fixed right-0 top-0 z-50 h-16 w-screen transform bg-white shadow-md transition-transform duration-300 ease-in-out lg:h-20 ${activeNavbar ? '-translate-y-0' : '-translate-y-full'}`}
+      className={`fixed right-0 top-0 z-50 h-16 w-screen transform bg-white shadow-md transition-transform duration-500 ease-in-out lg:h-20 ${activeNavbar ? '-translate-y-0' : '-translate-y-full'}`}
     >
       <div className='flex h-full items-center justify-start px-3'>
         <button
           className='btn btn-ghost mr-2 flex items-center justify-center p-2'
           onClick={() => setFontSizeHandler(fontSize + 2)}
         >
-          <PlusIcon className='w-7' />
+          <FontAwesomeIcon icon={faPlus} className='w-7' size='lg' />
         </button>
         <div
           className='flex h-12 w-12 items-center justify-center rounded-full border'
@@ -57,7 +58,7 @@ export default function SlidePanel({
           className='btn btn-ghost ml-2 flex items-center justify-center p-2'
           onClick={() => setFontSizeHandler(fontSize - 2)}
         >
-          <MinusIcon className='w-7' />
+          <FontAwesomeIcon icon={faMinus} className='w-7' size='lg' />
         </button>
         <div className='flex-grow'></div>
 
@@ -66,7 +67,7 @@ export default function SlidePanel({
           className='btn btn-ghost mr-2 flex items-center justify-center p-2'
           onClick={() => setLineHeightHandler(lineHeight + 4)}
         >
-          <PlusIcon className='w-7' />
+          <FontAwesomeIcon icon={faPlus} className='w-7' size='lg' />
         </button>
         <div className='flex h-12 w-12 justify-center rounded-full border py-1'>
           <svg xmlns='http://www.w3.org/2000/svg'>
@@ -92,7 +93,7 @@ export default function SlidePanel({
           className='btn btn-ghost ml-2 flex items-center justify-center p-2'
           onClick={() => setLineHeightHandler(lineHeight - 2)}
         >
-          <MinusIcon className='w-7' />
+          <FontAwesomeIcon icon={faMinus} className='w-7' size='lg' />
         </button>
       </div>
     </div>
