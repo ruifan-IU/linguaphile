@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/generate"
-  ],
+, "prisma/seed.ts"  ],
   "exclude": ["node_modules"]
 }
