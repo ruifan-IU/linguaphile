@@ -1,9 +1,8 @@
 'use client';
 
-import { useRef, useEffect, useState, useCallback, Fragment, use } from 'react';
+import { useRef, useEffect, useState, useCallback, Fragment } from 'react';
 import type { MutableRefObject } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faChevronRight,
@@ -20,6 +19,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { initializeWords } from '@/slices/lessonSlice';
 import drawPages from '@/utils/word/drawPages';
 import SlidePanel from './LessonModal/SlidePanel/SlidePanel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface LessonDisplayInterface {
   text: string;
@@ -41,6 +41,7 @@ export const LessonDisplay = ({
   const [translation, setTranslation] = useState('');
   const [activeNavbar, setActiveNavbar] = useState(false);
   const [fontSize, setFontSize] = useState(20);
+  const [lineHeight, setLineHeight] = useState(50);
   const selectedWordRef = useRef() as MutableRefObject<HTMLCanvasElement>;
   const canvasRef = useRef() as MutableRefObject<HTMLCanvasElement>;
   const dispatch = useAppDispatch();
@@ -150,7 +151,7 @@ export const LessonDisplay = ({
       drawPages(
         width,
         height,
-        50,
+        lineHeight,
         fontSize,
         text,
         wordsRef.current,
@@ -161,7 +162,7 @@ export const LessonDisplay = ({
         wordHandler,
       );
     },
-    [currentPage, text, fontSize],
+    [currentPage, text, fontSize, lineHeight],
   );
 
   const { ref, height, width } = useResizeDetector({ onResize });
@@ -206,19 +207,16 @@ export const LessonDisplay = ({
         className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
         {currentPage > 0 && (
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            className='text-xl sm:text-2xl md:text-3xl lg:text-4xl'
-          />
+          <FontAwesomeIcon  icon={faChevronLeft} className='mr-2 w-5 sm:w-10 sm:text-2xl' />
         )}
       </div>
       <div ref={ref} className='relative h-full flex-auto overflow-hidden'>
         <button
           className={`btn btn-ghost absolute right-3 top-3 z-10 ${activeNavbar ? 'border-slate-200 bg-slate-100' : ''}`}
-          onClick={() => setActiveNavbar(prev => !prev)}
+          onClick={() => setActiveNavbar((prev) => !prev)}
         >
-          {/* rotate when clicked */}
-          <FontAwesomeIcon icon={faGear} size='lg' className={`transform transition-transform duration-500 ease-in-out ${activeNavbar ? 'rotate-180' : ''}`} />
+          {/* spin 180 degrees when activeNavbar is true */}
+          <FontAwesomeIcon icon={faGear} className={`w-5 sm:w-10 sm:text-2xl ${activeNavbar ? 'transform rotate-180' : ''} transition-transform duration-500 ease-in-out`} />
         </button>
         <div
           className='absolute left-0 right-0 m-auto h-full rounded-box bg-slate-50 p-4 shadow-lg'
@@ -233,16 +231,15 @@ export const LessonDisplay = ({
         className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
         {currentPage < lessonPages.length - 1 && (
-          <FontAwesomeIcon
-            icon={faChevronRight}
-            className='text-xl sm:text-2xl md:text-3xl lg:text-4xl'
-          />
+          <FontAwesomeIcon icon={faChevronRight} className='ml-2 w-5 sm:w-10 sm:text-2xl' />
         )}
       </div>
       <SlidePanel
         activeNavbar={activeNavbar}
         fontSize={fontSize}
         setFontSize={setFontSize}
+        lineHeight={lineHeight}
+        setLineHeight={setLineHeight}
         onResize={onResize}
         width={width}
         height={height}
