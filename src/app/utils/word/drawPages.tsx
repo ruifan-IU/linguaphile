@@ -1,11 +1,12 @@
-import { Word } from "@prisma/client";
+import { Word } from '@prisma/client';
 
-const maxWordsPerPage = 800;
-const lineHeight = 50;
+const maxWordsPerPage = 2000;
 
 export default function drawPages(
   width: number,
   height: number,
+  lineHeight: number = 50,
+  fontSize: number = 20,
   text: string,
   words: { [key: string]: Word },
   canvasRef: React.RefObject<HTMLCanvasElement>,
@@ -17,13 +18,15 @@ export default function drawPages(
     isSaved: boolean,
   ) => void,
 ) {
+
+
   if (text) {
     const pages = [];
 
     let maxWidth = (width > 300 ? width : 300) - width / 13.25;
     let columnHeight = height - height / 50;
 
-    const pagePaddingLeft = width / 13.1;
+    const pagePaddingLeft = width / 14.7;
     if (width - pagePaddingLeft > 300) {
       maxWidth = width - pagePaddingLeft;
     }
@@ -39,7 +42,7 @@ export default function drawPages(
       canvas instanceof HTMLCanvasElement ? canvas.getContext('2d') : null;
     if (!context) return;
 
-    context.font = '20px verdana';
+    context.font = `${fontSize}px verdana`;
     const textPara: Array<string | number> = [];
     // Pushing zeroes allows the textToLines function to detect page breaks
     text.split('\n').forEach((para) => {
@@ -149,7 +152,7 @@ export default function drawPages(
       });
 
       const sText = (
-        <text fontFamily='verdana' fontSize='20px' fill='#000000'>
+        <text fontSize={`${fontSize}px`} fontFamily='Verdana'>
           {tspans}
         </text>
       );

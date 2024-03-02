@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faChevronRight,
+  faGear,
 } from '@fortawesome/free-solid-svg-icons';
 import { Dialog, Transition } from '@headlessui/react';
 import NewWordModal from './LessonModal/NewWordModal';
@@ -18,6 +19,7 @@ import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { initializeWords } from '@/slices/lessonSlice';
 import drawPages from '@/utils/word/drawPages';
+import SlidePanel from './LessonModal/SlidePanel/SlidePanel';
 
 interface LessonDisplayInterface {
   text: string;
@@ -37,6 +39,8 @@ export const LessonDisplay = ({
   const [bottomClick, setBottomClick] = useState(false);
   const [selectedWord, setSelectedWord] = useState('');
   const [translation, setTranslation] = useState('');
+  const [activeNavbar, setActiveNavbar] = useState(false);
+  const [fontSize, setFontSize] = useState(20);
   const selectedWordRef = useRef() as MutableRefObject<HTMLCanvasElement>;
   const canvasRef = useRef() as MutableRefObject<HTMLCanvasElement>;
   const dispatch = useAppDispatch();
@@ -146,6 +150,8 @@ export const LessonDisplay = ({
       drawPages(
         width,
         height,
+        50,
+        fontSize,
         text,
         wordsRef.current,
         canvasRef,
@@ -155,7 +161,7 @@ export const LessonDisplay = ({
         wordHandler,
       );
     },
-    [currentPage, text, onHideHandler],
+    [currentPage, text, fontSize],
   );
 
   const { ref, height, width } = useResizeDetector({ onResize });
@@ -171,7 +177,7 @@ export const LessonDisplay = ({
   };
 
   return (
-    <div className='flex h-full w-full items-stretch px-4 py-6'>
+    <div className='flex h-full w-full items-center px-4 py-6'>
       <canvas ref={canvasRef} className='hidden' />
       <Transition.Root show={savedWordModalOpen} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={onHideHandler}>
@@ -197,7 +203,7 @@ export const LessonDisplay = ({
       </Transition.Root>
       <div
         onClick={() => pageBackHandler()}
-        className='flex h-full w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
+        className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
         {currentPage > 0 && (
           <FontAwesomeIcon
@@ -206,18 +212,25 @@ export const LessonDisplay = ({
           />
         )}
       </div>
-      <div ref={ref} className='relative flex-auto overflow-hidden'>
-        <div
-          className='absolute left-0 right-0 h-full w-full'
-          style={{ zIndex: -1 }}
+      <div ref={ref} className='relative h-full flex-auto overflow-hidden'>
+        <button
+          className={`btn btn-ghost absolute right-3 top-3 z-10 ${activeNavbar ? 'border-slate-200 bg-slate-100' : ''}`}
+          onClick={() => setActiveNavbar(prev => !prev)}
         >
-          <div className='m-auto h-full w-11/12 rounded-box bg-slate-50 p-4 shadow-lg' />
+          {/* rotate when clicked */}
+          <FontAwesomeIcon icon={faGear} size='lg' className={`transform transition-transform duration-500 ease-in-out ${activeNavbar ? 'rotate-180' : ''}`} />
+        </button>
+        <div
+          className='absolute left-0 right-0 m-auto h-full rounded-box bg-slate-50 p-4 shadow-lg'
+          style={{ zIndex: -1 }}
+        />
+        <div className='pt-2'>
+          {lessonPages.length > 0 && lessonPages[currentPage]}
         </div>
-        {lessonPages.length > 0 && lessonPages[currentPage]}
       </div>
       <div
         onClick={() => pageForwardHandler()}
-        className='flex h-full w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
+        className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
         {currentPage < lessonPages.length - 1 && (
           <FontAwesomeIcon
@@ -226,6 +239,14 @@ export const LessonDisplay = ({
           />
         )}
       </div>
+      <SlidePanel
+        activeNavbar={activeNavbar}
+        fontSize={fontSize}
+        setFontSize={setFontSize}
+        onResize={onResize}
+        width={width}
+        height={height}
+      />
     </div>
   );
 };
