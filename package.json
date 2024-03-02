@@ -1,5 +1,5 @@
 {
-  "name": "linguaphile",
+  "name": "polyglot-ai",
   "version": "0.1.0",
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

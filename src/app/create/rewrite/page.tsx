@@ -1,4 +1,4 @@
-import generateRewrite from '@/lib/actions';
+import { generateRewrite } from '@/lib/actions';
 
 export default function ReWrite() {
   return (
