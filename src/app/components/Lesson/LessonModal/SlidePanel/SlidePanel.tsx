@@ -77,7 +77,7 @@ export default function SlidePanel({
               x2='32.75'
               y2={19 - lineHeight / 10}
               stroke='black'
-              strokeWidth='1'
+              strokeWidth='2.5'
             />
             <line
               x1='13'
@@ -85,7 +85,7 @@ export default function SlidePanel({
               x2='32.75'
               y2={19 + lineHeight / 10}
               stroke='black'
-              strokeWidth='1'
+              strokeWidth='2.5'
             />
           </svg>
         </div>
