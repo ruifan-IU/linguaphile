@@ -54,9 +54,9 @@ export default function FamiliarityBar({
             onClick={() => onStarClick(i + 1)}
           >
             {i < (hoveredStar || familiarity) ? (
-              <FontAwesomeIcon icon={solidStar} className='text-secondary' />
+              <FontAwesomeIcon icon={solidStar} className='text-accent' />
             ) : (
-              <FontAwesomeIcon icon={regularStar} className='text-secondary' />
+              <FontAwesomeIcon icon={regularStar} className='text-accent' />
             )}
           </button>
         ))}
