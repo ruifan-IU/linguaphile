@@ -39,7 +39,7 @@ export default function SlidePanel({
 
   return (
     <div
-      className={`fixed right-0 top-0 z-50 h-16 w-screen transform bg-white shadow-md transition-transform duration-500 ease-in-out lg:h-20 ${activeNavbar ? '-translate-y-0' : '-translate-y-full'}`}
+      className={`fixed right-0 top-0 z-50 h-16 w-screen transform bg-base-300 shadow-md transition-transform duration-500 ease-in-out lg:h-[4.75rem] ${activeNavbar ? '-translate-y-0' : '-translate-y-full'}`}
     >
       <div className='flex h-full items-center justify-start px-3'>
         <button
@@ -49,7 +49,7 @@ export default function SlidePanel({
           <FontAwesomeIcon icon={faPlus} className='w-7' size='lg' />
         </button>
         <div
-          className='flex h-12 w-12 items-center justify-center rounded-full border'
+          className='flex h-12 w-12 items-center justify-center rounded-full bg-amber-50'
           style={{ fontSize: `${fontSize}px` }}
         >
           A
@@ -69,21 +69,21 @@ export default function SlidePanel({
         >
           <FontAwesomeIcon icon={faPlus} className='w-7' size='lg' />
         </button>
-        <div className='flex h-12 w-12 justify-center rounded-full border py-1'>
+        <div className='flex h-12 w-12 justify-center rounded-full bg-amber-50 py-1'>
           <svg xmlns='http://www.w3.org/2000/svg'>
             <line
-              x1='13'
-              y1={19 - lineHeight / 10}
-              x2='32.75'
-              y2={19 - lineHeight / 10}
+              x1='14'
+              y1={20.5 - lineHeight / 10}
+              x2='33.75'
+              y2={20.5 - lineHeight / 10}
               stroke='black'
               strokeWidth='2.5'
             />
             <line
-              x1='13'
-              y1={19 + lineHeight / 10}
-              x2='32.75'
-              y2={19 + lineHeight / 10}
+              x1='14'
+              y1={20.5 + lineHeight / 10}
+              x2='33.75'
+              y2={20.5 + lineHeight / 10}
               stroke='black'
               strokeWidth='2.5'
             />

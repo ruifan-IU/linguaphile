@@ -204,19 +204,28 @@ export const LessonDisplay = ({
         className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
         {currentPage > 0 && (
-          <FontAwesomeIcon  icon={faChevronLeft} className='mr-2 w-5 sm:w-10 sm:text-2xl' />
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className='mr-2 w-5 sm:w-10 sm:text-2xl'
+          />
         )}
       </div>
-      <div ref={ref} className='relative h-full flex-auto overflow-hidden'>
+      <div
+        ref={ref}
+        className='relative h-full flex-auto overflow-hidden rounded-box'
+      >
         <button
-          className={`btn btn-ghost absolute right-3 top-3 z-10 ${activeNavbar ? 'border-slate-200 bg-slate-100' : ''}`}
+          className={`btn btn-ghost absolute right-2 top-2 z-10 h-7 min-h-7 w-7 p-1 lg:h-10 lg:w-10 lg:right-3 lg:top-3 ${activeNavbar ? 'border-slate-200 bg-base-100' : ''}`}
           onClick={() => setActiveNavbar((prev) => !prev)}
         >
           {/* spin 180 degrees when activeNavbar is true */}
-          <FontAwesomeIcon icon={faGear} className={`w-5 sm:w-10 sm:text-2xl ${activeNavbar ? 'transform rotate-180' : ''} transition-transform duration-500 ease-in-out`} />
+          <FontAwesomeIcon
+            icon={faGear}
+            className={`lg:text-2xl ${activeNavbar ? 'rotate-180 transform' : ''} transition-transform duration-500 ease-in-out`}
+          />
         </button>
         <div
-          className='absolute left-0 right-0 m-auto h-full rounded-box bg-slate-50 p-4 shadow-lg'
+          className='absolute left-0 right-0 m-auto h-full bg-amber-50 p-4 shadow-lg'
           style={{ zIndex: -1 }}
         />
         <div className='pt-2'>
@@ -228,7 +237,10 @@ export const LessonDisplay = ({
         className='flex h-5/6 w-3 flex-shrink-0 cursor-pointer items-center justify-center p-0 sm:min-w-12 md:min-w-16 lg:min-w-20'
       >
         {currentPage < lessonPages.length - 1 && (
-          <FontAwesomeIcon icon={faChevronRight} className='ml-2 w-5 sm:w-10 sm:text-2xl' />
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className='ml-2 w-5 sm:w-10 sm:text-2xl'
+          />
         )}
       </div>
       <SlidePanel
