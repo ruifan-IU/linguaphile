@@ -49,14 +49,14 @@ export default forwardRef(function NewWord(
     } catch (err) {
       console.error(err);
       toast.error('Failed to add word');
-      onHideHandler(true);
+      onHideHandler();
     }
     setAddingWord(false);
   };
 
   useEffect(() => {
     if (word in words) {
-      onHideHandler(true);
+      onHideHandler();
     }
   }, [addingWord, onHideHandler, word, words]);
 
@@ -107,7 +107,7 @@ export default forwardRef(function NewWord(
           <button
             type='button'
             className='btn btn-secondary mt-3 w-full sm:mt-0 sm:w-auto'
-            onClick={() => onHideHandler(true)}
+            onClick={() => onHideHandler()}
           >
             Back
           </button>

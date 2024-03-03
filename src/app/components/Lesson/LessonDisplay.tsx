@@ -58,7 +58,7 @@ export const LessonDisplay = ({
     }
   }, [savedWords, dispatch]);
 
-  const onHideHandler = (isNew: boolean = false) => {
+  const onHideHandler = () => {
     if (!selectedWord) return;
     if (selectedWord in words) {
       selectedWordRef.current.classList.add('fill-info');
@@ -68,11 +68,8 @@ export const LessonDisplay = ({
     selectedWordRef.current.classList.remove('fill-teal-600');
     setTranslation('');
     setSelectedWord('');
-    if (isNew) {
-      setNewWordModalOpen(false);
-    } else {
-      setSavedWordModalOpen(false);
-    }
+    setNewWordModalOpen(false);
+    setSavedWordModalOpen(false);
   };
 
   useEffect(() => {
