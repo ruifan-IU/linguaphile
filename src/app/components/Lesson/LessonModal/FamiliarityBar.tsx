@@ -7,6 +7,8 @@ import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Word } from '@prisma/client';
 import { toast } from 'react-toastify';
+import { useAppDispatch } from '@/lib/hooks';
+import { saveWord } from '@/slices/lessonSlice';
 
 interface FamiliarityBarProps {
   familiarity: number;
@@ -20,6 +22,7 @@ export default function FamiliarityBar({
   setWords,
 }: FamiliarityBarProps) {
   const [hoveredStar, setHoveredStar] = useState<number>(0);
+  const dispatch = useAppDispatch();
 
   const onStarClick = async (familiarity: number) => {
     try {
@@ -28,6 +31,12 @@ export default function FamiliarityBar({
         word.phrase,
         word.languageId,
         word.userId,
+      );
+      dispatch(
+        saveWord({
+          ...word,
+          familiarity,
+        }),
       );
       setWords &&
         setWords((prevWords) => {

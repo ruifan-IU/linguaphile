@@ -61,7 +61,7 @@ export default async function NavBar() {
           </h2>
         </Link>
       </div>
-      <div className='navbar-center hidden lg:flex'>
+      <div className='navbar-center flex'>
         <ul className='menu menu-horizontal space-x-4 px-10 text-lg'>
           <li>
             <Link href='/'>
@@ -80,7 +80,7 @@ export default async function NavBar() {
                   d='M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25'
                 />
               </svg> */}
-              Lessons
+              <p className='hidden lg:inline-block'>Lessons</p>
             </Link>
           </li>
           {session && (
@@ -88,13 +88,13 @@ export default async function NavBar() {
               <li>
                 <Link href='/dictionary'>
                   <FontAwesomeIcon icon={faBook} />
-                  Dictionary
+                  <p className='hidden lg:inline-block'>Dictionary</p>
                 </Link>
               </li>
               <li>
                 <Link href='/uploadLesson'>
                   <FontAwesomeIcon icon={faFileArrowUp} />
-                  Upload
+                  <p className='hidden lg:inline-block'>Upload</p>
                 </Link>
               </li>
               <li>
@@ -116,4 +116,3 @@ export default async function NavBar() {
     </div>
   );
 }
-

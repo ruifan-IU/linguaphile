@@ -15,9 +15,9 @@ export default function Dropdown() {
             {({ open }) => (
               <>
                 <OpenAIIcon className='-mt-1 mr-2 inline h-5 w-5' />
-                Create
+                <p className='hidden lg:inline-block'>Create</p>
                 <FontAwesomeIcon
-                  className='ml-2'
+                  className='ml-2 hidden lg:inline-block'
                   icon={faChevronUp}
                   rotation={open ? undefined : 180}
                   size='sm'
