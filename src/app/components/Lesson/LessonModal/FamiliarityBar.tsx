@@ -7,19 +7,20 @@ import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Word } from '@prisma/client';
 import { toast } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { saveWord } from '@/slices/lessonSlice';
 
 interface FamiliarityBarProps {
-  familiarity: number;
   word: Word;
-  setWords?: React.Dispatch<React.SetStateAction<Map<string, Word>>>;
 }
 
-export default function FamiliarityBar({
-  familiarity,
-  word,
-  setWords,
-}: FamiliarityBarProps) {
+export default function FamiliarityBar({ word }: FamiliarityBarProps) {
+  const [stars, setStars] = useState<number | null>(null);
   const [hoveredStar, setHoveredStar] = useState<number>(0);
+  const dispatch = useAppDispatch();
+  const familiarity = useAppSelector(
+    (state) => state.lesson.words[word.phrase]?.familiarity,
+  );
 
   const onStarClick = async (familiarity: number) => {
     try {
@@ -29,12 +30,13 @@ export default function FamiliarityBar({
         word.languageId,
         word.userId,
       );
-      setWords &&
-        setWords((prevWords) => {
-          const newWords: Map<string, Word> = new Map(prevWords);
-          newWords.set(word.phrase, { ...word, familiarity });
-          return newWords;
-        });
+      dispatch(
+        saveWord({
+          ...word,
+          familiarity,
+        }),
+      );
+      setStars(familiarity);
     } catch (error) {
       toast.error('Failed to change familiarity. Please try again.');
       console.error(error);
@@ -53,7 +55,7 @@ export default function FamiliarityBar({
             onMouseLeave={() => setHoveredStar(0)}
             onClick={() => onStarClick(i + 1)}
           >
-            {i < (hoveredStar || familiarity) ? (
+            {i < (hoveredStar || stars || word.familiarity) ? (
               <FontAwesomeIcon icon={solidStar} className='text-accent' />
             ) : (
               <FontAwesomeIcon icon={regularStar} className='text-accent' />

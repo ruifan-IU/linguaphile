@@ -29,7 +29,7 @@ export default async function Dictionary() {
               <tr key={word.id}>
                 <td>{word.phrase}</td>
                 <td>
-                  <FamiliarityBar familiarity={word.familiarity} word={word} />
+                  <FamiliarityBar word={word} />
                 </td>
                 <td>{word.translation}</td>
               </tr>

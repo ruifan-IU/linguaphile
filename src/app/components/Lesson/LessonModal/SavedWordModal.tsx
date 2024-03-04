@@ -56,11 +56,7 @@ export default forwardRef(function SavedWordComponent(
                   <div>Phrase: {word.phrase}</div>
                   <div>Definition: {word.translation}</div>
                   <div>
-                    Familiarity:{' '}
-                    <FamiliarityBar
-                      familiarity={word.familiarity}
-                      word={word}
-                    />
+                    Familiarity: <FamiliarityBar key={word.id} word={word} />
                   </div>
                 </div>
               </div>

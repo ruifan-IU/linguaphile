@@ -16,7 +16,7 @@ config.autoAddCss = false;
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Linguaphile',
+  title: 'Polyglot-AI',
   description: 'An AI-powered language learning platform',
 };
 
