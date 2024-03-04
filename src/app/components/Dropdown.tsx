@@ -10,22 +10,20 @@ export default function Dropdown() {
   return (
     <div className='text-right'>
       <Menu as='div' className='relative inline-block text-left'>
-        <div>
-          <Menu.Button>
-            {({ open }) => (
-              <>
-                <OpenAIIcon className='-mt-1 mr-2 inline h-5 w-5' />
-                <p className='hidden lg:inline-block'>Create</p>
-                <FontAwesomeIcon
-                  className='ml-2 hidden lg:inline-block'
-                  icon={faChevronUp}
-                  rotation={open ? undefined : 180}
-                  size='sm'
-                />
-              </>
-            )}
-          </Menu.Button>
-        </div>
+        <Menu.Button>
+          {({ open }) => (
+            <>
+              <OpenAIIcon className='-mt-1 mr-2 inline h-5 w-5' />
+              <p className='hidden lg:inline-block'>Create</p>
+              <FontAwesomeIcon
+                className='ml-2 hidden lg:inline-block'
+                icon={faChevronUp}
+                rotation={open ? undefined : 180}
+                size='sm'
+              />
+            </>
+          )}
+        </Menu.Button>
         <Transition
           as={Fragment}
           enter='transition ease-out duration-100'
