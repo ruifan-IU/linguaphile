@@ -1,15 +1,17 @@
 import { render, screen } from '@testing-library/react';
-import Page from '../src/app/Page';
-import { db } from '../src/app/lib/db'; // replace with your actual db file
+import '@testing-library/jest-dom';
+import Home from '../src/app/page';
+import { db } from '../src/app/lib/db';
 
 jest.mock('../src/app/lib/db', () => ({
-  // replace with your actual db file
-  lesson: {
-    findMany: jest.fn(),
+  db: {
+    lesson: {
+      findMany: jest.fn(),
+    },
   },
 }));
 
-describe('Page', () => {
+describe('Home', () => {
   it('renders lessons correctly', async () => {
     const mockLessons = [
       { id: '1', title: 'Lesson 1' },
@@ -18,7 +20,7 @@ describe('Page', () => {
 
     db.lesson.findMany.mockResolvedValue(mockLessons);
 
-    render(<Page />);
+    render(await Home());
 
     const lessonElements = await screen.findAllByText(/Lesson \d/);
 
