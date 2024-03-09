@@ -1,7 +1,12 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { signIn } from 'next-auth/react';
 import SignInWithGithub from '../src/app/components/SignInWithGithub';
+
+jest.mock('next-auth/react', () => ({
+  signIn: jest.fn(),
+}));
 
 describe('SignInWithGithub', () => {
   test('renders the login button', () => {
@@ -10,18 +15,14 @@ describe('SignInWithGithub', () => {
     expect(loginButton).toBeInTheDocument();
   });
 
-  // test('calls signIn function with correct parameters when the button is clicked', () => {
-  //   const signInMock = jest.fn();
-  //   jest.mock('next-auth/react', () => ({
-  //     signIn: signInMock,
-  //   }));
-
-  //   render(<SignInWithGithub />);
-  //   const loginButton = screen.getByText('Login with Github');
-  //   fireEvent.click(loginButton);
-
-  //   expect(signIn).toHaveBeenCalledWith('github', {
-  //     callbackUrl: `${window.location.origin}`,
-  //   });
-  // });
+  test('calls signIn function with correct parameters when the button is clicked', async () => {
+    render(<SignInWithGithub />);
+    const loginButton = screen.getByText('Login with Github');
+    userEvent.click(loginButton);
+    await waitFor(() => {
+      expect(signIn).toHaveBeenCalledWith('github', {
+        callbackUrl: `${window.location.origin}`,
+      });
+    });
+  });
 });
