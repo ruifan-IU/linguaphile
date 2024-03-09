@@ -12,10 +12,13 @@ const createJestConfig = nextJest({
 });
 
 const config: Config = {
+  preset: 'ts-jest',
   testEnvironment: 'jsdom',
   // All imported modules in your tests should be mocked automatically
   // automock: false,
-
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+  },
   // Stop running tests after `n` failures
   // bail: 0,
 
