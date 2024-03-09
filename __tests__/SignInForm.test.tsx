@@ -14,14 +14,14 @@ jest.mock('react-toastify', () => ({
 
 describe('SignInForm', () => {
   it('renders correctly', () => {
-    const { getByPlaceholderText } = render(<SignInForm />);
-    expect(getByPlaceholderText('Enter your email')).toBeInTheDocument();
+    const { getByLabelText } = render(<SignInForm />);
+    expect(getByLabelText('Email address')).toBeInTheDocument();
   });
 
   it('handles input change', () => {
-    const { getByPlaceholderText } = render(<SignInForm />);
-    const input: HTMLInputElement = getByPlaceholderText(
-      'Enter your email',
+    const { getByLabelText } = render(<SignInForm />);
+    const input: HTMLInputElement = getByLabelText(
+      'Email address',
     ) as HTMLInputElement;
     fireEvent.change(input, { target: { value: 'test@example.com' } });
     expect(input.value).toBe('test@example.com');
@@ -31,10 +31,11 @@ describe('SignInForm', () => {
     (signIn as jest.Mock).mockResolvedValue({ ok: true });
     (toast as unknown as jest.Mock).mockImplementation(() => {});
 
-    const { getByPlaceholderText, getByText } = render(<SignInForm />);
-    const input = getByPlaceholderText('Enter your email');
-    const button = getByText('Login with email');
-
+    const { getByLabelText, getByText } = render(<SignInForm />);
+    const input: HTMLInputElement = getByLabelText(
+      'Email address',
+    ) as HTMLInputElement;
+    const button = getByText('Sign in with email');
     fireEvent.change(input, { target: { value: 'test@example.com' } });
     userEvent.click(button);
 
