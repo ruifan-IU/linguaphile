@@ -2,21 +2,21 @@ import Link from 'next/link';
 import { db } from '@/lib/db';
 
 const levelColors: Record<number, string> = {
-  1: 'bg-slate-50',
-  2: 'bg-slate-200',
-  3: 'bg-slate-300',
-  4: 'bg-slate-500',
-  5: 'bg-slate-700',
-  6: 'bg-slate-900',
+  1: 'bg-green-300',
+  2: 'bg-green-600',
+  3: 'bg-blue-200',
+  4: 'bg-blue-600',
+  5: 'bg-purple-300',
+  6: 'bg-purple-600',
 };
 
 const levelTextColors: Record<number, string> = {
-  1: 'text-slate-900',
-  2: 'text-slate-900',
-  3: 'text-slate-900',
-  4: 'text-slate-900',
-  5: 'text-slate-50',
-  6: 'text-slate-50',
+  1: 'text-black',
+  2: 'text-white',
+  3: 'text-black',
+  4: 'text-white',
+  5: 'text-black',
+  6: 'text-white',
 };
 
 const levels: Record<number, string> = {
@@ -37,18 +37,20 @@ export default async function Home() {
         {lessons.map((lesson) => (
           <Link
             key={lesson.id}
-            className='max-h-40 max-w-xs rounded-box bg-base-300 shadow-lg'
+            className='col-span-1 max-h-40 max-w-xs divide-y divide-gray-200 rounded-lg bg-white shadow'
             href={`/lesson/${lesson.id}`}
           >
             <div className='flex items-start'>
               <div className='flex flex-col gap-2 p-4'>
-                <h2 className='line-clamp-1 text-xl font-bold'>
+                <h2 className='line-clamp-1 text-sm font-medium text-gray-900'>
                   {lesson.title}
                 </h2>
-                <p className='line-clamp-3'>{lesson.text}</p>
+                <p className='line-clamp-3 text-xs font-light text-gray-700'>
+                  {lesson.text}
+                </p>
               </div>
               <div
-                className={`h-12 min-w-4 rounded-bl rounded-tr border-b-2 border-y-blue-700 pt-2 ${levelColors[lesson.level]}`}
+                className={`h-12 min-w-4 rounded-bl-md rounded-tr border-b-2 border-black pt-2 ${levelColors[lesson.level]}`}
               >
                 <div
                   style={{

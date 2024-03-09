@@ -13,13 +13,8 @@ export default function drawPages(
   currentPage: number,
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>,
   setLessonPages: React.Dispatch<React.SetStateAction<JSX.Element[]>>,
-  wordHandler: (
-    e: React.MouseEvent<SVGTSpanElement, MouseEvent>,
-    isSaved: boolean,
-  ) => void,
+  wordHandler: (e: React.MouseEvent<SVGTSpanElement, MouseEvent>) => void,
 ) {
-
-
   if (text) {
     const pages = [];
 
@@ -120,8 +115,8 @@ export default function drawPages(
           }
           linkedLine.push(
             <tspan
-              className={`cursor-pointer transition-all duration-200 ease-in-out hover:fill-teal-600 ${isSaved ? 'fill-info' : ''}`}
-              onClick={(e) => wordHandler(e, isSaved)}
+              className={`cursor-pointer transition-all duration-200 ease-in-out hover:fill-teal-600 ${isSaved ? 'fill-blue-800' : ''}`}
+              onClick={(e) => wordHandler(e)}
               key={`${i}${lineIndex}${wordIndex}${linkedWord}`}
             >{`${linkedWord} `}</tspan>,
           );

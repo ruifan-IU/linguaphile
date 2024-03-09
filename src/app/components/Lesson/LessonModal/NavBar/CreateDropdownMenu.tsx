@@ -6,14 +6,26 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
-export default function Dropdown() {
+interface CreateDropdownMenuProps {
+  getLinkClass: (path: string[]) => string;
+  pathname: string;
+}
+
+export default function CreateDropdownMenu({
+  getLinkClass,
+  pathname,
+}: CreateDropdownMenuProps) {
   return (
-    <div className='text-right'>
+    <div
+      className={`inline-flex items-center border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/create/compose', '/create/rewrite'])}`}
+    >
       <Menu as='div' className='relative inline-block text-left'>
         <Menu.Button>
           {({ open }) => (
             <>
-              <OpenAIIcon className='-mt-1 mr-2 inline h-5 w-5' />
+              <OpenAIIcon
+                className={`-mt-1 mr-2 inline h-5 w-5 ${['/create/compose', '/create/rewrite'].includes(pathname) ? 'fill-gray-900 hover:fill-gray-900' : 'fill-gray-500 hover:fill-gray-700'}`}
+              />
               <p className='hidden lg:inline-block'>Create</p>
               <FontAwesomeIcon
                 className='ml-2 hidden lg:inline-block'
@@ -33,14 +45,14 @@ export default function Dropdown() {
           leaveFrom='transform opacity-100 scale-100'
           leaveTo='transform opacity-0 scale-95'
         >
-          <Menu.Items className='absolute left-[-1rem] mt-2 w-56 origin-top-right rounded-md bg-base-200 shadow-lg ring-1 ring-black/5 focus:outline-none'>
+          <Menu.Items className='absolute left-[-1rem] mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none'>
             <div className='px-1 py-1 '>
               <Menu.Item>
                 {({ active }) => (
                   <Link href='/create/compose'>
                     <button
                       className={`${
-                        active ? 'bg-base-300' : 'text-gray-900'
+                        active ? 'bg-slate-200' : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
                       {active ? (
@@ -64,7 +76,7 @@ export default function Dropdown() {
                   <Link href='/create/rewrite'>
                     <button
                       className={`${
-                        active ? 'bg-base-300' : 'text-gray-900'
+                        active ? 'bg-slate-200' : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
                       {active ? (
