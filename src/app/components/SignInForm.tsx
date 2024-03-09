@@ -25,7 +25,7 @@ export default function SignInForm() {
     <>
       <div className='flex min-h-full flex-1 flex-col justify-center'>
         <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-          <form className='space-y-6' action='#' method='POST'>
+          <form className='space-y-6' action={SignInWithEmail} method='POST'>
             <div>
               <label
                 htmlFor='email'
