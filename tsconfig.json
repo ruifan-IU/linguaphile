@@ -26,7 +26,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/create"
+    "src/app/create",
+    "__tests__/RootLayout.text.jsx",
+    "__tests__/Home.test.ts"
   ],
   "exclude": ["node_modules"]
 }
