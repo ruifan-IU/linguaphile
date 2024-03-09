@@ -18,7 +18,7 @@ describe('Home', () => {
       { id: '2', title: 'Lesson 2' },
     ];
 
-    db.lesson.findMany.mockResolvedValue(mockLessons);
+    (db.lesson.findMany as jest.Mock).mockResolvedValue(mockLessons);
 
     render(await Home());
 

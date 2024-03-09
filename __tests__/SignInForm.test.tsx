@@ -5,8 +5,12 @@ import { signIn } from 'next-auth/react';
 import SignInForm from '../src/app/components/SignInForm';
 import { toast } from 'react-toastify';
 
-jest.mock('next-auth/react');
-jest.mock('react-toastify');
+jest.mock('next-auth/react', () => ({
+  signIn: jest.fn(),
+}));
+jest.mock('react-toastify', () => ({
+  toast: jest.fn(),
+}));
 
 describe('SignInForm', () => {
   it('renders correctly', () => {
@@ -16,14 +20,16 @@ describe('SignInForm', () => {
 
   it('handles input change', () => {
     const { getByPlaceholderText } = render(<SignInForm />);
-    const input = getByPlaceholderText('Enter your email');
+    const input: HTMLInputElement = getByPlaceholderText(
+      'Enter your email',
+    ) as HTMLInputElement;
     fireEvent.change(input, { target: { value: 'test@example.com' } });
     expect(input.value).toBe('test@example.com');
   });
 
   it('handles form submission', async () => {
-    signIn.mockResolvedValue({ ok: true });
-    toast.mockImplementation(() => {});
+    (signIn as jest.Mock).mockResolvedValue({ ok: true });
+    (toast as unknown as jest.Mock).mockImplementation(() => {});
 
     const { getByPlaceholderText, getByText } = render(<SignInForm />);
     const input = getByPlaceholderText('Enter your email');
