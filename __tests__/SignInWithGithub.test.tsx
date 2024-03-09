@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { signIn } from 'next-auth/react';
-import SignInWithGithub from '../src/app/components/SignInWithGithub';
+import SignInWithGoogleOrGithub from '../src/app/components/SignInWithGoogleOrGithub';
 
 jest.mock('next-auth/react', () => ({
   signIn: jest.fn(),
@@ -10,13 +10,13 @@ jest.mock('next-auth/react', () => ({
 
 describe('SignInWithGithub', () => {
   test('renders the login button', () => {
-    render(<SignInWithGithub />);
+    render(<SignInWithGoogleOrGithub />);
     const loginButton = screen.getByText('Login with Github');
     expect(loginButton).toBeInTheDocument();
   });
 
   test('calls signIn function with correct parameters when the button is clicked', async () => {
-    render(<SignInWithGithub />);
+    render(<SignInWithGoogleOrGithub />);
     const loginButton = screen.getByText('Login with Github');
     userEvent.click(loginButton);
     await waitFor(() => {

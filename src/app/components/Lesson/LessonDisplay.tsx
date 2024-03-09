@@ -61,9 +61,9 @@ export const LessonDisplay = ({
   const onHideHandler = () => {
     if (!selectedWord) return;
     if (selectedWord in words) {
-      selectedWordRef.current.classList.add('fill-info');
+      selectedWordRef.current.classList.add('fill-blue-800');
     } else {
-      selectedWordRef.current.classList.remove('fill-info');
+      selectedWordRef.current.classList.remove('fill-blue-800');
     }
     selectedWordRef.current.classList.remove('fill-teal-600');
     setTranslation('');
@@ -71,18 +71,6 @@ export const LessonDisplay = ({
     setNewWordModalOpen(false);
     setSavedWordModalOpen(false);
   };
-
-  useEffect(() => {
-    const handleResize = () => {
-      setLessonPages([]);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     if (!lessonPages) return;
@@ -106,7 +94,6 @@ export const LessonDisplay = ({
     (width?: number, height?: number) => {
       const wordHandler = async (
         event: React.MouseEvent<SVGTSpanElement, MouseEvent>,
-        isSaved: Boolean,
       ) => {
         if (event.clientY > (window.innerHeight - 30) / 2) {
           setBottomClick(true);
@@ -126,20 +113,6 @@ export const LessonDisplay = ({
           setSavedWordModalOpen(true);
         } else {
           setNewWordModalOpen(true);
-        }
-        if (isSaved) return;
-        if (word) {
-          try {
-            const translation = await translateWord(word);
-            if (translation) {
-              setTranslation(translation);
-            } else {
-              toast.error('Failed to translate word');
-            }
-          } catch (e) {
-            console.error(e);
-            toast.error('Failed to translate word');
-          }
         }
       };
 
@@ -175,7 +148,7 @@ export const LessonDisplay = ({
   };
 
   return (
-    <div className='flex h-full w-full items-center px-4 py-6'>
+    <div className='mx-auto flex h-full max-w-[87rem] items-center py-6'>
       <canvas ref={canvasRef} className='hidden' />
       <Transition.Root show={savedWordModalOpen} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={onHideHandler}>
@@ -212,22 +185,17 @@ export const LessonDisplay = ({
       </div>
       <div
         ref={ref}
-        className='relative h-full flex-auto overflow-hidden rounded-box'
+        className='relative h-full flex-auto overflow-hidden rounded-3xl bg-white shadow-lg'
       >
         <button
-          className={`btn btn-ghost absolute right-2 top-2 z-10 h-7 min-h-7 w-7 p-1 lg:h-10 lg:w-10 lg:right-3 lg:top-3 ${activeNavbar ? 'border-slate-200 bg-base-100' : ''}`}
+          className={`absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-indigo-50 text-xs font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 lg:right-3 lg:top-3 lg:h-11 lg:w-11 lg:rounded-2xl`}
           onClick={() => setActiveNavbar((prev) => !prev)}
         >
-          {/* spin 180 degrees when activeNavbar is true */}
           <FontAwesomeIcon
             icon={faGear}
-            className={`lg:text-2xl ${activeNavbar ? 'rotate-180 transform' : ''} transition-transform duration-500 ease-in-out`}
+            className={`text-sm lg:text-lg ${activeNavbar ? 'rotate-180 transform' : ''} transition-transform duration-500 ease-in-out`}
           />
         </button>
-        <div
-          className='absolute left-0 right-0 m-auto h-full bg-amber-50 p-4 shadow-lg'
-          style={{ zIndex: -1 }}
-        />
         <div className='pt-2'>
           {lessonPages.length > 0 && lessonPages[currentPage]}
         </div>
