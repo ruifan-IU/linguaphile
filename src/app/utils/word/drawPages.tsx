@@ -120,7 +120,7 @@ export default function drawPages(
           }
           linkedLine.push(
             <tspan
-              className={`cursor-pointer transition-all duration-200 ease-in-out hover:fill-teal-600 ${isSaved ? 'fill-info' : ''}`}
+              className={`cursor-pointer transition-all duration-200 ease-in-out hover:fill-teal-600 ${isSaved ? 'fill-blue-800' : ''}`}
               onClick={(e) => wordHandler(e, isSaved)}
               key={`${i}${lineIndex}${wordIndex}${linkedWord}`}
             >{`${linkedWord} `}</tspan>,

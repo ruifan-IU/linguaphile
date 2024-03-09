@@ -1,5 +1,5 @@
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 interface SlidePanelProps {
   activeNavbar: boolean;
   fontSize: number;
@@ -39,23 +39,23 @@ export default function SlidePanel({
 
   return (
     <div
-      className={`fixed right-0 top-0 z-50 h-16 w-screen transform bg-base-300 shadow-md transition-transform duration-500 ease-in-out lg:h-[4.75rem] ${activeNavbar ? '-translate-y-0' : '-translate-y-full'}`}
+      className={`fixed right-0 top-0 z-50 h-20 w-screen transform bg-white shadow-md transition-transform duration-500 ease-in-out ${activeNavbar ? '-translate-y-0' : '-translate-y-full'}`}
     >
-      <div className='flex h-full items-center justify-start px-3'>
+      <div className='mx-auto flex h-full max-w-2xl items-center justify-start px-5'>
         <button
-          className='btn btn-ghost mr-2 flex items-center justify-center p-2'
+          className='mr-2 rounded-full bg-indigo-50 px-1 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100'
           onClick={() => setFontSizeHandler(fontSize + 2)}
         >
           <FontAwesomeIcon icon={faPlus} className='w-7' size='lg' />
         </button>
         <div
-          className='flex h-12 w-12 items-center justify-center rounded-full bg-amber-50'
+          className='flex h-12 w-12 items-center justify-center rounded-full'
           style={{ fontSize: `${fontSize}px` }}
         >
           A
         </div>
         <button
-          className='btn btn-ghost ml-2 flex items-center justify-center p-2'
+          className='ml-2 mr-2 rounded-full bg-indigo-50 px-1 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100'
           onClick={() => setFontSizeHandler(fontSize - 2)}
         >
           <FontAwesomeIcon icon={faMinus} className='w-7' size='lg' />
@@ -64,12 +64,12 @@ export default function SlidePanel({
 
         {/* add ui for changing line height*/}
         <button
-          className='btn btn-ghost mr-2 flex items-center justify-center p-2'
+          className='mr-2 rounded-full bg-indigo-50 px-1 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100'
           onClick={() => setLineHeightHandler(lineHeight + 4)}
         >
           <FontAwesomeIcon icon={faPlus} className='w-7' size='lg' />
         </button>
-        <div className='flex h-12 w-12 justify-center rounded-full bg-amber-50 py-1'>
+        <div className='flex h-12 w-12 rounded-full py-1'>
           <svg xmlns='http://www.w3.org/2000/svg'>
             <line
               x1='14'
@@ -90,7 +90,7 @@ export default function SlidePanel({
           </svg>
         </div>
         <button
-          className='btn btn-ghost ml-2 flex items-center justify-center p-2'
+          className='ml-2 mr-2 rounded-full bg-indigo-50 px-1 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100'
           onClick={() => setLineHeightHandler(lineHeight - 2)}
         >
           <FontAwesomeIcon icon={faMinus} className='w-7' size='lg' />

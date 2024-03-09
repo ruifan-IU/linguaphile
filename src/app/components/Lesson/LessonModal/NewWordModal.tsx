@@ -95,18 +95,18 @@ export default forwardRef(function NewWord(
             </div>
           </div>
         </div>
-        <div className='bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6'>
+        <div className='bg-green-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6'>
           <button
             type='button'
-            className='btn btn-primary w-full sm:ml-3 sm:mt-0 sm:w-auto'
-            onClick={addWordHandler}
+            className='w-full rounded-md bg-indigo-600 px-2.5 py-1.5q text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:ml-3 sm:mt-0 sm:w-auto'
+            onClick={() => addWordHandler()}
             disabled={!session}
           >
             {addingWord ? 'Adding...' : 'Add'}
           </button>
           <button
             type='button'
-            className='btn btn-secondary mt-3 w-full sm:mt-0 sm:w-auto'
+            className='mt-3 w-full rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100 sm:mt-0 sm:w-auto'
             onClick={() => onHideHandler()}
           >
             Back

@@ -13,29 +13,58 @@ export default async function Dictionary() {
   });
 
   return (
-    <div className='flex flex-col items-center p-10 lg:h-[calc(100vh-76px)]'>
-      <h1 className='text-4xl font-bold'>Your Words</h1>
-      <div className='mt-10 rounded-box border border-base-200 p-5 sm:w-11/12 md:w-9/12 lg:w-6/12'>
-        <table className='table table-zebra w-full'>
-          <thead>
-            <tr>
-              <th>Word</th>
-              <th>Familiarity</th>
-              <th>Translation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {words.map((word) => (
-              <tr key={word.id}>
-                <td>{word.phrase}</td>
-                <td>
-                  <FamiliarityBar word={word} />
-                </td>
-                <td>{word.translation}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className='mx-auto my-10 flex max-w-5xl flex-col items-center'>
+      <header className='my-4 text-base font-bold uppercase md:text-xl lg:text-2xl'>
+        your words
+      </header>
+      <div className='w-full px-4 xl:px-0'>
+        <div className='flow-root'>
+          <div className='overflow-x-auto'>
+            <div className='inline-block min-w-full px-1 py-1 align-middle'>
+              <div className='overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg'>
+                <table className='min-w-full divide-y divide-gray-300'>
+                  <thead className='bg-slate-50'>
+                    <tr>
+                      <th
+                        scope='col'
+                        className='py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3'
+                      >
+                        Word
+                      </th>
+                      <th
+                        scope='col'
+                        className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                      >
+                        Familiarity
+                      </th>
+                      <th
+                        scope='col'
+                        className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                      >
+                        Translation
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className='bg-white'>
+                    {words.map((word) => (
+                      <tr key={word.id} className='even:bg-slate-50'>
+                        <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3'>
+                          {word.phrase}
+                        </td>
+                        <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
+                          <FamiliarityBar word={word} />
+                        </td>
+                        <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
+                          {word.translation}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
