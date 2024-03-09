@@ -94,7 +94,6 @@ export const LessonDisplay = ({
     (width?: number, height?: number) => {
       const wordHandler = async (
         event: React.MouseEvent<SVGTSpanElement, MouseEvent>,
-        isSaved: Boolean,
       ) => {
         if (event.clientY > (window.innerHeight - 30) / 2) {
           setBottomClick(true);
@@ -114,20 +113,6 @@ export const LessonDisplay = ({
           setSavedWordModalOpen(true);
         } else {
           setNewWordModalOpen(true);
-        }
-        if (isSaved) return;
-        if (word) {
-          try {
-            const translation = await translateWord(word);
-            if (translation) {
-              setTranslation(translation);
-            } else {
-              toast.error('Failed to translate word');
-            }
-          } catch (e) {
-            console.error(e);
-            toast.error('Failed to translate word');
-          }
         }
       };
 
