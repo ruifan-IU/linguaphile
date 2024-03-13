@@ -13,7 +13,7 @@ export default async function SignIn() {
 
   return (
     <div className='flex h-full items-center justify-center'>
-      <div className='w-50 mx-5 bg-white p-6 shadow box rounded-lg'>
+      <div className='w-50 box mx-5 rounded-lg bg-white p-6 shadow'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
           <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
             Sign in to your account
@@ -21,15 +21,15 @@ export default async function SignIn() {
         </div>
         <SignInForm />
         <SignInWithGithub />
-        <p className='my-10 text-center text-sm text-gray-500'>
-          <div>Not a member?</div>
+        <div className='my-10 text-center text-sm text-gray-500'>
+          <p>Not a member?</p>
           <a
             href='#'
             className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
           >
             Start a 14 day free trial
           </a>
-        </p>
+        </div>
       </div>
     </div>
   );
