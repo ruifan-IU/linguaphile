@@ -23,6 +23,7 @@ interface NavBarProps {
 
 export default function NavBar({ session }: NavBarProps) {
   const pathname = usePathname();
+  console.log(session);
 
   const getLinkClass = (paths: string[]) => {
     return paths.includes(pathname)
@@ -37,11 +38,17 @@ export default function NavBar({ session }: NavBarProps) {
           <div className='mx-auto max-w-7xl px-0 sm:px-6 lg:px-8'>
             <div className='flex h-20 justify-between'>
               <div className='flex'>
-                <Image src={logo} alt='logo' width={325} />
+                <Image
+                  src={logo}
+                  alt='logo'
+                  width={325}
+                  className='h-auto w-auto'
+                  priority={true}
+                />
                 <div className='hidden sm:ml-6 sm:flex sm:space-x-8'>
                   <Link
                     href='/'
-                    className={`inline-flex items-center border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/'])}`}
+                    className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/'])}`}
                   >
                     <p>
                       <FontAwesomeIcon icon={faBookOpen} />
@@ -52,7 +59,7 @@ export default function NavBar({ session }: NavBarProps) {
                   </Link>
                   <Link
                     href='/dictionary'
-                    className={`inline-flex items-center border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/dictionary'])}`}
+                    className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/dictionary'])}`}
                   >
                     <p>
                       <FontAwesomeIcon icon={faBook} />
@@ -63,7 +70,7 @@ export default function NavBar({ session }: NavBarProps) {
                   </Link>
                   <Link
                     href='/upload-lesson'
-                    className={`inline-flex items-center border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/upload-lesson'])}`}
+                    className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/upload-lesson'])}`}
                   >
                     <p>
                       <FontAwesomeIcon icon={faFileArrowUp} />
@@ -78,10 +85,15 @@ export default function NavBar({ session }: NavBarProps) {
                   />
                 </div>
               </div>
+
               <div className='hidden sm:ml-6 sm:flex sm:items-center'>
                 {/* Profile dropdown */}
                 {session ? (
-                  <DesktopDropdown />
+                  <div className='hidden items-center px-1 text-lg font-medium lg:inline-flex'>
+                    <p className='whitespace-nowrap'>{`Hello, ${session.user.name.split(' ')[0]}!`}</p>
+                    {/* <img src={session.user.image}></img> */}
+                    <DesktopDropdown />
+                  </div>
                 ) : (
                   <Link
                     href='/signin'

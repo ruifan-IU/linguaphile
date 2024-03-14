@@ -17,7 +17,7 @@ export default function CreateDropdownMenu({
 }: CreateDropdownMenuProps) {
   return (
     <div
-      className={`inline-flex items-center border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/create/compose', '/create/rewrite'])}`}
+      className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/create/compose', '/create/rewrite'])}`}
     >
       <Menu as='div' className='relative inline-block text-left'>
         <Menu.Button>
