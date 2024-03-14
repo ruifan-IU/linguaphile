@@ -37,7 +37,13 @@ export default function NavBar({ session }: NavBarProps) {
           <div className='mx-auto max-w-7xl px-0 sm:px-6 lg:px-8'>
             <div className='flex h-20 justify-between'>
               <div className='flex'>
-                <Image src={logo} alt='logo' width={325} priority={true} />
+                <Image
+                  src={logo}
+                  alt='logo'
+                  width={325}
+                  className='h-auto w-auto'
+                  priority={true}
+                />
                 <div className='hidden sm:ml-6 sm:flex sm:space-x-8'>
                   <Link
                     href='/'
