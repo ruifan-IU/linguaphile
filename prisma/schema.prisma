@@ -50,6 +50,7 @@ model Lesson {
   id     String  @id @default(cuid()) @map("_id")
   title  String
   text   String
+  imageId String
   level  Int
   auth   User?   @relation(fields: [userId], references: [id])
   userId String?
