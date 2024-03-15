@@ -949,6 +949,8 @@ const load = async () => {
         {
           title: 'Twenty Thousand Leagues Under the Sea, Chapter One',
           level: 5,
+          updated: new Date(),
+          public: true,
           text: `THE YEAR 1866 was marked by a bizarre development, an unexplained and downright inexplicable phenomenon that surely no one has forgotten.
 Without getting into those rumors that upset civilians in the seaports and deranged the public mind even far inland, it must be said that professional seamen were especially alarmed. Traders, shipowners, captains of vessels, skippers, and master mariners from Europe and America, naval officers from every country, and at their heels the various national governments on these two continents, were all extremely disturbed by the business.
 In essence, over a period of time several ships had encountered "an enormous thing" at sea, a long spindle–shaped object, sometimes giving off a phosphorescent glow, infinitely bigger and faster than any whale.
@@ -992,6 +994,8 @@ This outrageous animal had to shoulder responsibility for all derelict vessels, 
         {
           title: 'Story One: Mike is a Cook',
           level: 1,
+          public: true,
+          updated: Date.now(),
           text: `Hi there.
 These are stories that I want you to listen to.
 They use the most common verbs in the language.
@@ -1058,6 +1062,8 @@ Bye for now.`,
         {
           title: 'Story Two: Dustin Wants to Take a Vacation',
           level: 1,
+          public: true,
+          updated: Date.now(),
           text: `Now let's listen to the story of Dustin, who is excited about his winter holiday.
 A) Dustin is excited for the winter holiday.
 He has some time off in the winter.
@@ -1096,6 +1102,8 @@ And there you have it, the story of Dustin who wanted to go on vacation. Thank y
         {
           title: 'Story Three: Karen Gets a Cat',
           level: 1,
+          public: true,
+          updated: Date.now(),
           text: `A) Karen is bored at work and at home.
 She does the same thing every day.
 She wants a new hobby.
@@ -1132,6 +1140,8 @@ Eight: Karen is now very happy because she has a cat. Is Karen bored now? No, Ka
         {
           title: 'Story Four: My Daughter is a Good Student',
           level: 1,
+          public: true,
+          updated: Date.now(),
           text: `
 A) My daughter goes to school every day.
 She likes school very much.
@@ -1168,6 +1178,8 @@ Seven: The daughter and Amy do well in school. Does the daughter do well in scho
         {
           title: 'Canadian English: Chapter II, Part 1',
           level: 4,
+          pulic: true,
+          updated: Date.now(),
           text: `The first Canadians were the native Indians who came from Asia over 10,000 years ago.
 They were fishers, hunters and farmers. They developed different cultures in different areas. In Central America these people developed one of the most famous independent centres of world civilization, with science, writing and advanced construction techniques. Scientists now believe there were different waves of settlement from Asia which spread out over the American continent. That is why there are different language groups in different areas. There may have been other visitors to North America over the centuries but we do not know for sure.
 The first known European visitors were the Vikings roughly 1,000 years ago. Because of wars and pressure on the land, some Vikings had left Europe and settled in Iceland. For the same reasons they moved on to Greenland. The world was warmer at that time, otherwise Greenland would not have been called Greenland. From there the Vikings went further west and stopped on the east coast of Canada. They found nature there to be very pleasant, green and rich. They fought with the local natives, some of their people were killed and therefore they left and returned to Iceland.

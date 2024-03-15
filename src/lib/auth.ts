@@ -30,8 +30,16 @@ export const authOptions = {
       from: process.env.EMAIL_FROM,
     }),
   ],
+  events: {
+    async signIn({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
   callbacks: {
-    session({ session, user }) {
+    async session({ session, user }) {
       session.user.id = user.id;
       return session;
     },
