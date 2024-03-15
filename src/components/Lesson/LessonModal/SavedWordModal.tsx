@@ -2,7 +2,7 @@ import { Dialog } from '@headlessui/react';
 import { Word } from '@prisma/client';
 import { forwardRef, useState, useEffect } from 'react';
 import FamiliarityBar from './FamiliarityBar';
-import { removeWord } from '@/utils/word/removeWord';
+import { removeWord } from '@/lib/word/removeWord';
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '@/lib/hooks';
 import { deleteWord } from '@/slices/lessonSlice';

@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
-import { LessonDisplay } from '../../components/Lesson/LessonDisplay';
+import { LessonDisplay } from '@/components/Lesson/LessonDisplay';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../../utils/auth';
+import { authOptions } from '@/lib/auth';
 import { Word } from '@prisma/client';
 
 export default async function Lesson({ params }: { params: { id: string } }) {

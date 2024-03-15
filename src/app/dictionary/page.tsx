@@ -1,7 +1,7 @@
 import FamiliarityBar from '@/components/Lesson/LessonModal/FamiliarityBar';
 import { db } from '@/lib/db';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../utils/auth';
+import { authOptions } from '@/lib/auth';
 
 export default async function Dictionary() {
   const session = await getServerSession(authOptions);

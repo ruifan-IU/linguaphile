@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import lessonReducer from '../slices/lessonSlice';
+import lessonReducer from '@/slices/lessonSlice';
 
 export const makeStore = () => {
   return configureStore({
