@@ -5,6 +5,14 @@ const load = async () => {
   try {
     await prisma.lesson.deleteMany();
     console.log('Deleted records in lesson table');
+    await prisma.word.deleteMany();
+    console.log('Deleted records in word table');
+    await prisma.user.delete({
+      where: {
+        email: 'dylan.jacob.black@gmail.com',
+      },
+    });
+    console.log('Deleted records in user table');
 
     const user = await prisma.user.create({
       data: {
@@ -949,6 +957,7 @@ const load = async () => {
         {
           title: 'Twenty Thousand Leagues Under the Sea, Chapter One',
           level: 5,
+          imageId: '33507_iqddhk',
           updated: new Date(),
           public: true,
           text: `THE YEAR 1866 was marked by a bizarre development, an unexplained and downright inexplicable phenomenon that surely no one has forgotten.
@@ -994,6 +1003,7 @@ This outrageous animal had to shoulder responsibility for all derelict vessels, 
         {
           title: 'Story One: Mike is a Cook',
           level: 1,
+          imageId: 'chef_enitya',
           public: true,
           updated: Date.now(),
           text: `Hi there.
@@ -1062,6 +1072,8 @@ Bye for now.`,
         {
           title: 'Story Two: Dustin Wants to Take a Vacation',
           level: 1,
+          imageId:
+            'Beach_20Vacation_20Packing_20List-2021_GettyImages-1030311160_yq8aaw',
           public: true,
           updated: Date.now(),
           text: `Now let's listen to the story of Dustin, who is excited about his winter holiday.
@@ -1102,6 +1114,7 @@ And there you have it, the story of Dustin who wanted to go on vacation. Thank y
         {
           title: 'Story Three: Karen Gets a Cat',
           level: 1,
+          imageId: 'ewudemhpsk9eioupqhyh',
           public: true,
           updated: Date.now(),
           text: `A) Karen is bored at work and at home.
@@ -1140,6 +1153,7 @@ Eight: Karen is now very happy because she has a cat. Is Karen bored now? No, Ka
         {
           title: 'Story Four: My Daughter is a Good Student',
           level: 1,
+          imageId: '100602603_bibkhu',
           public: true,
           updated: Date.now(),
           text: `
@@ -1178,6 +1192,7 @@ Seven: The daughter and Amy do well in school. Does the daughter do well in scho
         {
           title: 'Canadian English: Chapter II, Part 1',
           level: 4,
+          imageId: 'yiylevm1kp1ip5iebhsj',
           pulic: true,
           updated: Date.now(),
           text: `The first Canadians were the native Indians who came from Asia over 10,000 years ago.
