@@ -2,7 +2,7 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { signIn } from 'next-auth/react';
-import SignInForm from '../src/app/components/SignInForm';
+import SignInForm from '@/components/SignInForm';
 import { toast } from 'react-toastify';
 
 jest.mock('next-auth/react', () => ({

@@ -13,11 +13,11 @@ import NewWordModal from './LessonModal/NewWordModal';
 import SavedWordModal from './LessonModal/SavedWordModal';
 import { Session } from 'next-auth';
 import { Word } from '@prisma/client';
-import { translateWord } from '@/utils/word/translateWord';
+import { translateWord } from '@/lib/word/translateWord';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { initializeWords } from '@/slices/lessonSlice';
-import drawPages from '@/utils/word/drawPages';
+import drawPages from '@/lib/word/drawPages';
 import SlidePanel from './LessonModal/SlidePanel/SlidePanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -148,7 +148,7 @@ export const LessonDisplay = ({
   };
 
   return (
-    <div className='mx-auto flex h-full max-w-[87rem] items-center py-6'>
+    <div className='mx-auto flex h-full max-w-[87rem] items-center py-5 px-3'>
       <canvas ref={canvasRef} className='hidden' />
       <Transition.Root show={savedWordModalOpen} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={onHideHandler}>

@@ -1,13 +1,13 @@
 import { Dialog } from '@headlessui/react';
 import React, { forwardRef, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { addWord } from '@/utils/word/addWord';
+import { addWord } from '@/lib/word/addWord';
 import { useAppDispatch } from '@/lib/hooks';
 import { saveWord } from '@/slices/lessonSlice';
 import ModalContainer from './ModalContainer';
 import { Word } from '@prisma/client';
 import { Session } from 'next-auth';
-import { translateWord } from '@/utils/word/translateWord';
+import { translateWord } from '@/lib/word/translateWord';
 import { GoogleTranslateIcon } from '@/lib/SVGs';
 
 interface NewWordProps {

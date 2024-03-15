@@ -61,7 +61,10 @@ export default function DesktopDropdownMenu() {
                   'block w-full px-4 py-2 text-left text-sm text-gray-700',
                 )}
                 onClick={() =>
-                  signOut({ callbackUrl: `${window.location.origin}/signin` })
+                  signOut({
+                    callbackUrl: `${window.location.origin}/signin`,
+                    redirect: true,
+                  })
                 }
               >
                 Sign out

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import changeFamiliarity from '../../../utils/word/changeFamiliarity';
+import changeFamiliarity from '@/lib/word/changeFamiliarity';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

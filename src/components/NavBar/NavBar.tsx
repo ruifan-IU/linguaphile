@@ -10,7 +10,7 @@ import {
 import Image from 'next/image';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import logo from '../../../../../../public/logo.png';
+import logo from '@/../public/logo.png';
 import DesktopDropdown from './DesktopDropdownMenu';
 import MobileDropdownMenu from './MobileDropdownMenu';
 import { usePathname } from 'next/navigation';
@@ -69,28 +69,25 @@ export default function NavBar({ session }: NavBarProps) {
                     </p>
                   </Link>
                   <Link
-                    href='/upload-lesson'
-                    className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/upload-lesson'])}`}
+                    href='/compose'
+                    className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/compose'])}`}
                   >
                     <p>
                       <FontAwesomeIcon icon={faFileArrowUp} />
                       <span className='hidden lg:ml-2 lg:inline-block'>
-                        Upload
+                        Compose
                       </span>
                     </p>
                   </Link>
-                  <CreateDropdownMenu
-                    getLinkClass={getLinkClass}
-                    pathname={pathname}
-                  />
+
                 </div>
               </div>
 
               <div className='hidden sm:ml-6 sm:flex sm:items-center'>
                 {/* Profile dropdown */}
                 {session ? (
-                  <div className='hidden items-center px-1 text-lg font-medium lg:inline-flex'>
-                    <p className='whitespace-nowrap'>{`Hello, ${session.user.name.split(' ')[0]}!`}</p>
+                  <div className='items-center px-1 text-lg font-medium lg:inline-flex'>
+                    <p className='hidden lg:block whitespace-nowrap'>{`Hello, ${session.user.name.split(' ')[0]}!`}</p>
                     {/* <img src={session.user.image}></img> */}
                     <DesktopDropdown />
                   </div>
@@ -103,7 +100,7 @@ export default function NavBar({ session }: NavBarProps) {
                   </Link>
                 )}
               </div>
-              <div className='-mr-2 flex items-center sm:hidden'>
+              <div className='flex items-center sm:hidden'>
                 {/* Mobile menu button */}
                 <Disclosure.Button className='relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'>
                   <span className='absolute -inset-0.5' />

@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { signIn } from 'next-auth/react';
-import SignInWithGoogleOrGithub from '../src/app/components/SignInWithGoogleOrGithub';
+import SignInWithGoogleOrGithub from '@/components/SignInWithGoogleOrGithub';
 
 jest.mock('next-auth/react', () => ({
   signIn: jest.fn(),

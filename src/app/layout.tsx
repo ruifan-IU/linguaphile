@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
-import NavBar from './components/Lesson/LessonModal/NavBar/NavBar';
+import NavBar from '../components/NavBar/NavBar';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { ToastContainer } from 'react-toastify';
-import StoreProvider from './StoreProvider';
+import StoreProvider from '../StoreProvider';
 import { enableMapSet } from 'immer';
 import { getServerSession } from 'next-auth';
-import { authOptions } from './utils/auth';
+import { authOptions } from '@/lib/auth';
 
 enableMapSet();
 
@@ -20,6 +20,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Polyglot-AI',
   description: 'An AI-powered language learning platform',
+  icons: {
+    icon: 'favicon.png',
+  }
 };
 
 export default async function RootLayout({
@@ -31,6 +34,9 @@ export default async function RootLayout({
 
   return (
     <html lang='en'>
+      {/* <head>
+        <link rel="icon" href='/favicon.png" type="image/png' />
+      </head> */}
       <body className={`${inter.className} bg-emerald-50`}>
         <StoreProvider>
           <header className='sticky top-0 z-50 shadow-md'>

@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Home from '../src/app/page';
-import { db } from '../src/app/lib/db';
+import Home from '@/app/page';
+import { db } from '@/lib/db';
 
-jest.mock('../src/app/lib/db', () => ({
+jest.mock('@/lib/db', () => ({
   db: {
     lesson: {
       findMany: jest.fn(),

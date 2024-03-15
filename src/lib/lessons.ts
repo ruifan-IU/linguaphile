@@ -1,6 +1,6 @@
 import { db } from './db';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../utils/auth';
+import { authOptions } from './auth';
 
 export async function getLessons() {
   const lessons = await db.lesson.findMany();

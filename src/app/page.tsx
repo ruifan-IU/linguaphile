@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { db } from '@/lib/db';
+import CldImageWrapper from '../components/CldImageWrapper';
 
 const levelColors: Record<number, string> = {
   1: 'bg-green-300',
@@ -37,20 +38,27 @@ export default async function Home() {
         {lessons.map((lesson) => (
           <Link
             key={lesson.id}
-            className='col-span-1 max-h-40 max-w-xs divide-y divide-gray-200 rounded-lg bg-white shadow'
+            className='col-span-1 max-h-40 max-w-xs divide-y divide-gray-200 rounded-lg bg-white shadow min-w-[15rem]'
             href={`/lesson/${lesson.id}`}
           >
             <div className='flex items-start'>
+              <CldImageWrapper
+                src='https://res.cloudinary.com/dqlx6iqqt/image/upload/v1642910259/development/3x4cl0xscdkzup8r6aqhc36ref9l.jpg'
+                alt={lesson.title}
+                width={103}
+                height={50}
+                className='rounded-l-lg'
+              />
               <div className='flex flex-col gap-2 p-4'>
                 <h2 className='line-clamp-1 text-sm font-medium text-gray-900'>
                   {lesson.title}
                 </h2>
-                <p className='line-clamp-3 text-xs font-light text-gray-700'>
+                <p className='line-clamp-6 text-xs font-light text-gray-700'>
                   {lesson.text}
                 </p>
               </div>
               <div
-                className={`h-12 min-w-4 rounded-bl-md rounded-tr border-b-2 border-black pt-2 ${levelColors[lesson.level]}`}
+                className={`h-12 min-w-4 rounded-bl-md rounded-tr-lg border-b-2 border-black pt-2 ${levelColors[lesson.level]}`}
               >
                 <div
                   style={{
