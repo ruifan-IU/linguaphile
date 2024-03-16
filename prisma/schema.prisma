@@ -78,6 +78,7 @@ model Language {
   name  String @unique
   code  String @unique
   words Word[]
+  lessons Lesson[]
 }
 
 model Word {

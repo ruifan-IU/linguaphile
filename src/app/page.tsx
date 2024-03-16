@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { db } from '@/lib/db';
+import { revalidatePath } from 'next/cache';
 import CldImageWrapper from '../components/CldImageWrapper';
 
 const levelColors: Record<number, string> = {
@@ -30,7 +31,9 @@ const levels: Record<number, string> = {
 };
 
 export default async function Home() {
+  revalidatePath('/');
   const lessons = await db.lesson.findMany();
+  console.log(lessons);
 
   return (
     <main className='flex flex-col items-center justify-between p-10'>
@@ -38,12 +41,12 @@ export default async function Home() {
         {lessons.map((lesson) => (
           <Link
             key={lesson.id}
-            className='col-span-1 max-h-40 max-w-xs divide-y divide-gray-200 rounded-lg bg-white shadow min-w-[15rem]'
+            className='col-span-1 max-h-40 min-w-[15rem] max-w-xs divide-y divide-gray-200 rounded-lg bg-white shadow'
             href={`/lesson/${lesson.id}`}
           >
             <div className='flex items-start'>
               <CldImageWrapper
-                src='https://res.cloudinary.com/dqlx6iqqt/image/upload/v1642910259/development/3x4cl0xscdkzup8r6aqhc36ref9l.jpg'
+                src={lesson.imageId}
                 alt={lesson.title}
                 width={103}
                 height={50}

@@ -1,20 +1,21 @@
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const pris = new PrismaClient();
 
 const load = async () => {
   try {
-    await prisma.lesson.deleteMany();
+    await pris.lesson.deleteMany();
     console.log('Deleted records in lesson table');
-    await prisma.word.deleteMany();
-    console.log('Deleted records in word table');
-    await prisma.user.delete({
+    await pris.user.delete({
       where: {
         email: 'dylan.jacob.black@gmail.com',
       },
     });
+    await pris.word.deleteMany();
+    console.log('Deleted records in word table');
+
     console.log('Deleted records in user table');
 
-    const user = await prisma.user.create({
+    const user = await pris.user.create({
       data: {
         email: 'dylan.jacob.black@gmail.com',
         name: 'John Doe',
@@ -22,7 +23,7 @@ const load = async () => {
     });
     console.log('Created user:', user);
 
-    await prisma.word.createMany({
+    await pris.word.createMany({
       data: [
         {
           phrase: 'the',
@@ -431,13 +432,6 @@ const load = async () => {
           translation: 'él',
         },
         {
-          phrase: 'know',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'saber, conocer',
-        },
-        {
           phrase: 'take',
           familiarity: 2,
           languageId: 'en',
@@ -536,25 +530,11 @@ const load = async () => {
           translation: 'ahora',
         },
         {
-          phrase: 'look',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'mirar, buscar',
-        },
-        {
           phrase: 'only',
           familiarity: 2,
           languageId: 'en',
           userId: user.id,
           translation: 'sólo, solamente',
-        },
-        {
-          phrase: 'come',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'venir',
         },
         {
           phrase: 'its',
@@ -571,32 +551,11 @@ const load = async () => {
           translation: 'sobre, encima de',
         },
         {
-          phrase: 'think',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'pensar',
-        },
-        {
           phrase: 'also',
           familiarity: 2,
           languageId: 'en',
           userId: user.id,
           translation: 'también',
-        },
-        {
-          phrase: 'back',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'atrás, de vuelta',
-        },
-        {
-          phrase: 'after',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'después de',
         },
         {
           phrase: 'use',
@@ -746,41 +705,6 @@ const load = async () => {
           translation: 'casa',
         },
         {
-          phrase: 'own',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'propio, propia',
-        },
-        {
-          phrase: 'me',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'yo',
-        },
-        {
-          phrase: 'much',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'mucho, mucha',
-        },
-        {
-          phrase: 'before',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'antes de',
-        },
-        {
-          phrase: 'must',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'deber',
-        },
-        {
           phrase: 'look',
           familiarity: 2,
           languageId: 'en',
@@ -800,20 +724,6 @@ const load = async () => {
           languageId: 'en',
           userId: user.id,
           translation: 'hecho, hecha',
-        },
-        {
-          phrase: 'back',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'atrás, de vuelta',
-        },
-        {
-          phrase: 'through',
-          familiarity: 2,
-          languageId: 'en',
-          userId: user.id,
-          translation: 'a través de',
         },
         {
           phrase: 'many',
@@ -951,15 +861,17 @@ const load = async () => {
       ],
     });
     console.log('Created words');
-
-    await prisma.lesson.createMany({
+    const date = new Date().toISOString();
+    await pris.lesson.createMany({
       data: [
         {
           title: 'Twenty Thousand Leagues Under the Sea, Chapter One',
           level: 5,
           imageId: '33507_iqddhk',
-          updated: new Date(),
+          updated: date,
           public: true,
+          languageId: 'en',
+          userId: 'clttbm3ff0000dmot3x2b3p38',
           text: `THE YEAR 1866 was marked by a bizarre development, an unexplained and downright inexplicable phenomenon that surely no one has forgotten.
 Without getting into those rumors that upset civilians in the seaports and deranged the public mind even far inland, it must be said that professional seamen were especially alarmed. Traders, shipowners, captains of vessels, skippers, and master mariners from Europe and America, naval officers from every country, and at their heels the various national governments on these two continents, were all extremely disturbed by the business.
 In essence, over a period of time several ships had encountered "an enormous thing" at sea, a long spindle–shaped object, sometimes giving off a phosphorescent glow, infinitely bigger and faster than any whale.
@@ -1005,7 +917,9 @@ This outrageous animal had to shoulder responsibility for all derelict vessels, 
           level: 1,
           imageId: 'chef_enitya',
           public: true,
-          updated: Date.now(),
+          updated: date,
+          languageId: 'en',
+          userId: 'clttbm3ff0000dmot3x2b3p38',
           text: `Hi there.
 These are stories that I want you to listen to.
 They use the most common verbs in the language.
@@ -1075,7 +989,9 @@ Bye for now.`,
           imageId:
             'Beach_20Vacation_20Packing_20List-2021_GettyImages-1030311160_yq8aaw',
           public: true,
-          updated: Date.now(),
+          updated: date,
+          languageId: 'en',
+          userId: 'clttbm3ff0000dmot3x2b3p38',
           text: `Now let's listen to the story of Dustin, who is excited about his winter holiday.
 A) Dustin is excited for the winter holiday.
 He has some time off in the winter.
@@ -1116,7 +1032,9 @@ And there you have it, the story of Dustin who wanted to go on vacation. Thank y
           level: 1,
           imageId: 'ewudemhpsk9eioupqhyh',
           public: true,
-          updated: Date.now(),
+          updated: date,
+          languageId: 'en',
+          userId: 'clttbm3ff0000dmot3x2b3p38',
           text: `A) Karen is bored at work and at home.
 She does the same thing every day.
 She wants a new hobby.
@@ -1155,7 +1073,9 @@ Eight: Karen is now very happy because she has a cat. Is Karen bored now? No, Ka
           level: 1,
           imageId: '100602603_bibkhu',
           public: true,
-          updated: Date.now(),
+          updated: date,
+          languageId: 'en',
+          userId: 'clttbm3ff0000dmot3x2b3p38',
           text: `
 A) My daughter goes to school every day.
 She likes school very much.
@@ -1193,8 +1113,10 @@ Seven: The daughter and Amy do well in school. Does the daughter do well in scho
           title: 'Canadian English: Chapter II, Part 1',
           level: 4,
           imageId: 'yiylevm1kp1ip5iebhsj',
-          pulic: true,
-          updated: Date.now(),
+          public: true,
+          updated: date,
+          languageId: 'en',
+          userId: 'clttbm3ff0000dmot3x2b3p38',
           text: `The first Canadians were the native Indians who came from Asia over 10,000 years ago.
 They were fishers, hunters and farmers. They developed different cultures in different areas. In Central America these people developed one of the most famous independent centres of world civilization, with science, writing and advanced construction techniques. Scientists now believe there were different waves of settlement from Asia which spread out over the American continent. That is why there are different language groups in different areas. There may have been other visitors to North America over the centuries but we do not know for sure.
 The first known European visitors were the Vikings roughly 1,000 years ago. Because of wars and pressure on the land, some Vikings had left Europe and settled in Iceland. For the same reasons they moved on to Greenland. The world was warmer at that time, otherwise Greenland would not have been called Greenland. From there the Vikings went further west and stopped on the east coast of Canada. They found nature there to be very pleasant, green and rich. They fought with the local natives, some of their people were killed and therefore they left and returned to Iceland.
@@ -1210,7 +1132,7 @@ These people wanted to remain loyal to the King of England. During the 19th cent
     console.error(e);
     process.exit(1);
   } finally {
-    await prisma.$disconnect();
+    await pris.$disconnect();
   }
 };
 
