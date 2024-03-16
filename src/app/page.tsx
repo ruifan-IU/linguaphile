@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { db } from '@/lib/db';
+import { revalidatePath } from 'next/cache';
 import CldImageWrapper from '../components/CldImageWrapper';
 
 const levelColors: Record<number, string> = {
@@ -30,7 +31,9 @@ const levels: Record<number, string> = {
 };
 
 export default async function Home() {
+  revalidatePath('/');
   const lessons = await db.lesson.findMany();
+  console.log(lessons);
 
   return (
     <main className='flex flex-col items-center justify-between p-5 sm:p-10'>
