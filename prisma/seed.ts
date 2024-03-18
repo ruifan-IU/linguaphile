@@ -1036,6 +1036,7 @@ And there you have it, the story of Dustin who wanted to go on vacation. Thank y
           updated: date,
           languageId: 'en',
           userId: user.id,
+          bookmarkedByIDs: ['cltvvrku10009smxbn3ygnlkc'],
           text: `A) Karen is bored at work and at home.
 She does the same thing every day.
 She wants a new hobby.
@@ -1077,6 +1078,7 @@ Eight: Karen is now very happy because she has a cat. Is Karen bored now? No, Ka
           updated: date,
           languageId: 'en',
           userId: user.id,
+          bookmarkedByIDs: ['cltvvrku10009smxbn3ygnlkc'],
           text: `
 A) My daughter goes to school every day.
 She likes school very much.

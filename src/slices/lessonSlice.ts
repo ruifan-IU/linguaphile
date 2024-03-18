@@ -6,6 +6,10 @@ interface LessonSlice {
   words: { [key: string]: Word };
 }
 
+interface LessonListSlice {
+  bookmarked: string[];
+}
+
 const initialState: LessonSlice = {
   words: {},
 };
