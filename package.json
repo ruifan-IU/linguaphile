@@ -2,7 +2,7 @@
   "name": "polyglot-ai",
   "version": "0.1.0",
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "ts-node prisma/seed.ts"
   },
   "private": true,
   "scripts": {
