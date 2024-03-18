@@ -18,7 +18,7 @@ config.autoAddCss = false;
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Polyglot-AI',
+  title: 'polyglot AI',
   description: 'An AI-powered language learning platform',
   icons: {
     icon: 'favicon.png',
