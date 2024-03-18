@@ -2,15 +2,20 @@ import FamiliarityBar from '@/components/Lesson/LessonModal/FamiliarityBar';
 import { db } from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { Word } from '@prisma/client';
 
 export default async function Dictionary() {
   const session = await getServerSession(authOptions);
 
-  const words = await db.word.findMany({
-    where: {
-      userId: session?.user.id,
-    },
-  });
+  let words: Word[] = [];
+
+  if (session) {
+    words = await db.word.findMany({
+      where: {
+        userId: session.user.id,
+      },
+    });
+  }
 
   return (
     <div className='mx-auto my-10 flex max-w-5xl flex-col items-center'>

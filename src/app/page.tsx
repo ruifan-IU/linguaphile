@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import CldImageWrapper from '../components/CldImageWrapper';
+import LessonDropdown from '@/components/Lesson/LessonDropdown';
 
 const levelColors: Record<number, string> = {
   1: 'bg-green-300',
@@ -33,27 +34,26 @@ const levels: Record<number, string> = {
 export default async function Home() {
   revalidatePath('/');
   const lessons = await db.lesson.findMany();
-  console.log(lessons);
 
   return (
-    <main className='flex flex-col items-center justify-between p-10'>
+    <main className='flex flex-col items-center justify-between p-5 sm:p-10'>
       <div className='grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         {lessons.map((lesson) => (
           <Link
             key={lesson.id}
-            className='col-span-1 max-h-40 min-w-[15rem] max-w-xs divide-y divide-gray-200 rounded-lg bg-white shadow'
+            className='relative col-span-1 max-h-40 min-w-[15rem] max-w-sm divide-y divide-gray-200 rounded-lg bg-white shadow'
             href={`/lesson/${lesson.id}`}
           >
-            <div className='flex items-start'>
+            <div className='flex items-stretch'>
               <CldImageWrapper
                 src={lesson.imageId}
                 alt={lesson.title}
-                width={103}
-                height={50}
-                className='rounded-l-lg'
+                width={500}
+                height={500}
+                className='h-40 w-40 flex-shrink-0 rounded-l-lg object-cover object-top'
               />
               <div className='flex flex-col gap-2 p-4'>
-                <h2 className='line-clamp-1 text-sm font-medium text-gray-900'>
+                <h2 className='line-clamp-1 text-xs font-medium text-gray-900'>
                   {lesson.title}
                 </h2>
                 <p className='line-clamp-6 text-xs font-light text-gray-700'>
@@ -73,6 +73,7 @@ export default async function Home() {
                   {levels[lesson.level]}
                 </div>
               </div>
+              <LessonDropdown />
             </div>
           </Link>
         ))}

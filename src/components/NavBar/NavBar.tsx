@@ -23,7 +23,6 @@ interface NavBarProps {
 
 export default function NavBar({ session }: NavBarProps) {
   const pathname = usePathname();
-  console.log(session);
 
   const getLinkClass = (paths: string[]) => {
     return paths.includes(pathname)
