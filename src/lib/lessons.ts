@@ -1,3 +1,4 @@
+'use server';
 import { db } from './db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './auth';
@@ -6,7 +7,30 @@ export async function getLessons() {
   const lessons = await db.lesson.findMany();
   return lessons;
 }
+export async function bookMarkLesson(lessonId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error('You must be logged in to bookmark a lesson');
+  }
+  const prevBookmarks = await db.user.findFirst({
+    where: {
+      id: session.user.id,
+    },
+    select: {
+      bookmarkIDs: true,
+    },
+  });
+  const bookmarkIDs = prevBookmarks?.bookmarkIDs || [];
 
+  await db.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      bookmarkIDs: [...bookmarkIDs, lessonId],
+    },
+  });
+}
 export async function saveLesson(lesson: {
   title: string;
   level: string;
@@ -62,6 +86,10 @@ export async function saveLesson(lesson: {
         level: levelInt,
         text: lesson.text,
         userId: session?.user.id,
+        imageId: 'imageId',
+        public: false,
+        updated: new Date(),
+        languageId: 'en',
       },
     });
   }

@@ -1,6 +1,11 @@
+'use client';
 import Link from 'next/link';
 import CldImageWrapper from '../CldImageWrapper';
+import { faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LessonDropdown from '@/components/Lesson/LessonDropdown';
+import { BookmarkSlashIcon } from '@heroicons/react/24/outline';
+import { bookMarkLesson } from '@/lib/lessons';
 declare global {
   type Lesson = {
     id: string;
@@ -42,27 +47,28 @@ export default function LessonList({ lessons }: { lessons: Lesson[] }) {
   return (
     <div className='grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
       {lessons.map((lesson) => (
-        <Link
+        <div
           key={lesson.id}
           className='relative col-span-1 max-h-40 min-w-[15rem] max-w-sm divide-y divide-gray-200 rounded-lg bg-white shadow'
-          href={`/lesson/${lesson.id}`}
         >
           <div className='flex items-stretch'>
-            <CldImageWrapper
-              src={lesson.imageId}
-              alt={lesson.title}
-              width={500}
-              height={500}
-              className='h-40 w-40 flex-shrink-0 rounded-l-lg object-cover object-top'
-            />
-            <div className='flex flex-col gap-2 p-4'>
-              <h2 className='line-clamp-1 text-xs font-medium text-gray-900'>
-                {lesson.title}
-              </h2>
-              <p className='line-clamp-6 text-xs font-light text-gray-700'>
-                {lesson.text}
-              </p>
-            </div>
+            <Link href={`/lesson/${lesson.id}`} className='flex items-stretch'>
+              <CldImageWrapper
+                src={lesson.imageId}
+                alt={lesson.title}
+                width={500}
+                height={500}
+                className='h-40 w-40 flex-shrink-0 rounded-l-lg object-cover object-top'
+              />
+              <div className='flex flex-col gap-2 p-4'>
+                <h2 className='line-clamp-1 text-xs font-medium text-gray-900'>
+                  {lesson.title}
+                </h2>
+                <p className='line-clamp-6 text-xs font-light text-gray-700'>
+                  {lesson.text}
+                </p>
+              </div>
+            </Link>
             <div
               className={`h-12 min-w-4 rounded-bl-md rounded-tr-lg border-b-2 border-black pt-2 ${levelColors[lesson.level]}`}
             >
@@ -75,10 +81,19 @@ export default function LessonList({ lessons }: { lessons: Lesson[] }) {
               >
                 {levels[lesson.level]}
               </div>
+              <button
+                onClick={async () => await bookMarkLesson(lesson.id)}
+                className='mt-2'
+              >
+                <FontAwesomeIcon
+                  icon={faBookmark}
+                  style={{ color: '#FFD43B' }}
+                />
+              </button>
             </div>
             <LessonDropdown />
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );
