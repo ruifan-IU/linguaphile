@@ -1,5 +1,8 @@
 'use client';
+
 import Link from 'next/link';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
+import { addBookmarked } from '@/slices/lessonListSlice';
 import CldImageWrapper from '../CldImageWrapper';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,6 +47,11 @@ const levels: Record<number, string> = {
 };
 
 export default function LessonList({ lessons }: { lessons: Lesson[] }) {
+  const dispatch = useAppDispatch();
+  const handleAddBookmark = async (lesson: Lesson) => {
+    await bookMarkLesson(lesson.id);
+    dispatch(addBookmarked(lesson));
+  };
   return (
     <div className='grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
       {lessons.map((lesson) => (
@@ -82,7 +90,7 @@ export default function LessonList({ lessons }: { lessons: Lesson[] }) {
                 {levels[lesson.level]}
               </div>
               <button
-                onClick={async () => await bookMarkLesson(lesson.id)}
+                onClick={() => handleAddBookmark(lesson)}
                 className='mt-2'
               >
                 <FontAwesomeIcon

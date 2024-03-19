@@ -1,13 +1,8 @@
-import { AppDispatch } from '@/lib/store';
 import { Word } from '@prisma/client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface LessonSlice {
   words: { [key: string]: Word };
-}
-
-interface LessonListSlice {
-  bookmarked: string[];
 }
 
 const initialState: LessonSlice = {
