@@ -37,13 +37,15 @@ export default function LessonTabs({
       <Tab.Panels>
         <Tab.Panel>
           <LessonList
-            lessons={publicLessons.length === 0 ? lessons : publicLessons}
+            // lessons={publicLessons.length === 0 ? lessons : publicLessons}
+            lessons={lessons}
           />
         </Tab.Panel>
         <Tab.Panel>
           <LessonList
             lessons={
-              bookmarkedLessons.length === 0 ? bookmarked : bookmarkedLessons
+              // bookmarkedLessons.length === 0 ? bookmarked : bookmarkedLessons
+              bookmarked
             }
           />
         </Tab.Panel>

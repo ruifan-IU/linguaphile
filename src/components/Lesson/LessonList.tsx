@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { revalidatePath } from 'next/cache';
 import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 import { addBookmarked } from '@/slices/lessonListSlice';
 import CldImageWrapper from '../CldImageWrapper';
@@ -9,15 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LessonDropdown from '@/components/Lesson/LessonDropdown';
 import { BookmarkSlashIcon } from '@heroicons/react/24/outline';
 import { bookMarkLesson } from '@/lib/lessons';
-declare global {
-  type Lesson = {
-    id: string;
-    title: string;
-    text: string;
-    imageId: string;
-    level: number;
-  };
-}
+import { Lesson } from '.prisma/client';
 
 const levelColors: Record<number, string> = {
   1: 'bg-green-300',
@@ -50,7 +43,7 @@ export default function LessonList({ lessons }: { lessons: Lesson[] }) {
   const dispatch = useAppDispatch();
   const handleAddBookmark = async (lesson: Lesson) => {
     await bookMarkLesson(lesson.id);
-    dispatch(addBookmarked(lesson));
+    // dispatch(addBookmarked(lesson));
   };
   return (
     <div className='grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>

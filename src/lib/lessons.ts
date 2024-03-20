@@ -1,4 +1,6 @@
 'use server';
+
+import { revalidatePath } from 'next/cache';
 import { db } from './db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './auth';
@@ -30,6 +32,27 @@ export async function bookMarkLesson(lessonId: string) {
       bookmarkIDs: [...bookmarkIDs, lessonId],
     },
   });
+
+  const bookmarked = await db.lesson.findFirst({
+    where: {
+      id: lessonId,
+    },
+    select: {
+      bookmarkedByIDs: true,
+    },
+  });
+
+  const bookmarkedByIDs = bookmarked?.bookmarkedByIDs || [];
+
+  await db.lesson.update({
+    where: {
+      id: lessonId,
+    },
+    data: {
+      bookmarkedByIDs: [...bookmarkedByIDs, session.user.id],
+    },
+  });
+  revalidatePath('/');
 }
 export async function saveLesson(lesson: {
   title: string;

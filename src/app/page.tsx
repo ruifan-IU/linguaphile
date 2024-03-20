@@ -12,13 +12,23 @@ export default async function Home() {
       public: true,
     },
   });
+
   const session = await getServerSession(authOptions);
   const bookmarked = session
+    ? await db.user.findFirst({
+        where: {
+          id: session.user.id,
+        },
+        select: {
+          bookmarkIDs: true,
+        },
+      })
+    : null;
+
+  const bookmarkedLessons = bookmarked
     ? await db.lesson.findMany({
         where: {
-          bookmarkedByIDs: {
-            has: session.user?.id,
-          },
+          id: { in: bookmarked.bookmarkIDs },
         },
       })
     : [];
@@ -27,7 +37,7 @@ export default async function Home() {
   return (
     <main className='flex flex-col items-center justify-between p-5 sm:p-10'>
       {session ? (
-        <LessonTabs lessons={lessons} bookmarked={bookmarked} />
+        <LessonTabs lessons={lessons} bookmarked={bookmarkedLessons} />
       ) : (
         <LessonList lessons={publicLessons} />
       )}
