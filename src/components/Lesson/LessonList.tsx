@@ -9,7 +9,7 @@ import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LessonDropdown from '@/components/Lesson/LessonDropdown';
 import { BookmarkSlashIcon } from '@heroicons/react/24/outline';
-import { bookMarkLesson } from '@/lib/lessons';
+import { bookMarkLesson, unBookMarkLesson } from '@/lib/lessons';
 import { Lesson } from '.prisma/client';
 
 const levelColors: Record<number, string> = {
@@ -45,6 +45,9 @@ export default function LessonList({ lessons }: { lessons: Lesson[] }) {
     await bookMarkLesson(lesson.id);
     // dispatch(addBookmarked(lesson));
   };
+  const handleUnBookmark = async (lesson: Lesson) => {
+    await unBookMarkLesson(lesson.id);
+  }
   return (
     <div className='grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
       {lessons.map((lesson) => (
@@ -84,6 +87,15 @@ export default function LessonList({ lessons }: { lessons: Lesson[] }) {
               </div>
               <button
                 onClick={() => handleAddBookmark(lesson)}
+                className='mt-2'
+              >
+                <FontAwesomeIcon
+                  icon={faBookmark}
+                  style={{ color: '#FFD43B' }}
+                />
+              </button>
+              <button
+                onClick={() => handleUnBookmark(lesson)}
                 className='mt-2'
               >
                 <FontAwesomeIcon

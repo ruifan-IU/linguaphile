@@ -54,6 +54,54 @@ export async function bookMarkLesson(lessonId: string) {
   });
   revalidatePath('/');
 }
+export async function unBookMarkLesson(lessonId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error('You must be logged in to unbookmark a lesson');
+  }
+  const prevBookmarks = await db.user.findFirst({
+    where: {
+      id: session.user.id,
+    },
+    select: {
+      bookmarkIDs: true,
+    },
+  });
+  const bookmarkIDs = prevBookmarks?.bookmarkIDs || [];
+  const newBookmarks = bookmarkIDs.filter((id) => id !== lessonId);
+
+  await db.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      bookmarkIDs: newBookmarks,
+    },
+  });
+
+  const bookmarked = await db.lesson.findFirst({
+    where: {
+      id: lessonId,
+    },
+    select: {
+      bookmarkedByIDs: true,
+    },
+  });
+
+  const bookmarkedByIDs = bookmarked?.bookmarkedByIDs || [];
+  const newBookedByIDs = bookmarkedByIDs.filter((id) => id !== session.user.id);
+
+  await db.lesson.update({
+    where: {
+      id: lessonId,
+    },
+    data: {
+      bookmarkedByIDs: newBookedByIDs,
+    },
+  });
+  revalidatePath('/');
+}
+
 export async function saveLesson(lesson: {
   title: string;
   level: string;
