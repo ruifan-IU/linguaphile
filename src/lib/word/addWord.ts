@@ -1,5 +1,6 @@
-"use server"
+'use server';
 
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 
 export async function addWord(
@@ -27,6 +28,7 @@ export async function addWord(
       familiarity: 0,
     },
   });
+  revalidatePath('/dictionary');
 
   return newWord;
 }

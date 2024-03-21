@@ -1,11 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import lessonReducer from '@/slices/lessonSlice';
+import lessonListReducer from '@/slices/lessonListSlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       lesson: lessonReducer,
+      lessonList: lessonListReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ serializableCheck: false }),
   });
 };
 
