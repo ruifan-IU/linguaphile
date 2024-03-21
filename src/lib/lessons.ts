@@ -102,6 +102,29 @@ export async function unBookMarkLesson(lessonId: string) {
   revalidatePath('/');
 }
 
+export async function addToRecent(lessonId: string, userId: string) {
+  const prevRecents = await db.user.findFirst({
+    where: {
+      id: userId,
+    },
+    select: {
+      recentLessonIDs: true,
+    },
+  });
+  const recentIDs = prevRecents?.recentLessonIDs || [];
+  const newRecentIDs = recentIDs.filter((id) => id !== lessonId);
+  newRecentIDs.unshift(lessonId);
+
+  await db.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      recentLessonIDs: newRecentIDs,
+    },
+  });
+  revalidatePath('/');
+}
 export async function saveLesson(lesson: {
   title: string;
   level: string;

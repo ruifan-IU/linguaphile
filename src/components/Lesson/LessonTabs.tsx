@@ -8,12 +8,21 @@ import { Lesson } from '.prisma/client';
 import { Tab } from '@headlessui/react';
 import LessonList from '@/components/Lesson/LessonList';
 
+const tabs = [
+  { name: 'My Account', href: '#', current: true },
+  { name: 'Company', href: '#', current: false },
+  { name: 'Team Members', href: '#', current: false },
+  { name: 'Billing', href: '#', current: false },
+];
+
 export default function LessonTabs({
   lessons,
   bookmarked,
+  recentLessons,
 }: {
   lessons: Lesson[];
   bookmarked: Lesson[];
+  recentLessons: Lesson[];
 }) {
   const dispatch = useAppDispatch();
   const publicLessons = useAppSelector(
@@ -33,6 +42,7 @@ export default function LessonTabs({
       <Tab.List className='flex gap-2'>
         <Tab>All Lessons</Tab>
         <Tab>Bookmarked</Tab>
+        <Tab>Recent</Tab>
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel>
@@ -48,6 +58,9 @@ export default function LessonTabs({
               bookmarked
             }
           />
+        </Tab.Panel>
+        <Tab.Panel>
+          <LessonList lessons={recentLessons} />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

@@ -20,9 +20,6 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'polyglot AI',
   description: 'An AI-powered language learning platform',
-  icons: {
-    icon: 'favicon.png',
-  }
 };
 
 export default async function RootLayout({
@@ -42,9 +39,7 @@ export default async function RootLayout({
           <header className='sticky top-0 z-50 shadow-md'>
             <NavBar session={session} />
           </header>
-          <main className='h-[calc(100vh-5rem)]'>
-            {children}
-          </main>
+          <main className='h-[calc(100vh-5rem)]'>{children}</main>
           <ToastContainer position='bottom-right' theme='dark' />
         </StoreProvider>
       </body>

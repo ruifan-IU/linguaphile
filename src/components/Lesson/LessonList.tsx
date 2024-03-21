@@ -42,12 +42,21 @@ const levels: Record<number, string> = {
 export default function LessonList({ lessons }: { lessons: Lesson[] }) {
   const dispatch = useAppDispatch();
   const handleAddBookmark = async (lesson: Lesson) => {
-    await bookMarkLesson(lesson.id);
+    try {
+      await bookMarkLesson(lesson.id);
+    } catch (e) {
+      console.log(e);
+    }
+
     // dispatch(addBookmarked(lesson));
   };
   const handleUnBookmark = async (lesson: Lesson) => {
-    await unBookMarkLesson(lesson.id);
-  }
+    try {
+      await unBookMarkLesson(lesson.id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div className='grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
       {lessons.map((lesson) => (
@@ -94,10 +103,7 @@ export default function LessonList({ lessons }: { lessons: Lesson[] }) {
                   style={{ color: '#FFD43B' }}
                 />
               </button>
-              <button
-                onClick={() => handleUnBookmark(lesson)}
-                className='mt-2'
-              >
+              <button onClick={() => handleUnBookmark(lesson)} className='mt-2'>
                 <FontAwesomeIcon
                   icon={faBookmark}
                   style={{ color: '#FFD43B' }}
