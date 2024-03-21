@@ -78,16 +78,21 @@ export default function NavBar({ session }: NavBarProps) {
                       </span>
                     </p>
                   </Link>
-
                 </div>
               </div>
 
               <div className='hidden sm:ml-6 sm:flex sm:items-center'>
                 {/* Profile dropdown */}
                 {session ? (
-                  <div className='items-center px-1 text-lg font-medium lg:inline-flex'>
-                    <p className='hidden lg:block whitespace-nowrap'>{`Hello, ${session.user.name.split(' ')[0]}!`}</p>
-                    {/* <img src={session.user.image}></img> */}
+                  <div className='hidden items-center px-1 text-lg font-medium sm:inline-flex'>
+                    {/* <Image
+                      className='rounded-full'
+                      alt={'profile'}
+                      src={session.user.image}
+                    ></Image> */}
+                    <div className='hidden lg:inline-flex'>
+                      <p className='whitespace-nowrap'>{session.user.name}</p>
+                    </div>
                     <DesktopDropdown />
                   </div>
                 ) : (
@@ -119,7 +124,6 @@ export default function NavBar({ session }: NavBarProps) {
     </Disclosure>
   );
 }
-
 
 function OpenAIIcon(props: React.SVGProps<SVGSVGElement>) {
   return (

@@ -45,6 +45,7 @@ model User {
   lessons       Lesson[] @relation("UserLessons")
   bookmarkIDs  String[] 
   bookmarks     Lesson[] @relation("UserBookmarks", fields: [bookmarkIDs], references: [id])
+  recentLessonIDs String[]
   words         Word[]
 }
 
