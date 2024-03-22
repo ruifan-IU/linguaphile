@@ -9,7 +9,7 @@ import LessonTabs from '@/components/Lesson/LessonTabs';
 export default async function Home() {
   const bookmarkedLessons: Lesson[] = [];
   const recentLessons: Lesson[] = [];
-  revalidatePath('/');
+  // revalidatePath('/');
   const publicLessons = await db.lesson.findMany({
     where: {
       public: true,
@@ -56,12 +56,21 @@ export default async function Home() {
 
   return (
     <main className='flex flex-col items-center justify-between p-5 sm:p-10'>
-      {session ? (
+      {/* {session ? (
         <LessonTabs
           lessons={lessons}
           bookmarked={bookmarkedLessons}
           recentLessons={recentLessons}
         />
+      ) : (
+        <LessonList lessons={publicLessons} />
+      )} */}
+      {session ? (
+        <>
+          Recent: <LessonList lessons={recentLessons} />
+          Bookmarked: <LessonList lessons={bookmarkedLessons} />
+          All Lessons: <LessonList lessons={lessons} />
+        </>
       ) : (
         <LessonList lessons={publicLessons} />
       )}

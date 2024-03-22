@@ -1,16 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { revalidatePath } from 'next/cache';
 import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 import { addBookmarked } from '@/slices/lessonListSlice';
 import CldImageWrapper from '../CldImageWrapper';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LessonDropdown from '@/components/Lesson/LessonDropdown';
-import { BookmarkSlashIcon } from '@heroicons/react/24/outline';
 import { bookMarkLesson, unBookMarkLesson } from '@/lib/lessons';
 import { Lesson } from '.prisma/client';
+import { addToRecent } from '@/lib/lessons';
 
 const levelColors: Record<number, string> = {
   1: 'bg-green-300',
@@ -57,6 +56,13 @@ export default function LessonList({ lessons }: { lessons: Lesson[] }) {
       console.log(e);
     }
   };
+  const handleAddToRecent = async (lesson: Lesson) => {
+    try {
+      await addToRecent(lesson.id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div className='grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
       {lessons.map((lesson) => (
@@ -65,7 +71,11 @@ export default function LessonList({ lessons }: { lessons: Lesson[] }) {
           className='relative col-span-1 max-h-40 min-w-[15rem] max-w-sm divide-y divide-gray-200 rounded-lg bg-white shadow'
         >
           <div className='flex items-stretch'>
-            <Link href={`/lesson/${lesson.id}`} className='flex items-stretch'>
+            <Link
+              href={`/lesson/${lesson.id}`}
+              className='flex items-stretch'
+              onClick={() => addToRecent(lesson.id)}
+            >
               <CldImageWrapper
                 src={lesson.imageId}
                 alt={lesson.title}
