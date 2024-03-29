@@ -5,8 +5,11 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import LessonList from '@/components/Lesson/LessonList';
 import LessonTabs from '@/components/Lesson/LessonTabs';
+import EmblaCarousel from '@/components/Lesson/carousel/Carousel';
+import { EmblaOptionsType } from 'embla-carousel';
 
 export default async function Home() {
+  const OPTIONS: EmblaOptionsType = { slidesToScroll: 'auto' };
   const bookmarkedLessons: Lesson[] = [];
   const recentLessons: Lesson[] = [];
   // revalidatePath('/');
@@ -53,9 +56,9 @@ export default async function Home() {
   }
 
   const lessons = await db.lesson.findMany();
-
+  //className='flex flex-col items-center justify-between p-5 sm:p-10'
   return (
-    <main className='flex flex-col items-center justify-between p-5 sm:p-10'>
+    <main className='flex flex-col items-center justify-between'>
       {/* {session ? (
         <LessonTabs
           lessons={lessons}
@@ -67,9 +70,9 @@ export default async function Home() {
       )} */}
       {session ? (
         <>
-          Recent: <LessonList lessons={recentLessons} />
-          Bookmarked: <LessonList lessons={bookmarkedLessons} />
-          All Lessons: <LessonList lessons={lessons} />
+          Recent: <EmblaCarousel slides={recentLessons} options={OPTIONS} />
+          Bookmarked: <EmblaCarousel slides={bookmarkedLessons} />
+          All Lessons: <EmblaCarousel slides={lessons} />
         </>
       ) : (
         <LessonList lessons={publicLessons} />
