@@ -71,8 +71,9 @@ export default async function Home() {
       {session ? (
         <>
           Recent: <EmblaCarousel slides={recentLessons} options={OPTIONS} />
-          Bookmarked: <EmblaCarousel slides={bookmarkedLessons} />
-          All Lessons: <EmblaCarousel slides={lessons} />
+          Bookmarked:{' '}
+          <EmblaCarousel slides={bookmarkedLessons} options={OPTIONS} />
+          All Lessons: <EmblaCarousel slides={lessons} options={OPTIONS} />
         </>
       ) : (
         <LessonList lessons={publicLessons} />

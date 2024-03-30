@@ -32,24 +32,24 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   } = usePrevNextButtons(emblaApi);
 
   return (
-    <section className='embla m-auto w-[20rem] md:w-[40rem] lg:w-[60rem]'>
-      <div className='overflow-hidden' ref={emblaRef}>
-        <div className='embla__container'>
-          {slides.map((slide, index) => (
-            <div className='embla__slide' key={slide.id}>
-              <LessonCard lesson={slide} />
-            </div>
-          ))}
+    <div className='flex flex-row items-center'>
+      <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+      <section className='embla m-auto w-[21rem] md:w-[45rem] lg:w-[69rem]'>
+        <div className='overflow-hidden' ref={emblaRef}>
+          <div className='embla__container'>
+            {slides.map((slide, index) => (
+              <div
+                className='embla__slide md:flex-2 lg:flex-3 flex-1'
+                key={slide.id}
+              >
+                <LessonCard lesson={slide} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-
-      <div className='embla__controls'>
-        <div className='embla__buttons'>
-          <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-        </div>
-      </div>
-    </section>
+      </section>
+      <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+    </div>
   );
 };
 
