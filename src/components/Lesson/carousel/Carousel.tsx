@@ -43,7 +43,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
       <section className='embla m-auto w-[15rem] md:w-[40rem] lg:w-[72rem]'>
         <div className='overflow-hidden' ref={emblaRef}>
           <div className='embla__container'>
-            {slides.map((slide, index) => (
+            {slides.map((slide) => (
               <div
                 className='embla__slide md:flex-2 lg:flex-3 flex-1'
                 key={slide.id}

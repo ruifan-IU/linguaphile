@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import CldImageWrapper from '../CldImageWrapper';
-import { faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LessonDropdown from '@/components/Lesson/LessonDropdown';
 import { bookMarkLesson, unBookMarkLesson } from '@/lib/lessons';
@@ -64,8 +64,18 @@ export default function LessonCard({ lesson }: { lesson: Lesson }) {
   return (
     <div
       // key={lesson.id}
-      className='relative col-span-1 max-h-40 min-w-[15rem] max-w-sm divide-y divide-gray-200 rounded-lg bg-white shadow'
+      className='group relative col-span-1 max-h-40 min-w-[15rem] max-w-sm divide-y divide-gray-200 rounded-lg bg-white shadow'
     >
+      <button
+        onClick={() => handleAddBookmark(lesson)}
+        className='absolute left-2 top-2 z-10 m-auto h-8 w-8 bg-white opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100'
+      >
+        <FontAwesomeIcon
+          icon={faSquarePlus}
+          size='2xl'
+          style={{ color: 'rgb(59 130 246)' }}
+        />
+      </button>
       <div className='flex items-stretch'>
         <Link
           href={`/lesson/${lesson.id}`}
@@ -100,9 +110,7 @@ export default function LessonCard({ lesson }: { lesson: Lesson }) {
           >
             {levels[lesson.level]}
           </div>
-          <button onClick={() => handleAddBookmark(lesson)} className='mt-2'>
-            <FontAwesomeIcon icon={faBookmark} style={{ color: '#FFD43B' }} />
-          </button>
+
           <button onClick={() => handleUnBookmark(lesson)} className='mt-2'>
             <FontAwesomeIcon icon={faBookmark} style={{ color: '#FFD43B' }} />
           </button>
