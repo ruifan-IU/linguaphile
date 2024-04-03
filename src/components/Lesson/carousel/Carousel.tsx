@@ -33,8 +33,14 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
   return (
     <div className='flex flex-row items-center'>
-      <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-      <section className='embla m-auto w-[21rem] md:w-[45rem] lg:w-[69rem]'>
+      <div className='min-w-12'>
+        {prevBtnDisabled ? (
+          <div></div>
+        ) : (
+          <PrevButton onClick={onPrevButtonClick} />
+        )}
+      </div>
+      <section className='embla m-auto w-[15rem] md:w-[40rem] lg:w-[72rem]'>
         <div className='overflow-hidden' ref={emblaRef}>
           <div className='embla__container'>
             {slides.map((slide, index) => (
@@ -48,7 +54,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
           </div>
         </div>
       </section>
-      <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+      <div className='min-w-12'>
+        {nextBtnDisabled ? (
+          <div></div>
+        ) : (
+          <NextButton onClick={onNextButtonClick} />
+        )}
+      </div>
     </div>
   );
 };
