@@ -14,11 +14,12 @@ import LessonCard from '@/components/Lesson/LessonCard';
 
 type PropType = {
   slides: Lesson[];
+  session: any;
   options?: EmblaOptionsType;
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props;
+  const { slides, session, options } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
@@ -48,7 +49,10 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                 className='embla__slide md:flex-2 lg:flex-3 flex-1'
                 key={slide.id}
               >
-                <LessonCard lesson={slide} />
+                <LessonCard
+                  bookmarked={slide.bookmarkedByIDs.includes(session?.user.id)}
+                  lesson={slide}
+                />
               </div>
             ))}
           </div>
