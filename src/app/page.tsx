@@ -70,10 +70,20 @@ export default async function Home() {
       )} */}
       {session ? (
         <>
-          Recent: <EmblaCarousel slides={recentLessons} options={OPTIONS} />
+          Recent:{' '}
+          <EmblaCarousel
+            slides={recentLessons}
+            session={session}
+            options={OPTIONS}
+          />
           Bookmarked:{' '}
-          <EmblaCarousel slides={bookmarkedLessons} options={OPTIONS} />
-          All Lessons: <EmblaCarousel slides={lessons} options={OPTIONS} />
+          <EmblaCarousel
+            slides={bookmarkedLessons}
+            session={session}
+            options={OPTIONS}
+          />
+          All Lessons:{' '}
+          <EmblaCarousel slides={lessons} session={session} options={OPTIONS} />
         </>
       ) : (
         <LessonList lessons={publicLessons} />
