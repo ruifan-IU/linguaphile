@@ -5,11 +5,14 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import LessonList from '@/components/Lesson/LessonList';
 import LessonTabs from '@/components/Lesson/LessonTabs';
+import EmblaCarousel from '@/components/Lesson/carousel/Carousel';
+import { EmblaOptionsType } from 'embla-carousel';
 
 export default async function Home() {
+  const OPTIONS: EmblaOptionsType = { slidesToScroll: 'auto' };
   const bookmarkedLessons: Lesson[] = [];
   const recentLessons: Lesson[] = [];
-  revalidatePath('/');
+  // revalidatePath('/');
   const publicLessons = await db.lesson.findMany({
     where: {
       public: true,
@@ -53,15 +56,25 @@ export default async function Home() {
   }
 
   const lessons = await db.lesson.findMany();
-
+  //className='flex flex-col items-center justify-between p-5 sm:p-10'
   return (
-    <main className='flex flex-col items-center justify-between p-5 sm:p-10'>
-      {session ? (
+    <main className='flex flex-col items-center justify-between'>
+      {/* {session ? (
         <LessonTabs
           lessons={lessons}
           bookmarked={bookmarkedLessons}
           recentLessons={recentLessons}
         />
+      ) : (
+        <LessonList lessons={publicLessons} />
+      )} */}
+      {session ? (
+        <>
+          Recent: <EmblaCarousel slides={recentLessons} options={OPTIONS} />
+          Bookmarked:{' '}
+          <EmblaCarousel slides={bookmarkedLessons} options={OPTIONS} />
+          All Lessons: <EmblaCarousel slides={lessons} options={OPTIONS} />
+        </>
       ) : (
         <LessonList lessons={publicLessons} />
       )}

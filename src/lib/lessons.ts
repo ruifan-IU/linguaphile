@@ -102,10 +102,14 @@ export async function unBookMarkLesson(lessonId: string) {
   revalidatePath('/');
 }
 
-export async function addToRecent(lessonId: string, userId: string) {
+export async function addToRecent(lessonId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error('You must be logged in to add a lesson to recent');
+  }
   const prevRecents = await db.user.findFirst({
     where: {
-      id: userId,
+      id: session.user.id,
     },
     select: {
       recentLessonIDs: true,
@@ -117,7 +121,7 @@ export async function addToRecent(lessonId: string, userId: string) {
 
   await db.user.update({
     where: {
-      id: userId,
+      id: session.user.id,
     },
     data: {
       recentLessonIDs: newRecentIDs,
@@ -125,6 +129,7 @@ export async function addToRecent(lessonId: string, userId: string) {
   });
   revalidatePath('/');
 }
+
 export async function saveLesson(lesson: {
   title: string;
   level: string;
