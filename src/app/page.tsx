@@ -69,22 +69,32 @@ export default async function Home() {
         <LessonList lessons={publicLessons} />
       )} */}
       {session ? (
-        <>
-          Recent:{' '}
-          <EmblaCarousel
-            slides={recentLessons}
-            session={session}
-            options={OPTIONS}
-          />
-          Bookmarked:{' '}
-          <EmblaCarousel
-            slides={bookmarkedLessons}
-            session={session}
-            options={OPTIONS}
-          />
-          All Lessons:{' '}
-          <EmblaCarousel slides={lessons} session={session} options={OPTIONS} />
-        </>
+        <div className='mt-4'>
+          <section>
+            <h1 className='ml-10 p-2 text-lg font-bold'>Recently Viewed:</h1>
+            <EmblaCarousel
+              slides={recentLessons}
+              session={session}
+              options={OPTIONS}
+            />
+          </section>
+          <section>
+            <h1 className='ml-10 p-2 text-lg font-bold'>My Lessons:</h1>
+            <EmblaCarousel
+              slides={bookmarkedLessons}
+              session={session}
+              options={OPTIONS}
+            />
+          </section>
+          <section>
+            <h1 className='ml-10 p-2 text-lg font-bold'>All Public Lessons:</h1>
+            <EmblaCarousel
+              slides={lessons}
+              session={session}
+              options={OPTIONS}
+            />
+          </section>
+        </div>
       ) : (
         <LessonList lessons={publicLessons} />
       )}
