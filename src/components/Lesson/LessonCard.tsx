@@ -3,13 +3,20 @@
 import Link from 'next/link';
 import CldImageWrapper from '../CldImageWrapper';
 import {
-  faBookmark,
   faSquarePlus,
   faSquareMinus,
+  faHeart,
 } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LessonDropdown from '@/components/Lesson/LessonDropdown';
-import { bookMarkLesson, unBookMarkLesson } from '@/lib/lessons';
+import {
+  bookMarkLesson,
+  unBookMarkLesson,
+  likeLesson,
+  unLikeLesson,
+} from '@/lib/lessons';
 import { Lesson } from '.prisma/client';
 import { addToRecent } from '@/lib/lessons';
 
@@ -43,9 +50,11 @@ const levels: Record<number, string> = {
 export default function LessonCard({
   lesson,
   bookmarked,
+  liked,
 }: {
   lesson: Lesson;
   bookmarked: boolean;
+  liked: boolean;
 }) {
   const handleAddBookmark = async (lesson: Lesson) => {
     try {
@@ -63,6 +72,21 @@ export default function LessonCard({
       console.log(e);
     }
   };
+  const handleLike = async (lesson: Lesson) => {
+    try {
+      await likeLesson(lesson.id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const handleUnLike = async (lesson: Lesson) => {
+    try {
+      await unLikeLesson(lesson.id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleAddToRecent = async (lesson: Lesson) => {
     try {
       await addToRecent(lesson.id);
@@ -95,6 +119,24 @@ export default function LessonCard({
             icon={faSquarePlus}
             size='2xl'
             style={{ color: 'rgb(59 130 246)' }}
+          />
+        )}
+      </button>
+      <button
+        onClick={liked ? () => handleUnLike(lesson) : () => handleLike(lesson)}
+        className='absolute bottom-1 right-8 z-10 m-auto h-6 w-12 rounded-full border-2 border-solid border-green-500 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100'
+      >
+        {liked ? (
+          <FontAwesomeIcon
+            icon={farHeart}
+            size='sm'
+            style={{ color: 'rgb(220 38 38)' }}
+          />
+        ) : (
+          <FontAwesomeIcon
+            icon={faHeart}
+            size='sm'
+            style={{ color: 'rgb(220 38 38)' }}
           />
         )}
       </button>

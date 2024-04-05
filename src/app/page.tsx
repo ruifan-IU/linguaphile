@@ -11,6 +11,7 @@ import { EmblaOptionsType } from 'embla-carousel';
 export default async function Home() {
   const OPTIONS: EmblaOptionsType = { slidesToScroll: 'auto' };
   const bookmarkedLessons: Lesson[] = [];
+  const likedLessons: Lesson[] = [];
   const recentLessons: Lesson[] = [];
   // revalidatePath('/');
   const publicLessons = await db.lesson.findMany({
@@ -27,6 +28,7 @@ export default async function Home() {
         },
         select: {
           bookmarkIDs: true,
+          likedIDs: true,
           recentLessonIDs: true,
         },
       })
@@ -43,6 +45,16 @@ export default async function Home() {
         bookmarkedLessons.push(lesson);
       }
     }
+    for (const lessonID of lessonIDLists.likedIDs) {
+      const lesson = await db.lesson.findUnique({
+        where: {
+          id: lessonID,
+        },
+      });
+      if (lesson) {
+        likedLessons.push(lesson);
+      }
+    }
     for (const lessonID of lessonIDLists.recentLessonIDs) {
       const lesson = await db.lesson.findUnique({
         where: {
@@ -55,7 +67,6 @@ export default async function Home() {
     }
   }
 
-  const lessons = await db.lesson.findMany();
   //className='flex flex-col items-center justify-between p-5 sm:p-10'
   return (
     <main className='flex flex-col items-center justify-between'>
@@ -79,7 +90,7 @@ export default async function Home() {
             />
           </section>
           <section>
-            <h1 className='ml-10 p-2 text-lg font-bold'>My Lessons:</h1>
+            <h1 className='ml-10 p-2 text-lg font-bold'>Currently Studying:</h1>
             <EmblaCarousel
               slides={bookmarkedLessons}
               session={session}
@@ -87,9 +98,17 @@ export default async function Home() {
             />
           </section>
           <section>
+            <h1 className='ml-10 p-2 text-lg font-bold'>Liked Lessons:</h1>
+            <EmblaCarousel
+              slides={likedLessons}
+              session={session}
+              options={OPTIONS}
+            />
+          </section>
+          <section>
             <h1 className='ml-10 p-2 text-lg font-bold'>All Public Lessons:</h1>
             <EmblaCarousel
-              slides={lessons}
+              slides={publicLessons}
               session={session}
               options={OPTIONS}
             />

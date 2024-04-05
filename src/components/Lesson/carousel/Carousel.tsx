@@ -51,6 +51,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
               >
                 <LessonCard
                   bookmarked={slide.bookmarkedByIDs.includes(session?.user.id)}
+                  liked={slide.likedByIDs.includes(session?.user.id)}
                   lesson={slide}
                 />
               </div>

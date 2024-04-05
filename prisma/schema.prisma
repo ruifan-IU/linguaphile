@@ -43,6 +43,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   lessons       Lesson[] @relation("UserLessons")
+  likedLessons  Lesson[] @relation("UserLikedLessons", fields: [likedIDs], references: [id])
+  likedIDs      String[]
   bookmarkIDs  String[] 
   bookmarks     Lesson[] @relation("UserBookmarks", fields: [bookmarkIDs], references: [id])
   recentLessonIDs String[]
@@ -59,6 +61,8 @@ model Lesson {
   updated DateTime
   languageId String
   language   Language @relation(fields: [languageId], references: [id])
+  likedByIDs String[]
+  likedBy User[] @relation("UserLikedLessons", fields: [likedByIDs], references: [id])
   bookmarkedByIDs String[] 
   bookmarkedBy User[] @relation("UserBookmarks", fields: [bookmarkedByIDs], references: [id])
   auth   User?   @relation("UserLessons", fields: [userId], references: [id])
