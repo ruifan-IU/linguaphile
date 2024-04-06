@@ -5,10 +5,6 @@ import { db } from './db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './auth';
 
-export async function getLessons() {
-  const lessons = await db.lesson.findMany();
-  return lessons;
-}
 export async function bookMarkLesson(lessonId: string) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -52,8 +48,10 @@ export async function bookMarkLesson(lessonId: string) {
       bookmarkedByIDs: [...bookmarkedByIDs, session.user.id],
     },
   });
+
   revalidatePath('/');
 }
+
 export async function unBookMarkLesson(lessonId: string) {
   const session = await getServerSession(authOptions);
   if (!session) {

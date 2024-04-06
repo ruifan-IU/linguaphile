@@ -4,29 +4,32 @@ import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { Lesson } from '@prisma/client';
+interface LessonDropdownProps {
+  selectedLesson: Lesson;
+  setSelectedLesson: React.Dispatch<React.SetStateAction<Lesson | null>>;
+}
 
-const solutions = [
-  { name: 'Edit', href: '#' },
-  { name: 'Rewrite', href: '#' },
-];
+export default function LessonDropdown({
+  selectedLesson,
+  setSelectedLesson,
+}: LessonDropdownProps) {
+  const onClickRewrite = () => {
+    setSelectedLesson(selectedLesson);
+  };
 
-export default function LessonDropdown() {
+  const solutions = [
+    { name: 'Edit', href: '#' },
+    { name: 'Rewrite', href: '#', onClick: onClickRewrite },
+  ];
+
   return (
-    <Popover
-      onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }}
-      className='relative'
-    >
-      <Popover.Button
-        className='hover:bg-gray-30 absolute bottom-0 right-0 m-1 rounded-lg bg-gray-200 p-1 text-xs font-bold text-gray-900 shadow-lg'
-        onClick={(e) => e.stopPropagation()}
-      >
-        <FontAwesomeIcon icon={faEllipsisVertical} size='xl' />
+    <Popover className='relative'>
+      <Popover.Button className='hover:bg-gray-30 z-20 absolute bottom-0 right-0 m-1 rounded-lg bg-gray-200 p-1 text-xs font-bold text-gray-900 shadow-lg'>
+        <FontAwesomeIcon icon={faEllipsisVertical} size='xl' onClick={() => {}} />
       </Popover.Button>
 
-      <Popover.Overlay className='fixed inset-0 z-10' />
+      <Popover.Overlay className='fixed inset-0' />
 
       <Transition
         as={Fragment}
@@ -43,6 +46,7 @@ export default function LessonDropdown() {
               <a
                 key={item.name}
                 href={item.href}
+                onClick={item.onClick}
                 className='block hover:text-indigo-600'
               >
                 {item.name}
