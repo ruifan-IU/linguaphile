@@ -1,17 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import CldImageWrapper from '../CldImageWrapper';
-import {
-  faBookmark,
-  faSquarePlus,
-  faSquareMinus,
-} from '@fortawesome/free-solid-svg-icons';
+import { faSquarePlus, faSquareMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LessonDropdown from '@/components/Lesson/LessonDropdown';
 import { bookMarkLesson, unBookMarkLesson } from '@/lib/lessons';
 import { Lesson } from '.prisma/client';
 import { addToRecent } from '@/lib/lessons';
+import RewriteModal from './RewriteModal/RewriteModal';
 
 const levelColors: Record<number, string> = {
   1: 'bg-green-300',
@@ -40,13 +38,14 @@ const levels: Record<number, string> = {
   6: 'C2',
 };
 
-export default function LessonCard({
-  lesson,
-  bookmarked,
-}: {
+interface LessonCardProps {
   lesson: Lesson;
   bookmarked: boolean;
-}) {
+}
+
+export default function LessonCard({ lesson, bookmarked }: LessonCardProps) {
+  const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+
   const handleAddBookmark = async (lesson: Lesson) => {
     try {
       await bookMarkLesson(lesson.id);
@@ -56,6 +55,7 @@ export default function LessonCard({
 
     // dispatch(addBookmarked(lesson));
   };
+
   const handleUnBookmark = async (lesson: Lesson) => {
     try {
       await unBookMarkLesson(lesson.id);
@@ -63,6 +63,7 @@ export default function LessonCard({
       console.log(e);
     }
   };
+
   const handleAddToRecent = async (lesson: Lesson) => {
     try {
       await addToRecent(lesson.id);
@@ -70,7 +71,7 @@ export default function LessonCard({
       console.log(e);
     }
   };
-  //grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+
   return (
     <div
       // key={lesson.id}
@@ -133,8 +134,15 @@ export default function LessonCard({
             {levels[lesson.level]}
           </div>
         </div>
-        <LessonDropdown />
+        <LessonDropdown
+          setSelectedLesson={setSelectedLesson}
+          selectedLesson={lesson}
+        />
       </div>
+      <RewriteModal
+        selectedLesson={selectedLesson}
+        setSelectedLesson={setSelectedLesson}
+      />
     </div>
   );
 }

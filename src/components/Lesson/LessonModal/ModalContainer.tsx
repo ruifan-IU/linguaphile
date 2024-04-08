@@ -3,13 +3,24 @@ import { Transition } from '@headlessui/react';
 
 interface ModalContainerProps {
   children: ReactNode;
-  bottomClick: boolean;
+  bottomClick?: boolean;
 }
 
 export default function ModalContainer({
   children,
   bottomClick,
 }: ModalContainerProps) {
+
+  let alignItems;
+  if (bottomClick === true) {
+    alignItems = 'items-start';
+  } else if (bottomClick === false) {
+    alignItems = 'items-end';
+  } else {
+    alignItems = 'items-center';
+  }
+
+
   return (
     <>
       <Transition.Child
@@ -25,7 +36,7 @@ export default function ModalContainer({
       </Transition.Child>
       <div className='fixed inset-0 z-10 overflow-y-auto'>
         <div
-          className={`flex min-h-full justify-center p-16 text-center sm:py-40 ${bottomClick ? 'items-start' : 'items-end'}`}
+          className={`flex min-h-full justify-center p-16 text-center sm:py-40 ${alignItems}`}
         >
           <Transition.Child
             as={Fragment}

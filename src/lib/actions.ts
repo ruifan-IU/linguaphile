@@ -1,10 +1,12 @@
 'use server';
 
 import OpenAI from 'openai';
-import { saveLesson } from './lessons';
+import { rewriteLesson } from './lessons';
 import context from './context';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { db } from './db';
+import levelMap from './levelMap';
 
 export async function uploadLesson(formData: FormData) {
   const prompt = {
@@ -14,25 +16,47 @@ export async function uploadLesson(formData: FormData) {
     text: formData.get('text') as string,
   };
 
-  await saveLesson(prompt);
+
+  console.log(prompt)
+  await db.lesson.create({
+    data: {
+      title: prompt.title,
+      languageId: prompt.language,
+      level: levelMap[prompt.level],
+      text: prompt.text,
+      public: true,
+      imageId: 'www.dummy.com/image.jpg',
+      updated: new Date(),
+    },
+  });
   revalidatePath('/');
   redirect('/');
-  return true;
 }
 
 export async function generateRewrite(formData: FormData) {
-  const prompt = {
-    title: formData.get('title') as string,
-    language: formData.get('language') as string,
-    level: formData.get('level') as string,
-    text: formData.get('text') as string,
-  };
+  const lesson = await db.lesson.findFirst({
+    where: {
+      id: formData.get('lessonId') as string,
+    },
+  });
 
-  const userPrompt = `Here is a reading lesson: ${prompt.text} Please rewrite the lesson to the level of difficulty suited for ${prompt.language} language learners at ${prompt.level} level. Please include only the rewritten text in your response.`;
+  const language = await db.language.findFirst({
+    where: {
+      id: lesson?.languageId,
+    },
+  });
+
+  const newLevel = formData.get('level') as string;
+
+  console.log('newLevel', newLevel);
+
+  const userPrompt = `Here is a reading lesson: ${lesson?.text} Rewrite the lesson to the level of difficulty suited for ${language} language learners at the ${newLevel} CEFR level. Only include the rewritten text in your response.`;
 
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
+
+  console.log('Generating rewrite...');
 
   const response = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
@@ -44,9 +68,18 @@ export async function generateRewrite(formData: FormData) {
 
   const newText = response.choices[0].message.content;
 
-  if (newText) prompt.text = newText;
+  console.log('Rewrite generated:', newText);
 
-  await saveLesson(prompt);
+  if (!newText) {
+    throw new Error('Failed to generate rewrite');
+  }
+
+  if (!lesson) {
+    throw new Error('Lesson not found');
+  }
+
+  await rewriteLesson(lesson, newLevel, newText);
+
   revalidatePath('/');
   redirect('/');
   return true;

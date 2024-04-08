@@ -84,61 +84,48 @@ export default forwardRef(function NewWord(
         className='relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg'
         ref={forwardedRef}
       >
-        <div className='bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4'>
+        <Dialog.Title className='flex justify-center bg-green-50 px-4 py-3 text-lg font-semibold text-gray-900 sm:px-6'>
+          Add Word to Dictionary
+        </Dialog.Title>
+        <div className='bg-white px-6 pb-6 pt-3'>
           <div className='sm:flex sm:items-start'>
-            <div className='mt-3 w-full text-center sm:mt-0 sm:text-left'>
-              <div className='mt-2 w-full'>
-                <div className='w-full'>
-                  {!session && <div>Must log in to add words.</div>}
-                  {session && (
-                    <>
-                      <div className='mx-auto text-center text-lg font-semibold'>
-                        {word}
-                      </div>
-                      <div className='tooltip' data-tip='Google Translate'>
-                        <button
-                          name='google-translate'
-                          type='button'
-                          className='btn btn-ghost'
-                          onClick={() => googleTranslate(word)}
-                        >
-                          <GoogleTranslateIcon />
-                        </button>
-                        {loading && (
-                          <div className='flex items-center justify-center'>
-                            <div
-                              className='inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]'
-                              role='status'
-                            >
-                              <span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>
-                                Loading...
-                              </span>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      <div className='mt-2'>
-                        <input
-                          type='text'
-                          name='translation'
-                          id='translation'
-                          className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                          placeholder='Enter translation'
-                          value={translation}
-                          onChange={(e) => traslationHandler(e)}
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
+            <div className='w-full text-center sm:text-left'>
+              {!session && <div>Must log in to add words.</div>}
+              {session && (
+                <>
+                  <div className='mx-auto py-3 text-center text-lg font-semibold'>
+                    {word}
+                  </div>
+                  <div className='tooltip' data-tip='Google Translate'></div>
+                  <div className='mt-2'>
+                    <input
+                      type='text'
+                      name='translation'
+                      id='translation'
+                      className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                      placeholder='Enter translation'
+                      value={translation}
+                      onChange={(e) => traslationHandler(e)}
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
         <div className='bg-green-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6'>
           <button
+            name='google-translate'
             type='button'
-            className='py-1.5q w-full rounded-md bg-indigo-600 px-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:ml-3 sm:mt-0 sm:w-auto'
+            className='mb-3 sm:mb-0 order-last flex justify-center w-full rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100 sm:mt-0 sm:w-auto'
+            onClick={() => googleTranslate(word)}
+          >
+            {loading ? 'Translating...' : 'Translate'}
+            <GoogleTranslateIcon className='ml-2 h-5 w-5' />
+          </button>
+          <button
+            type='button'
+            className='w-full rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:ml-3 sm:mt-0 sm:w-auto'
             onClick={() => addWordHandler()}
             disabled={!session}
           >
@@ -151,6 +138,7 @@ export default forwardRef(function NewWord(
           >
             Back
           </button>
+          <div className='flex-1' />
         </div>
       </Dialog.Panel>
     </ModalContainer>
