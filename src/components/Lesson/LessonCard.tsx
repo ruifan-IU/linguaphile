@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import CldImageWrapper from '../CldImageWrapper';
 import {
@@ -19,6 +20,7 @@ import {
 } from '@/lib/lessons';
 import { Lesson } from '.prisma/client';
 import { addToRecent } from '@/lib/lessons';
+import RewriteModal from './RewriteModal/RewriteModal';
 
 const levelColors: Record<number, string> = {
   1: 'bg-green-300',
@@ -46,6 +48,11 @@ const levels: Record<number, string> = {
   5: 'C1',
   6: 'C2',
 };
+interface LessonCardProps {
+  lesson: Lesson;
+  bookmarked: boolean;
+  liked: boolean;
+}
 
 export default function LessonCard({
   lesson,
@@ -56,6 +63,7 @@ export default function LessonCard({
   bookmarked: boolean;
   liked: boolean;
 }) {
+  const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const likes = lesson.likedByIDs.length;
   const handleAddBookmark = async (lesson: Lesson) => {
     try {
@@ -66,6 +74,7 @@ export default function LessonCard({
 
     // dispatch(addBookmarked(lesson));
   };
+
   const handleUnBookmark = async (lesson: Lesson) => {
     try {
       await unBookMarkLesson(lesson.id);
@@ -95,7 +104,7 @@ export default function LessonCard({
       console.log(e);
     }
   };
-  //grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+
   return (
     <div
       // key={lesson.id}
@@ -177,8 +186,15 @@ export default function LessonCard({
             {levels[lesson.level]}
           </div>
         </div>
-        <LessonDropdown />
+        <LessonDropdown
+          setSelectedLesson={setSelectedLesson}
+          selectedLesson={lesson}
+        />
       </div>
+      <RewriteModal
+        selectedLesson={selectedLesson}
+        setSelectedLesson={setSelectedLesson}
+      />
     </div>
   );
 }

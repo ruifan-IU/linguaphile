@@ -6,7 +6,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import LessonList from '@/components/Lesson/LessonList';
 import LessonTabs from '@/components/Lesson/LessonTabs';
-import EmblaCarousel from '@/components/Lesson/carousel/Carousel';
+import EmblaCarousel from '@/components/Lesson/Carousel/EmblaCarousel';
 import { EmblaOptionsType } from 'embla-carousel';
 
 export default async function Home() {

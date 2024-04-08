@@ -68,13 +68,13 @@ export default function NavBar({ session }: NavBarProps) {
                     </p>
                   </Link>
                   <Link
-                    href='/compose'
+                    href='/upload'
                     className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/compose'])}`}
                   >
                     <p>
                       <FontAwesomeIcon icon={faFileArrowUp} />
                       <span className='hidden lg:ml-2 lg:inline-block'>
-                        Compose
+                        Upload
                       </span>
                     </p>
                   </Link>

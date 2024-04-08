@@ -7,3 +7,13 @@ declare module 'next-auth' {
     } & DefaultSession['user'];
   }
 }
+
+declare global {
+  interface Window {
+    cloudinary: {
+      openUploadWidget: (options: any, callback: any) => {
+        open: () => void;
+      }
+    };
+  }
+}
