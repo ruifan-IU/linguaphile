@@ -12,14 +12,17 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { Lesson } from '.prisma/client';
 import LessonCard from '@/components/Lesson/LessonCard';
 
-type PropType = {
+interface EmblaCarouselProps {
   slides: Lesson[];
   session: any;
   options?: EmblaOptionsType;
-};
+}
 
-const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, session, options } = props;
+const EmblaCarousel = ({
+  slides,
+  session,
+  options,
+}: EmblaCarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
@@ -46,7 +49,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
           <div className='embla__container'>
             {slides.map((slide) => (
               <div
-                className='embla__slide md:flex-2 lg:flex-3 flex-1'
+                className='embla__slide flex-1 md:flex-2 lg:flex-3'
                 key={slide.id}
               >
                 <LessonCard

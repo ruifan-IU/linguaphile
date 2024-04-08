@@ -31,9 +31,6 @@ export default async function RootLayout({
 
   return (
     <html lang='en'>
-      {/* <head>
-        <link rel="icon" href='/favicon.png" type="image/png' />
-      </head> */}
       <body className={`${inter.className} bg-emerald-50`}>
         <StoreProvider>
           <header className='sticky top-0 z-50 shadow-md'>

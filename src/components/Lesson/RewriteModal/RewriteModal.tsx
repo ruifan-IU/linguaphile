@@ -20,6 +20,7 @@ export default function RewriteModal({
 
   const onHideHandler = () => {
     setSelectedLesson(null);
+    setLevel('Difficulty Level');
   };
 
   return (
@@ -36,7 +37,7 @@ export default function RewriteModal({
                   <input
                     type='hidden'
                     name='lessonId'
-                    value={selectedLesson?.id}
+                    value={selectedLesson?.id || ''}
                   />
                   <select
                     id='level'

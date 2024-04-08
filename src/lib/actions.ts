@@ -1,11 +1,12 @@
 'use server';
 
 import OpenAI from 'openai';
-import { saveLesson } from './lessons';
+import { rewriteLesson } from './lessons';
 import context from './context';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { db } from './db';
+import levelMap from './levelMap';
 
 export async function uploadLesson(formData: FormData) {
   const prompt = {
@@ -15,7 +16,19 @@ export async function uploadLesson(formData: FormData) {
     text: formData.get('text') as string,
   };
 
-  await saveLesson(prompt);
+
+  console.log(prompt)
+  await db.lesson.create({
+    data: {
+      title: prompt.title,
+      languageId: prompt.language,
+      level: levelMap[prompt.level],
+      text: prompt.text,
+      public: true,
+      imageId: 'www.dummy.com/image.jpg',
+      updated: new Date(),
+    },
+  });
   revalidatePath('/');
   redirect('/');
 }
@@ -33,17 +46,17 @@ export async function generateRewrite(formData: FormData) {
     },
   });
 
-  const level = formData.get('level') as string;
+  const newLevel = formData.get('level') as string;
 
-  console.log("level", level)
+  console.log('newLevel', newLevel);
 
-  const userPrompt = `Here is a reading lesson: ${lesson?.text} Please rewrite the lesson to the level of difficulty suited for ${language} language learners at ${level} level. Please include only the rewritten text in your response.`;
+  const userPrompt = `Here is a reading lesson: ${lesson?.text} Rewrite the lesson to the level of difficulty suited for ${language} language learners at the ${newLevel} CEFR level. Only include the rewritten text in your response.`;
 
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
 
-  console.log('Generating rewrite...')
+  console.log('Generating rewrite...');
 
   const response = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
@@ -61,12 +74,12 @@ export async function generateRewrite(formData: FormData) {
     throw new Error('Failed to generate rewrite');
   }
 
-  await saveLesson({
-    title: `${lesson?.title} (Rewritten to ${level})`,
-    level: level,
-    text: newText,
-    imageId: lesson?.imageId,
-  });
+  if (!lesson) {
+    throw new Error('Lesson not found');
+  }
+
+  await rewriteLesson(lesson, newLevel, newText);
+
   revalidatePath('/');
   redirect('/');
   return true;
