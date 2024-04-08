@@ -53,6 +53,7 @@ export async function bookMarkLesson(lessonId: string) {
     },
   });
   revalidatePath('/');
+  revalidatePath('/library/recently-viewed');
 }
 export async function unBookMarkLesson(lessonId: string) {
   const session = await getServerSession(authOptions);
@@ -100,6 +101,7 @@ export async function unBookMarkLesson(lessonId: string) {
     },
   });
   revalidatePath('/');
+  revalidatePath('/library/recently-viewed');
 }
 export async function likeLesson(lessonId: string) {
   const session = await getServerSession(authOptions);
@@ -148,6 +150,7 @@ export async function likeLesson(lessonId: string) {
   });
 
   revalidatePath('/');
+  revalidatePath('/library/recently-viewed');
 }
 export async function unLikeLesson(lessonId: string) {
   const session = await getServerSession(authOptions);
@@ -195,6 +198,7 @@ export async function unLikeLesson(lessonId: string) {
   });
 
   revalidatePath('/');
+  revalidatePath('/library/recently-viewed');
 }
 
 export async function addToRecent(lessonId: string) {
@@ -223,6 +227,7 @@ export async function addToRecent(lessonId: string) {
     },
   });
   revalidatePath('/');
+  revalidatePath('/library/recently-viewed');
 }
 
 export async function saveLesson(lesson: {

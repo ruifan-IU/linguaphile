@@ -56,6 +56,7 @@ export default function LessonCard({
   bookmarked: boolean;
   liked: boolean;
 }) {
+  const likes = lesson.likedByIDs.length;
   const handleAddBookmark = async (lesson: Lesson) => {
     try {
       await bookMarkLesson(lesson.id);
@@ -98,7 +99,7 @@ export default function LessonCard({
   return (
     <div
       // key={lesson.id}
-      className='group relative col-span-1 max-h-40 min-w-[15rem] max-w-sm divide-y divide-gray-200 rounded-lg bg-white shadow'
+      className='group relative col-span-1 max-h-40 min-w-[15rem] max-w-sm rounded-lg bg-white bg-blend-overlay shadow'
     >
       <button
         onClick={
@@ -106,7 +107,7 @@ export default function LessonCard({
             ? () => handleUnBookmark(lesson)
             : () => handleAddBookmark(lesson)
         }
-        className='absolute left-2 top-2 z-10 m-auto h-8 w-8 bg-white opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100'
+        className='absolute left-2 top-2 z-10 m-auto h-8 w-8 rounded-md bg-white opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100'
       >
         {bookmarked ? (
           <FontAwesomeIcon
@@ -138,7 +139,8 @@ export default function LessonCard({
             size='sm'
             style={{ color: 'rgb(220 38 38)' }}
           />
-        )}
+        )}{' '}
+        {likes}
       </button>
       <div className='flex items-stretch'>
         <Link

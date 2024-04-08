@@ -46,21 +46,21 @@ export default function LessonTabs({
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel>
-          <LessonList
+          {/* <LessonList
             // lessons={publicLessons.length === 0 ? lessons : publicLessons}
             lessons={lessons}
-          />
+          /> */}
         </Tab.Panel>
         <Tab.Panel>
-          <LessonList
+          {/* <LessonList
             lessons={
               // bookmarkedLessons.length === 0 ? bookmarked : bookmarkedLessons
               bookmarked
             }
-          />
+          /> */}
         </Tab.Panel>
         <Tab.Panel>
-          <LessonList lessons={recentLessons} />
+          {/* <LessonList lessons={recentLessons} /> */}
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { db } from '@/lib/db';
 import { Lesson } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
@@ -82,7 +83,12 @@ export default async function Home() {
       {session ? (
         <div className='mt-4'>
           <section>
-            <h1 className='ml-10 p-2 text-lg font-bold'>Recently Viewed:</h1>
+            <div className='flex w-full flex-row justify-between'>
+              <h1 className='ml-10 p-2 text-lg font-bold'>Recently Viewed:</h1>
+              <Link href='/library/recently-viewed'>
+                <button>View All</button>
+              </Link>
+            </div>
             <EmblaCarousel
               slides={recentLessons}
               session={session}
@@ -115,7 +121,7 @@ export default async function Home() {
           </section>
         </div>
       ) : (
-        <LessonList lessons={publicLessons} />
+        <p>please log in</p>
       )}
     </main>
   );
