@@ -78,11 +78,11 @@ export default async function Home() {
       )} */}
       {session ? (
         <div className='mt-4'>
-          <section>
+          <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
               <h1 className='ml-10 p-2 text-lg font-bold'>Recently Viewed:</h1>
               <Link href='/library/recently-viewed'>
-                <button>View All</button>
+                <button>View All &gt;</button>
               </Link>
             </div>
             <EmblaCarousel
@@ -91,13 +91,13 @@ export default async function Home() {
               options={OPTIONS}
             />
           </section>
-          <section>
+          <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
               <h1 className='ml-10 p-2 text-lg font-bold'>
                 Currently Studying:
               </h1>
               <Link href='/library/currently-studying'>
-                <button>View All</button>
+                <button>View All &gt;</button>
               </Link>
             </div>
             <EmblaCarousel
@@ -106,11 +106,11 @@ export default async function Home() {
               options={OPTIONS}
             />
           </section>
-          <section>
+          <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
               <h1 className='ml-10 p-2 text-lg font-bold'>Liked Lessons:</h1>
               <Link href='/library/liked'>
-                <button>View All</button>
+                <button>View All &gt;</button>
               </Link>
             </div>
             <EmblaCarousel
@@ -119,7 +119,7 @@ export default async function Home() {
               options={OPTIONS}
             />
           </section>
-          <section>
+          <section className='mb-4'>
             <h1 className='ml-10 p-2 text-lg font-bold'>All Public Lessons:</h1>
             <EmblaCarousel
               slides={publicLessons}
