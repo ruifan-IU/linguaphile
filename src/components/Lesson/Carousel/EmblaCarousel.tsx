@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { EmblaOptionsType } from 'embla-carousel';
-import { DotButton, useDotButton } from './CarouselDotButton';
 import {
   PrevButton,
   NextButton,
@@ -18,15 +17,8 @@ interface EmblaCarouselProps {
   options?: EmblaOptionsType;
 }
 
-const EmblaCarousel = ({
-  slides,
-  session,
-  options,
-}: EmblaCarouselProps) => {
+const EmblaCarousel = ({ slides, session, options }: EmblaCarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
-
-  const { selectedIndex, scrollSnaps, onDotButtonClick } =
-    useDotButton(emblaApi);
 
   const {
     prevBtnDisabled,
@@ -49,7 +41,7 @@ const EmblaCarousel = ({
           <div className='embla__container'>
             {slides.map((slide) => (
               <div
-                className='embla__slide flex-1 md:flex-2 lg:flex-3'
+                className='embla__slide md:flex-2 lg:flex-3 flex-1'
                 key={slide.id}
               >
                 <LessonCard

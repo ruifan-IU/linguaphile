@@ -1,11 +1,8 @@
 import Link from 'next/link';
 import { db } from '@/lib/db';
 import { Lesson } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import LessonList from '@/components/Lesson/LessonList';
-import LessonTabs from '@/components/Lesson/LessonTabs';
 import EmblaCarousel from '@/components/Lesson/Carousel/EmblaCarousel';
 import { EmblaOptionsType } from 'embla-carousel';
 
@@ -14,7 +11,7 @@ export default async function Home() {
   const bookmarkedLessons: Lesson[] = [];
   const likedLessons: Lesson[] = [];
   const recentLessons: Lesson[] = [];
-  // revalidatePath('/');
+
   const publicLessons = await db.lesson.findMany({
     where: {
       public: true,
@@ -68,7 +65,6 @@ export default async function Home() {
     }
   }
 
-  //className='flex flex-col items-center justify-between p-5 sm:p-10'
   return (
     <main className='flex flex-col items-center justify-between'>
       {/* {session ? (
@@ -96,7 +92,14 @@ export default async function Home() {
             />
           </section>
           <section>
-            <h1 className='ml-10 p-2 text-lg font-bold'>Currently Studying:</h1>
+            <div className='flex w-full flex-row justify-between'>
+              <h1 className='ml-10 p-2 text-lg font-bold'>
+                Currently Studying:
+              </h1>
+              <Link href='/library/currently-studying'>
+                <button>View All</button>
+              </Link>
+            </div>
             <EmblaCarousel
               slides={bookmarkedLessons}
               session={session}
@@ -104,7 +107,12 @@ export default async function Home() {
             />
           </section>
           <section>
-            <h1 className='ml-10 p-2 text-lg font-bold'>Liked Lessons:</h1>
+            <div className='flex w-full flex-row justify-between'>
+              <h1 className='ml-10 p-2 text-lg font-bold'>Liked Lessons:</h1>
+              <Link href='/library/liked'>
+                <button>View All</button>
+              </Link>
+            </div>
             <EmblaCarousel
               slides={likedLessons}
               session={session}

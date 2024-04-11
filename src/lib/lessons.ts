@@ -227,7 +227,6 @@ export async function addToRecent(lessonId: string) {
     },
   });
   revalidatePath('/');
-  revalidatePath('/library/recently-viewed');
 }
 
 export async function rewriteLesson(
