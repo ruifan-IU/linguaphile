@@ -18,6 +18,10 @@ export default async function Home() {
     },
   });
 
+  publicLessons.sort((a, b) => {
+    return b.likedByIDs.length - a.likedByIDs.length;
+  });
+
   const session = await getServerSession(authOptions);
   const lessonIDLists = session
     ? await db.user.findFirst({
@@ -80,7 +84,7 @@ export default async function Home() {
         <div className='mt-4'>
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>Recently Viewed:</h1>
+              <h1 className='ml-10 p-2 text-lg font-bold'>Recently Studied:</h1>
               <Link href='/library/recently-viewed'>
                 <button>View All &gt;</button>
               </Link>
@@ -93,9 +97,7 @@ export default async function Home() {
           </section>
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>
-                Currently Studying:
-              </h1>
+              <h1 className='ml-10 p-2 text-lg font-bold'>Saved Lessons:</h1>
               <Link href='/library/currently-studying'>
                 <button>View All &gt;</button>
               </Link>
@@ -108,7 +110,7 @@ export default async function Home() {
           </section>
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>Liked Lessons:</h1>
+              <h1 className='ml-10 p-2 text-lg font-bold'>My Likes:</h1>
               <Link href='/library/liked'>
                 <button>View All &gt;</button>
               </Link>
@@ -120,7 +122,12 @@ export default async function Home() {
             />
           </section>
           <section className='mb-4'>
-            <h1 className='ml-10 p-2 text-lg font-bold'>All Public Lessons:</h1>
+            <div className='flex w-full flex-row justify-between'>
+              <h1 className='ml-10 p-2 text-lg font-bold'>Trending:</h1>
+              <Link href='/library/trending'>
+                <button>View All &gt;</button>
+              </Link>
+            </div>
             <EmblaCarousel
               slides={publicLessons}
               session={session}
