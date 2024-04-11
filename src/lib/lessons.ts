@@ -27,7 +27,7 @@ export async function bookMarkLesson(lessonId: string) {
       id: session.user.id,
     },
     data: {
-      bookmarkIDs: [...bookmarkIDs, lessonId],
+      bookmarkIDs: [lessonId, ...bookmarkIDs],
     },
   });
 
@@ -47,11 +47,12 @@ export async function bookMarkLesson(lessonId: string) {
       id: lessonId,
     },
     data: {
-      bookmarkedByIDs: [...bookmarkedByIDs, session.user.id],
+      bookmarkedByIDs: [session.user.id, ...bookmarkedByIDs],
     },
   });
 
   revalidatePath('/');
+  revalidatePath('/library/recently-viewed');
 }
 
 export async function unBookMarkLesson(lessonId: string) {
@@ -100,6 +101,104 @@ export async function unBookMarkLesson(lessonId: string) {
     },
   });
   revalidatePath('/');
+  revalidatePath('/library/recently-viewed');
+}
+export async function likeLesson(lessonId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error('You must be logged in to like a lesson');
+  }
+  const lesson = await db.lesson.findFirst({
+    where: {
+      id: lessonId,
+    },
+    select: {
+      likedByIDs: true,
+    },
+  });
+  const likedByIDs = lesson?.likedByIDs || [];
+  const newLikedByIDs = likedByIDs.filter((id) => id !== session.user.id);
+  newLikedByIDs.unshift(session.user.id);
+
+  await db.lesson.update({
+    where: {
+      id: lessonId,
+    },
+    data: {
+      likedByIDs: newLikedByIDs,
+    },
+  });
+
+  const prevLikes = await db.user.findFirst({
+    where: {
+      id: session.user.id,
+    },
+    select: {
+      likedIDs: true,
+    },
+  });
+  const likedIDs = prevLikes?.likedIDs || [];
+  const newLikedIDs = likedIDs.filter((id) => id !== lessonId);
+  newLikedIDs.unshift(lessonId);
+  await db.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      likedIDs: newLikedIDs,
+    },
+  });
+
+  revalidatePath('/');
+  revalidatePath('/library/recently-viewed');
+}
+export async function unLikeLesson(lessonId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error('You must be logged in to unlike a lesson');
+  }
+  const lesson = await db.lesson.findFirst({
+    where: {
+      id: lessonId,
+    },
+    select: {
+      likedByIDs: true,
+    },
+  });
+  const likedByIDs = lesson?.likedByIDs || [];
+  const newLikedByIDs = likedByIDs.filter((id) => id !== session.user.id);
+
+  await db.lesson.update({
+    where: {
+      id: lessonId,
+    },
+    data: {
+      likedByIDs: newLikedByIDs,
+    },
+  });
+
+  const prevLikes = await db.user.findFirst({
+    where: {
+      id: session.user.id,
+    },
+    select: {
+      likedIDs: true,
+    },
+  });
+  const likedIDs = prevLikes?.likedIDs || [];
+  const newLikedIDs = likedIDs.filter((id) => id !== lessonId);
+
+  await db.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      likedIDs: newLikedIDs,
+    },
+  });
+
+  revalidatePath('/');
+  revalidatePath('/library/recently-viewed');
 }
 
 export async function addToRecent(lessonId: string) {

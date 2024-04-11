@@ -4,11 +4,15 @@ import { Lesson } from '@prisma/client';
 interface LessonListState {
   publicLessons: Lesson[];
   bookmarked: Lesson[];
+  recentlyViewed: Lesson[];
+  liked: Lesson[];
 }
 
 const initialState: LessonListState = {
   publicLessons: [],
   bookmarked: [],
+  recentlyViewed: [],
+  liked: [],
 };
 
 export const lessonListSlice = createSlice({
