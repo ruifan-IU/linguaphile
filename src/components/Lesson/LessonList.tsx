@@ -1,5 +1,3 @@
-'use client';
-
 import { Lesson } from '@prisma/client';
 import LessonCard from './LessonCard';
 

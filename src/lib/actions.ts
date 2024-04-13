@@ -16,8 +16,7 @@ export async function uploadLesson(formData: FormData) {
     text: formData.get('text') as string,
   };
 
-
-  console.log(prompt)
+  console.log(prompt);
   await db.lesson.create({
     data: {
       title: prompt.title,
@@ -83,4 +82,10 @@ export async function generateRewrite(formData: FormData) {
   revalidatePath('/');
   redirect('/');
   return true;
+}
+
+export async function selectLevels(formData: FormData) {
+  const levels = formData.getAll('levels');
+  console.log('levels', levels);
+  return levels;
 }

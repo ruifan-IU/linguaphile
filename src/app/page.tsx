@@ -5,6 +5,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import EmblaCarousel from '@/components/Lesson/Carousel/EmblaCarousel';
 import { EmblaOptionsType } from 'embla-carousel';
+import LevelSelection from '@/components/Lesson/LevelSelection';
 
 export default async function Home() {
   const OPTIONS: EmblaOptionsType = { slidesToScroll: 'auto' };
@@ -71,15 +72,7 @@ export default async function Home() {
 
   return (
     <main className='flex flex-col items-center justify-between'>
-      {/* {session ? (
-        <LessonTabs
-          lessons={lessons}
-          bookmarked={bookmarkedLessons}
-          recentLessons={recentLessons}
-        />
-      ) : (
-        <LessonList lessons={publicLessons} />
-      )} */}
+      <LevelSelection />
       {session ? (
         <div className='mt-4'>
           <section className='mb-4'>
