@@ -9,26 +9,27 @@ import { db } from './db';
 import levelMap from './levelMap';
 
 export async function uploadLesson(formData: FormData) {
-  const prompt = {
-    title: formData.get('title') as string,
-    language: formData.get('language') as string,
-    level: formData.get('level') as string,
-    text: formData.get('text') as string,
-  };
+  console.log('formData', formData.get('title'));
+  console.log('formData', formData.get('language'));
+  console.log('formData', formData.get('level'));
+  console.log('formData', formData.get('text'));
+  console.log('formData', formData.get('imageId'));
 
-
-  console.log(prompt)
-  await db.lesson.create({
-    data: {
-      title: prompt.title,
-      languageId: prompt.language,
-      level: levelMap[prompt.level],
-      text: prompt.text,
-      public: true,
-      imageId: 'www.dummy.com/image.jpg',
-      updated: new Date(),
-    },
-  });
+  try {
+    await db.lesson.create({
+      data: {
+        title: formData.get('title') as string,
+        languageId: formData.get('language') as string,
+        level: levelMap[formData.get('level') as keyof typeof levelMap],
+        text: formData.get('text') as string,
+        public: true,
+        imageId: formData.get('imageId') as string,
+        updated: new Date(),
+      },
+    });
+  } catch (e) {
+    console.log(e);
+  }
   revalidatePath('/');
   redirect('/');
 }
@@ -82,5 +83,4 @@ export async function generateRewrite(formData: FormData) {
 
   revalidatePath('/');
   redirect('/');
-  return true;
 }
