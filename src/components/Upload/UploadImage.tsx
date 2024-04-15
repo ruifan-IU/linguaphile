@@ -9,6 +9,7 @@ interface UploadImageProps {
 
 export default function UploadImage({ imageId, setImageId }: UploadImageProps) {
   const uploadImageHandler = (info: { public_id: string }) => {
+    console.log('info', info);
     setImageId(info.public_id);
   };
 

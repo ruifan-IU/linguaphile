@@ -18,7 +18,6 @@ export default function UploadLesson() {
       language: 'DEFAULT',
       level: 'DEFAULT',
       text: '',
-      image: '',
     },
   });
 
@@ -33,7 +32,7 @@ export default function UploadLesson() {
     formData.append('language', data.language);
     formData.append('level', data.level);
     formData.append('text', data.text);
-    formData.append('image', imageId);
+    formData.append('imageId', imageId);
 
     try {
       await uploadLesson(formData);
