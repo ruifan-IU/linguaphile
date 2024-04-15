@@ -105,8 +105,6 @@ export default function LessonCard({
     }
   };
 
-  console.log('lesson', lesson);
-
   return (
     <div
       // key={lesson.id}
@@ -156,7 +154,7 @@ export default function LessonCard({
       <div className='flex items-stretch'>
         <Link
           href={`/lesson/${lesson.id}`}
-          className='flex items-stretch flex-grow'
+          className='flex flex-grow items-stretch'
           onClick={() => handleAddToRecent(lesson)}
         >
           <CldImageWrapper
