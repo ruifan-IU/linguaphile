@@ -5,13 +5,29 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import EmblaCarousel from '@/components/Lesson/Carousel/EmblaCarousel';
 import { EmblaOptionsType } from 'embla-carousel';
+import LevelSelection from '@/components/Lesson/LevelSelection';
 
-export default async function Home() {
+type searchParamsType = {
+  [key: string]: string;
+};
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: searchParamsType;
+}) {
   const OPTIONS: EmblaOptionsType = { slidesToScroll: 'auto' };
   const bookmarkedLessons: Lesson[] = [];
   const likedLessons: Lesson[] = [];
   const recentLessons: Lesson[] = [];
 
+  let minLevel = 1;
+  let maxLevel = 6;
+  console.log('searchParams', searchParams);
+  if (searchParams.minLevel && searchParams.maxLevel) {
+    minLevel = parseInt(searchParams.minLevel);
+    maxLevel = parseInt(searchParams.maxLevel);
+  }
   const publicLessons = await db.lesson.findMany({
     where: {
       public: true,
@@ -71,15 +87,7 @@ export default async function Home() {
 
   return (
     <main className='flex flex-col items-center justify-between'>
-      {/* {session ? (
-        <LessonTabs
-          lessons={lessons}
-          bookmarked={bookmarkedLessons}
-          recentLessons={recentLessons}
-        />
-      ) : (
-        <LessonList lessons={publicLessons} />
-      )} */}
+      <LevelSelection />
       {session ? (
         <div className='mt-4'>
           <section className='mb-4'>
@@ -90,7 +98,9 @@ export default async function Home() {
               </Link>
             </div>
             <EmblaCarousel
-              slides={recentLessons}
+              slides={recentLessons.filter((lesson) => {
+                return lesson.level >= minLevel && lesson.level <= maxLevel;
+              })}
               session={session}
               options={OPTIONS}
             />
@@ -103,7 +113,9 @@ export default async function Home() {
               </Link>
             </div>
             <EmblaCarousel
-              slides={bookmarkedLessons}
+              slides={bookmarkedLessons.filter((lesson) => {
+                return lesson.level >= minLevel && lesson.level <= maxLevel;
+              })}
               session={session}
               options={OPTIONS}
             />
@@ -116,7 +128,9 @@ export default async function Home() {
               </Link>
             </div>
             <EmblaCarousel
-              slides={likedLessons}
+              slides={likedLessons.filter((lesson) => {
+                return lesson.level >= minLevel && lesson.level <= maxLevel;
+              })}
               session={session}
               options={OPTIONS}
             />
@@ -129,7 +143,9 @@ export default async function Home() {
               </Link>
             </div>
             <EmblaCarousel
-              slides={publicLessons}
+              slides={publicLessons.filter((lesson) => {
+                return lesson.level >= minLevel && lesson.level <= maxLevel;
+              })}
               session={session}
               options={OPTIONS}
             />

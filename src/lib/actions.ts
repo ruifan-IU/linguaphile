@@ -84,3 +84,16 @@ export async function generateRewrite(formData: FormData) {
   revalidatePath('/');
   redirect('/');
 }
+export async function selectLevels(minLevel: number, maxLevel: number) {
+  const range = [minLevel.toString(), maxLevel.toString()];
+  console.log('range', range);
+
+  const params = new URLSearchParams([
+    ['minLevel', range[0]],
+    ['maxLevel', range[1]],
+  ]);
+
+  redirect(`/?${params.toString()}`);
+
+  return range;
+}
