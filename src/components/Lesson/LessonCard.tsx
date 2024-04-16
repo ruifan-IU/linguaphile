@@ -71,8 +71,6 @@ export default function LessonCard({
     } catch (e) {
       console.log(e);
     }
-
-    // dispatch(addBookmarked(lesson));
   };
 
   const handleUnBookmark = async (lesson: Lesson) => {
@@ -134,7 +132,7 @@ export default function LessonCard({
       </button>
       <button
         onClick={liked ? () => handleUnLike(lesson) : () => handleLike(lesson)}
-        className='absolute bottom-1 right-8 z-10 m-auto h-6 w-12 rounded-full border-2 border-solid border-green-500 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100'
+        className='absolute bottom-1 right-8 z-10 m-auto flex h-4 w-12 items-center justify-evenly rounded-full opacity-0 ring-1 transition-opacity duration-300 ease-in-out group-hover:opacity-100'
       >
         {liked ? (
           <FontAwesomeIcon
@@ -148,8 +146,8 @@ export default function LessonCard({
             size='sm'
             style={{ color: 'rgb(220 38 38)' }}
           />
-        )}{' '}
-        {likes}
+        )}
+        <p className='text-sm'>{likes}</p>
       </button>
       <div className='flex items-stretch'>
         <Link

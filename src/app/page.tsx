@@ -94,10 +94,14 @@ export default async function Home({
       {session ? (
         <div className='mt-4'>
           <section className='mb-4'>
-            <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>Recently Studied:</h1>
-              <Link href='/library/recently-viewed'>
-                <button>View All &gt;</button>
+            <div className='flex w-full flex-row items-center justify-between'>
+              <h1 className='ml-10 p-4 text-xl font-semibold'>
+                Recently Studied:
+              </h1>
+              <Link className='mr-10' href='/library/recently-viewed'>
+                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-200'>
+                  View All &gt;
+                </button>
               </Link>
             </div>
             <EmblaCarousel
@@ -110,9 +114,13 @@ export default async function Home({
           </section>
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>Saved Lessons:</h1>
-              <Link href='/library/currently-studying'>
-                <button>View All &gt;</button>
+              <h1 className='ml-10 p-4 text-xl font-semibold'>
+                Saved Lessons:
+              </h1>
+              <Link className='mr-10' href='/library/currently-studying'>
+                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-200'>
+                  View All &gt;
+                </button>
               </Link>
             </div>
             <EmblaCarousel
@@ -125,9 +133,11 @@ export default async function Home({
           </section>
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>My Likes:</h1>
-              <Link href='/library/liked'>
-                <button>View All &gt;</button>
+              <h1 className='ml-10 p-4 text-xl font-semibold'>My Likes:</h1>
+              <Link className='mr-10' href='/library/liked'>
+                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-200'>
+                  View All &gt;
+                </button>
               </Link>
             </div>
             <EmblaCarousel
@@ -140,9 +150,11 @@ export default async function Home({
           </section>
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>Trending:</h1>
-              <Link href='/library/trending'>
-                <button>View All &gt;</button>
+              <h1 className='ml-10 p-4 text-xl font-semibold'>Trending:</h1>
+              <Link className='mr-10' href='/library/trending'>
+                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-200'>
+                  View All &gt;
+                </button>
               </Link>
             </div>
             <EmblaCarousel
