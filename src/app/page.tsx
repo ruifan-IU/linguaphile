@@ -23,7 +23,7 @@ export default async function Home({
 
   let minLevel = 1;
   let maxLevel = 6;
-  console.log('searchParams', searchParams);
+
   if (searchParams.minLevel && searchParams.maxLevel) {
     minLevel = parseInt(searchParams.minLevel);
     maxLevel = parseInt(searchParams.maxLevel);
@@ -87,7 +87,10 @@ export default async function Home({
 
   return (
     <main className='flex flex-col items-center justify-between'>
-      <LevelSelection />
+      <div className='flex w-5/6 flex-row justify-between'>
+        <LevelSelection />
+        <LevelSelection />
+      </div>
       {session ? (
         <div className='mt-4'>
           <section className='mb-4'>
