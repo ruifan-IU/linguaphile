@@ -117,7 +117,7 @@ export default forwardRef(function NewWord(
           <button
             name='google-translate'
             type='button'
-            className='mb-3 sm:mb-0 order-last flex justify-center w-full rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100 sm:mt-0 sm:w-auto'
+            className='order-last mb-3 flex w-full justify-center rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100 sm:mb-0 sm:mt-0 sm:w-auto'
             onClick={() => googleTranslate(word)}
           >
             {loading ? 'Translating...' : 'Translate'}
@@ -138,7 +138,7 @@ export default forwardRef(function NewWord(
           >
             Back
           </button>
-          <div className='flex-1' />
+          <div className='w-full'/>
         </div>
       </Dialog.Panel>
     </ModalContainer>
