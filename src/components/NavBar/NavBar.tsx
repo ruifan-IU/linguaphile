@@ -44,41 +44,43 @@ export default function NavBar({ session }: NavBarProps) {
                   className='h-auto w-auto'
                   priority={true}
                 />
-                <div className='hidden sm:ml-6 sm:flex sm:space-x-8'>
-                  <Link
-                    href='/'
-                    className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/'])}`}
-                  >
-                    <p>
-                      <FontAwesomeIcon icon={faBookOpen} />
-                      <span className='hidden lg:ml-2 lg:inline-block'>
-                        Lessons
-                      </span>
-                    </p>
-                  </Link>
-                  <Link
-                    href='/dictionary'
-                    className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/dictionary'])}`}
-                  >
-                    <p>
-                      <FontAwesomeIcon icon={faBook} />
-                      <span className='hidden lg:ml-2 lg:inline-block'>
-                        Dictionary
-                      </span>
-                    </p>
-                  </Link>
-                  <Link
-                    href='/upload'
-                    className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/compose'])}`}
-                  >
-                    <p>
-                      <FontAwesomeIcon icon={faFileArrowUp} />
-                      <span className='hidden lg:ml-2 lg:inline-block'>
-                        Upload
-                      </span>
-                    </p>
-                  </Link>
-                </div>
+                {session && (
+                  <div className='hidden sm:ml-6 sm:flex sm:space-x-8'>
+                    <Link
+                      href='/'
+                      className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/'])}`}
+                    >
+                      <p>
+                        <FontAwesomeIcon icon={faBookOpen} />
+                        <span className='hidden lg:ml-2 lg:inline-block'>
+                          Lessons
+                        </span>
+                      </p>
+                    </Link>
+                    <Link
+                      href='/dictionary'
+                      className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/dictionary'])}`}
+                    >
+                      <p>
+                        <FontAwesomeIcon icon={faBook} />
+                        <span className='hidden lg:ml-2 lg:inline-block'>
+                          Dictionary
+                        </span>
+                      </p>
+                    </Link>
+                    <Link
+                      href='/upload'
+                      className={`inline-flex items-center whitespace-nowrap border-b-4 px-1 pt-1 text-lg font-medium ${getLinkClass(['/compose'])}`}
+                    >
+                      <p>
+                        <FontAwesomeIcon icon={faFileArrowUp} />
+                        <span className='hidden lg:ml-2 lg:inline-block'>
+                          Upload
+                        </span>
+                      </p>
+                    </Link>
+                  </div>
+                )}
               </div>
 
               <div className='hidden sm:ml-6 sm:flex sm:items-center'>
