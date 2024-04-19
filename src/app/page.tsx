@@ -97,7 +97,7 @@ export default async function Home({
         </div>
       </div>
       {session ? (
-        <div className='mt-4'>
+        <div>
           <section className='mb-4'>
             <div className='flex w-full flex-row items-center justify-between'>
               <h1 className='ml-10 p-4 text-xl font-semibold'>
