@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { selectLevels } from '@/lib/actions';
 import RangeSlider from 'react-range-slider-input';
-import 'react-range-slider-input/dist/style.css';
 
 const LevelSelection = () => {
   const [selectedRange, setSelectedRange] = useState<number[]>([1, 6]);
@@ -12,7 +11,7 @@ const LevelSelection = () => {
     selectLevels(selectedRange[0], selectedRange[1]);
   }
   return (
-    <div className='mt-4 flex w-96 flex-col items-center space-y-4'>
+    <div className='m-6 flex w-5/6 flex-col items-center space-y-4'>
       <h2 className='text-lg font-semibold'>Select Range of Level</h2>
       <RangeSlider
         min={1}

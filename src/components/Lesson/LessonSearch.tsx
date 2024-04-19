@@ -2,13 +2,21 @@
 
 const LessonSearch = () => {
   return (
-    <div>
+    <div className='m-6 flex h-2/5 w-full rounded bg-slate-100'>
       <input
-        type='text'
-        id='title'
-        placeholder='Enter title here...'
-        className='block w-full flex-grow rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6'
+        type='search'
+        name='search'
+        placeholder='Search...'
+        className='w-full border-none bg-transparent px-4 py-1 text-gray-400 outline-none focus:outline-none'
       />
+      <button
+        type='submit'
+        className=' rounded bg-indigo-600 px-4 py-2 text-white'
+      >
+        Search
+      </button>
     </div>
   );
 };
+
+export default LessonSearch;
