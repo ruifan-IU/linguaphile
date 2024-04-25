@@ -92,7 +92,10 @@ export default async function Home({
         <div className='flex items-center justify-center'>
           <LessonSearch />
         </div>
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-between'>
+          <p className='text-center font-semibold text-slate-600'>
+            Select Level:
+          </p>
           <LevelSelection />
         </div>
       </div>

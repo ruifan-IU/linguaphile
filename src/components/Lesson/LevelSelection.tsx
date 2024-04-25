@@ -11,8 +11,7 @@ const LevelSelection = () => {
     selectLevels(selectedRange[0], selectedRange[1]);
   }
   return (
-    <div className='m-6 flex w-5/6 flex-col items-center space-y-4'>
-      <h2 className='text-lg font-semibold'>Select Range of Level</h2>
+    <div className='mt-10 flex w-full flex-col items-center justify-center space-y-4'>
       <RangeSlider
         min={1}
         max={6}
@@ -27,7 +26,7 @@ const LevelSelection = () => {
             key={index}
             className={`text-sm font-semibold ${
               selectedRange[0] <= index + 1 && index + 1 <= selectedRange[1]
-                ? 'text-black'
+                ? 'text-slate-600'
                 : 'text-gray-400'
             }`}
           >
