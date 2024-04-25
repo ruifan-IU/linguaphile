@@ -6,6 +6,7 @@ import { authOptions } from '@/lib/auth';
 import EmblaCarousel from '@/components/Lesson/Carousel/EmblaCarousel';
 import { EmblaOptionsType } from 'embla-carousel';
 import LevelSelection from '@/components/Lesson/LevelSelection';
+import LessonSearch from '@/components/Lesson/LessonSearch';
 
 type searchParamsType = {
   [key: string]: string;
@@ -23,7 +24,7 @@ export default async function Home({
 
   let minLevel = 1;
   let maxLevel = 6;
-  console.log('searchParams', searchParams);
+
   if (searchParams.minLevel && searchParams.maxLevel) {
     minLevel = parseInt(searchParams.minLevel);
     maxLevel = parseInt(searchParams.maxLevel);
@@ -87,14 +88,28 @@ export default async function Home({
 
   return (
     <main className='flex flex-col items-center justify-between'>
-      <LevelSelection />
+      <div className='grid w-9/12 grid-cols-2 gap-10'>
+        <div className='flex items-center justify-center'>
+          <LessonSearch />
+        </div>
+        <div className='flex items-center justify-between'>
+          <p className='text-center font-semibold text-slate-600'>
+            Select Level:
+          </p>
+          <LevelSelection />
+        </div>
+      </div>
       {session ? (
-        <div className='mt-4'>
+        <div>
           <section className='mb-4'>
-            <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>Recently Studied:</h1>
-              <Link href='/library/recently-viewed'>
-                <button>View All &gt;</button>
+            <div className='flex w-full flex-row items-center justify-between'>
+              <h1 className='ml-10 p-4 text-xl font-semibold'>
+                Recently Studied:
+              </h1>
+              <Link className='mr-10' href='/library/recently-viewed'>
+                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                  View All &gt;
+                </button>
               </Link>
             </div>
             <EmblaCarousel
@@ -107,9 +122,13 @@ export default async function Home({
           </section>
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>Saved Lessons:</h1>
-              <Link href='/library/currently-studying'>
-                <button>View All &gt;</button>
+              <h1 className='ml-10 p-4 text-xl font-semibold'>
+                Saved Lessons:
+              </h1>
+              <Link className='mr-10' href='/library/currently-studying'>
+                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                  View All &gt;
+                </button>
               </Link>
             </div>
             <EmblaCarousel
@@ -122,9 +141,11 @@ export default async function Home({
           </section>
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>My Likes:</h1>
-              <Link href='/library/liked'>
-                <button>View All &gt;</button>
+              <h1 className='ml-10 p-4 text-xl font-semibold'>My Likes:</h1>
+              <Link className='mr-10' href='/library/liked'>
+                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                  View All &gt;
+                </button>
               </Link>
             </div>
             <EmblaCarousel
@@ -137,9 +158,11 @@ export default async function Home({
           </section>
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-2 text-lg font-bold'>Trending:</h1>
-              <Link href='/library/trending'>
-                <button>View All &gt;</button>
+              <h1 className='ml-10 p-4 text-xl font-semibold'>Trending:</h1>
+              <Link className='mr-10' href='/library/trending'>
+                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                  View All &gt;
+                </button>
               </Link>
             </div>
             <EmblaCarousel

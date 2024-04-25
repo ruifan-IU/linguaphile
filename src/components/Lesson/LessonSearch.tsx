@@ -1,14 +1,32 @@
 'use client';
+import { useState } from 'react';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const LessonSearch = () => {
+  const [search, setSearch] = useState('');
+
   return (
-    <div>
-      <input
-        type='text'
-        id='title'
-        placeholder='Enter title here...'
-        className='block w-full flex-grow rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6'
-      />
+    <div className='m-6 w-full '>
+      <div className='flex h-2/5 w-full rounded-lg border-2 border-solid border-gray-100 bg-white'>
+        <input
+          type='search'
+          name='search'
+          placeholder='Search...'
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className='mr-0.5 w-full rounded-l-lg border-none bg-transparent px-4 py-1 text-gray-400 outline-none hover:border hover:border-solid hover:border-gray-300 focus:outline-none'
+        />
+        <button
+          type='submit'
+          className='rounded-r-lg border-none bg-white px-4 py-2 text-black hover:border hover:border-solid hover:border-gray-300'
+        >
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        </button>
+      </div>
+      <div className={`${search ? '' : 'hidden'}`}>Hello</div>
     </div>
   );
 };
+
+export default LessonSearch;
