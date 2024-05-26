@@ -7,6 +7,7 @@ import EmblaCarousel from '@/components/Lesson/Carousel/EmblaCarousel';
 import { EmblaOptionsType } from 'embla-carousel';
 import LevelSelection from '@/components/Lesson/LevelSelection';
 import LessonSearch from '@/components/Lesson/LessonSearch';
+import { redirect } from 'next/navigation';
 
 type searchParamsType = {
   [key: string]: string;
@@ -40,6 +41,11 @@ export default async function Home({
   });
 
   const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect('/welcome');
+  }
+
   const lessonIDLists = session
     ? await db.user.findFirst({
         where: {

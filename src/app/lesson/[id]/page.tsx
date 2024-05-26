@@ -3,9 +3,14 @@ import { LessonDisplay } from '@/components/Lesson/LessonDisplay';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { Word } from '@prisma/client';
+import { redirect } from 'next/navigation';
 
 export default async function Lesson({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect('/welcome');
+  }
 
   const lesson = await db.lesson.findUnique({
     where: {
