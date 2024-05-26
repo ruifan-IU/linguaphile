@@ -1,7 +1,11 @@
 import { CloudArrowUpIcon, LockClosedIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 
-export default function Example() {
+export default async function Example() {
+  const session = await getServerSession();
+
   return (
     <div className='relative isolate overflow-hidden bg-emerald-50 px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0'>
       <div className='mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10'>
@@ -15,7 +19,7 @@ export default function Example() {
                 A better approach
               </h1>
               <p className='mt-6 text-xl leading-8 text-gray-700'>
-                Learn English faster by building your own dictionay while
+                Learn English faster by constructing your own dictionay while
                 reading must-read classics rewritten by AI to the difficulty
                 level of your choosing.
               </p>
@@ -24,7 +28,7 @@ export default function Example() {
         </div>
         <div className='-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden'>
           <Image
-            className='w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl sm:w-[57rem]'
+            className='w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl sm:w-[57rem] ring-2 ring-emerald-200'
             src='/screenshot.png'
             alt=''
             width={1140}

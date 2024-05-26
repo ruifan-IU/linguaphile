@@ -3,9 +3,14 @@ import { db } from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { Word } from '@prisma/client';
+import { redirect } from 'next/navigation';
 
 export default async function Dictionary() {
   const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect('/welcome');
+  }
 
   let words: Word[] = [];
 
@@ -22,7 +27,7 @@ export default async function Dictionary() {
       <header className='my-4 text-base font-bold uppercase md:text-xl lg:text-2xl'>
         your words
       </header>
-      <div className='w-full px-4 xl:px-0'>
+      <div className='xl:px-0 w-full px-4'>
         <div className='flow-root'>
           <div className='overflow-x-auto'>
             <div className='inline-block min-w-full px-1 py-1 align-middle'>
