@@ -263,12 +263,13 @@ export async function rewriteLesson(
   return true;
 }
 
-export async function getTitles() {
-  const titles = await db.lesson.findMany({
-    select: {
-      title: true,
+export async function getAllLessons() {
+  const publicLessons = await db.lesson.findMany({
+    where: {
+      public: true,
     },
   });
-  console.log(titles);
-  return titles;
+
+  console.log('all lessons', publicLessons);
+  return publicLessons;
 }
