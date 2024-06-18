@@ -30,6 +30,13 @@ export default async function Home({
     minLevel = parseInt(searchParams.minLevel);
     maxLevel = parseInt(searchParams.maxLevel);
   }
+
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect('/welcome');
+  }
+
   const publicLessons = await db.lesson.findMany({
     where: {
       public: true,
@@ -39,13 +46,6 @@ export default async function Home({
   publicLessons.sort((a, b) => {
     return b.likedByIDs.length - a.likedByIDs.length;
   });
-
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    redirect('/welcome');
-  }
-
   const lessonIDLists = session
     ? await db.user.findFirst({
         where: {
@@ -105,8 +105,8 @@ export default async function Home({
           <LevelSelection />
         </div>
       </div>
-      {session ? (
-        <div>
+      <div>
+        {recentLessons.length ? (
           <section className='mb-4'>
             <div className='flex w-full flex-row items-center justify-between'>
               <h1 className='ml-10 p-4 text-xl font-semibold'>
@@ -126,6 +126,8 @@ export default async function Home({
               options={OPTIONS}
             />
           </section>
+        ) : null}
+        {bookmarkedLessons.length ? (
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
               <h1 className='ml-10 p-4 text-xl font-semibold'>
@@ -145,6 +147,8 @@ export default async function Home({
               options={OPTIONS}
             />
           </section>
+        ) : null}
+        {likedLessons.length ? (
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
               <h1 className='ml-10 p-4 text-xl font-semibold'>My Likes:</h1>
@@ -162,27 +166,25 @@ export default async function Home({
               options={OPTIONS}
             />
           </section>
-          <section className='mb-4'>
-            <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-4 text-xl font-semibold'>Trending:</h1>
-              <Link className='mr-10' href='/library/trending'>
-                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
-                  View All &gt;
-                </button>
-              </Link>
-            </div>
-            <EmblaCarousel
-              slides={publicLessons.filter((lesson) => {
-                return lesson.level >= minLevel && lesson.level <= maxLevel;
-              })}
-              session={session}
-              options={OPTIONS}
-            />
-          </section>
-        </div>
-      ) : (
-        <p>please log in</p>
-      )}
+        ) : null}
+        <section className='mb-4'>
+          <div className='flex w-full flex-row justify-between'>
+            <h1 className='ml-10 p-4 text-xl font-semibold'>Trending:</h1>
+            <Link className='mr-10' href='/library/trending'>
+              <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                View All &gt;
+              </button>
+            </Link>
+          </div>
+          <EmblaCarousel
+            slides={publicLessons.filter((lesson) => {
+              return lesson.level >= minLevel && lesson.level <= maxLevel;
+            })}
+            session={session}
+            options={OPTIONS}
+          />
+        </section>
+      </div>
     </main>
   );
 }
