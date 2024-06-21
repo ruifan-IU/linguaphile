@@ -32,6 +32,7 @@ export default async function Home({
   }
 
   const session = await getServerSession(authOptions);
+  console.log('session', session);
 
   if (!session) {
     redirect('/welcome');
@@ -93,98 +94,102 @@ export default async function Home({
   }
 
   return (
-    <main className='flex flex-col items-center justify-between'>
-      <div className='grid w-9/12 grid-cols-2 gap-10'>
-        <div className='flex items-center justify-center'>
+    <main className='flex w-full flex-col items-center justify-between'>
+      <div className='flex w-full flex-col items-center justify-between'>
+        <div className='w-full'>
           <LessonSearch />
         </div>
-        <div className='flex items-center justify-between'>
-          <p className='text-center font-semibold text-slate-600'>
+        <div className='w-full'>
+          <div className='text-center font-semibold text-slate-600'>
             Select Level:
-          </p>
+          </div>
           <LevelSelection />
         </div>
       </div>
-      <div>
-        {recentLessons.length ? (
-          <section className='mb-4'>
-            <div className='flex w-full flex-row items-center justify-between'>
-              <h1 className='ml-10 p-4 text-xl font-semibold'>
-                Recently Studied:
-              </h1>
-              <Link className='mr-10' href='/library/recently-viewed'>
-                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
-                  View All &gt;
-                </button>
-              </Link>
-            </div>
-            <EmblaCarousel
-              slides={recentLessons.filter((lesson) => {
-                return lesson.level >= minLevel && lesson.level <= maxLevel;
-              })}
-              session={session}
-              options={OPTIONS}
-            />
-          </section>
-        ) : null}
-        {bookmarkedLessons.length ? (
+      {session ? (
+        <div>
+          {recentLessons.length ? (
+            <section className='mb-4'>
+              <div className='flex w-full flex-row items-center justify-between'>
+                <h1 className='ml-10 p-4 text-xl font-semibold'>
+                  Recently Studied:
+                </h1>
+                <Link className='mr-10' href='/library/recently-viewed'>
+                  <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                    View All &gt;
+                  </button>
+                </Link>
+              </div>
+              <EmblaCarousel
+                slides={recentLessons.filter((lesson) => {
+                  return lesson.level >= minLevel && lesson.level <= maxLevel;
+                })}
+                session={session}
+                options={OPTIONS}
+              />
+            </section>
+          ) : null}
+          {bookmarkedLessons.length ? (
+            <section className='mb-4'>
+              <div className='flex w-full flex-row justify-between'>
+                <h1 className='ml-10 p-4 text-xl font-semibold'>
+                  Saved Lessons:
+                </h1>
+                <Link className='mr-10' href='/library/currently-studying'>
+                  <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                    View All &gt;
+                  </button>
+                </Link>
+              </div>
+              <EmblaCarousel
+                slides={bookmarkedLessons.filter((lesson) => {
+                  return lesson.level >= minLevel && lesson.level <= maxLevel;
+                })}
+                session={session}
+                options={OPTIONS}
+              />
+            </section>
+          ) : null}
+          {likedLessons.length ? (
+            <section className='mb-4'>
+              <div className='flex w-full flex-row justify-between'>
+                <h1 className='ml-10 p-4 text-xl font-semibold'>My Likes:</h1>
+                <Link className='mr-10' href='/library/liked'>
+                  <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                    View All &gt;
+                  </button>
+                </Link>
+              </div>
+              <EmblaCarousel
+                slides={likedLessons.filter((lesson) => {
+                  return lesson.level >= minLevel && lesson.level <= maxLevel;
+                })}
+                session={session}
+                options={OPTIONS}
+              />
+            </section>
+          ) : null}
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-4 text-xl font-semibold'>
-                Saved Lessons:
-              </h1>
-              <Link className='mr-10' href='/library/currently-studying'>
+              <h1 className='ml-10 p-4 text-xl font-semibold'>Trending:</h1>
+              <Link className='mr-10' href='/library/trending'>
                 <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
                   View All &gt;
                 </button>
               </Link>
             </div>
             <EmblaCarousel
-              slides={bookmarkedLessons.filter((lesson) => {
+              slides={publicLessons.filter((lesson) => {
                 return lesson.level >= minLevel && lesson.level <= maxLevel;
               })}
               session={session}
               options={OPTIONS}
             />
           </section>
-        ) : null}
-        {likedLessons.length ? (
-          <section className='mb-4'>
-            <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-4 text-xl font-semibold'>My Likes:</h1>
-              <Link className='mr-10' href='/library/liked'>
-                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
-                  View All &gt;
-                </button>
-              </Link>
-            </div>
-            <EmblaCarousel
-              slides={likedLessons.filter((lesson) => {
-                return lesson.level >= minLevel && lesson.level <= maxLevel;
-              })}
-              session={session}
-              options={OPTIONS}
-            />
-          </section>
-        ) : null}
-        <section className='mb-4'>
-          <div className='flex w-full flex-row justify-between'>
-            <h1 className='ml-10 p-4 text-xl font-semibold'>Trending:</h1>
-            <Link className='mr-10' href='/library/trending'>
-              <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
-                View All &gt;
-              </button>
-            </Link>
-          </div>
-          <EmblaCarousel
-            slides={publicLessons.filter((lesson) => {
-              return lesson.level >= minLevel && lesson.level <= maxLevel;
-            })}
-            session={session}
-            options={OPTIONS}
-          />
-        </section>
-      </div>
+        </div>
+      ) : (
+        ''
+      )}
     </main>
   );
 }

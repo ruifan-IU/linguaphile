@@ -44,7 +44,7 @@ const LessonSearch = () => {
   };
 
   return (
-    <div className='m-6 w-full '>
+    <div className='m-2'>
       <div className='flex h-2/5 w-full rounded-lg border-2 border-solid border-gray-100 bg-white'>
         <AsyncSelect
           className='w-full text-slate-950'
