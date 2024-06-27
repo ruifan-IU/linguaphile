@@ -95,8 +95,8 @@ export default async function Home({
 
   return (
     <main className='flex w-full flex-col items-center justify-between'>
-      <div className='flex w-full flex-col items-center justify-between'>
-        <div className='w-full'>
+      <div className='flex w-full flex-col items-center justify-between md:flex-row'>
+        <div className='top z-10 w-full'>
           <LessonSearch />
         </div>
         <div className='w-full'>
@@ -111,11 +111,11 @@ export default async function Home({
           {recentLessons.length ? (
             <section className='mb-4'>
               <div className='flex w-full flex-row items-center justify-between'>
-                <h1 className='ml-10 p-4 text-xl font-semibold'>
+                <h1 className='ml-10 p-4 font-semibold text-slate-600'>
                   Recently Studied:
                 </h1>
-                <Link className='mr-10' href='/library/recently-viewed'>
-                  <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                <Link className='mr-10 p-4' href='/library/recently-viewed'>
+                  <button className='h-10 w-24 rounded-lg text-center text-slate-600 transition-colors duration-300 hover:bg-slate-100'>
                     View All &gt;
                   </button>
                 </Link>
@@ -132,11 +132,11 @@ export default async function Home({
           {bookmarkedLessons.length ? (
             <section className='mb-4'>
               <div className='flex w-full flex-row justify-between'>
-                <h1 className='ml-10 p-4 text-xl font-semibold'>
+                <h1 className='ml-10 p-4 font-semibold text-slate-600'>
                   Saved Lessons:
                 </h1>
-                <Link className='mr-10' href='/library/currently-studying'>
-                  <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                <Link className='mr-10 p-4' href='/library/currently-studying'>
+                  <button className='h-10 w-24 rounded-lg text-center text-slate-600 transition-colors duration-300 hover:bg-slate-100'>
                     View All &gt;
                   </button>
                 </Link>
@@ -153,9 +153,11 @@ export default async function Home({
           {likedLessons.length ? (
             <section className='mb-4'>
               <div className='flex w-full flex-row justify-between'>
-                <h1 className='ml-10 p-4 text-xl font-semibold'>My Likes:</h1>
-                <Link className='mr-10' href='/library/liked'>
-                  <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+                <p className='ml-10 p-4 font-semibold text-slate-600'>
+                  My Likes:
+                </p>
+                <Link className='mr-10 p-4' href='/library/liked'>
+                  <button className='h-10 w-24 rounded-lg text-center text-slate-600 transition-colors duration-300 hover:bg-slate-100'>
                     View All &gt;
                   </button>
                 </Link>
@@ -171,9 +173,11 @@ export default async function Home({
           ) : null}
           <section className='mb-4'>
             <div className='flex w-full flex-row justify-between'>
-              <h1 className='ml-10 p-4 text-xl font-semibold'>Trending:</h1>
-              <Link className='mr-10' href='/library/trending'>
-                <button className='h-10 w-24 rounded-lg text-center transition-colors duration-300 hover:bg-slate-100'>
+              <h1 className='ml-10 p-4 font-semibold text-slate-600'>
+                Trending:
+              </h1>
+              <Link className='mr-10 p-4' href='/library/trending'>
+                <button className='h-10 w-24 rounded-lg text-center text-slate-600 transition-colors duration-300 hover:bg-slate-100'>
                   View All &gt;
                 </button>
               </Link>

@@ -12,14 +12,16 @@ const LevelSelection = () => {
   }
   return (
     <div className='flex w-full flex-col items-center justify-center space-y-4 p-2'>
-      <RangeSlider
-        min={1}
-        max={6}
-        step={1}
-        value={selectedRange}
-        onInput={setSelectedRange}
-        onThumbDragEnd={handleSelectLevels}
-      />
+      <div className='w-full'>
+        <RangeSlider
+          min={1}
+          max={6}
+          step={1}
+          value={selectedRange}
+          onInput={setSelectedRange}
+          onThumbDragEnd={handleSelectLevels}
+        />
+      </div>
       <div className='m-2 flex w-full justify-between'>
         {['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map((level, index) => (
           <div
